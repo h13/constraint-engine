@@ -1,0 +1,8 @@
+/vendor/
+/var/db/*.sqlite3
+/var/tmp/
+/var/log/
+env.json
+mcp-server/node_modules/
+mcp-server/dist/
+.phpunit.result.cache
