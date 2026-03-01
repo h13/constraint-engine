@@ -12,6 +12,8 @@ services:
       DB_USER: ${DB_USER:-app}
       DB_PASS: ${DB_PASS:-secret}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-sonnet-4-5-20250929}
+      API_BASE_URL: ${API_BASE_URL:-http://localhost:8080}
     depends_on:
       db:
         condition: service_healthy
