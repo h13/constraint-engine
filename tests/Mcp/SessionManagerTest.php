@@ -90,6 +90,31 @@ class SessionManagerTest extends TestCase
         $this->assertNull($resolved);
     }
 
+    public function testStartSessionWithCustomUserId(): void
+    {
+        $this->manager->startSession('Task', 'custom-user');
+
+        $this->assertSame('custom-user', $this->manager->getUserId());
+    }
+
+    public function testGetUserIdDefaultsToDefault(): void
+    {
+        $this->assertSame('default', $this->manager->getUserId());
+
+        $this->manager->startSession('Task');
+
+        $this->assertSame('default', $this->manager->getUserId());
+    }
+
+    public function testEndSessionResetsUserId(): void
+    {
+        $this->manager->startSession('Task', 'custom-user');
+        $this->assertSame('custom-user', $this->manager->getUserId());
+
+        $this->manager->endSession();
+        $this->assertSame('default', $this->manager->getUserId());
+    }
+
     public function testSessionIdFormat(): void
     {
         $this->manager->startSession('Task');

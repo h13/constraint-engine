@@ -63,6 +63,7 @@ final class SessionManager
 
         $this->activeSessionId = null;
         $this->activeTaskContext = null;
+        $this->userId = 'default';
         $this->checkpointCount = 0;
         $this->tagCounts = [];
 
