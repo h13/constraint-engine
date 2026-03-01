@@ -86,7 +86,7 @@ final class PatternViewer
             $currentStart = date('Y-m-d', strtotime('-7 days'));
             $currentEnd = date('Y-m-d');
             $previousStart = date('Y-m-d', strtotime('-14 days'));
-            $previousEnd = date('Y-m-d', strtotime('-7 days'));
+            $previousEnd = date('Y-m-d', strtotime('-8 days'));
         }
 
         $current = $this->query->periodSummary($currentStart, $currentEnd);
@@ -167,12 +167,12 @@ final class PatternViewer
         }
 
         if (count($rates) >= 2) {
-            $improvement = $firstRate - (float) $lastRate;
+            $rateChange = (float) $lastRate - $firstRate;
             $lines[] = '---';
-            if ($improvement > 0) {
-                $lines[] = 'Improvement: factual rate decreased by ' . number_format($improvement, 1) . 'pp (learning effect detected)';
-            } elseif ($improvement < 0) {
-                $lines[] = 'Note: factual rate increased by ' . number_format(-$improvement, 1) . 'pp (may need attention)';
+            if ($rateChange < 0) {
+                $lines[] = 'Improvement: factual rate decreased by ' . number_format(-$rateChange, 1) . 'pp (learning effect detected)';
+            } elseif ($rateChange > 0) {
+                $lines[] = 'Note: factual rate increased by ' . number_format($rateChange, 1) . 'pp (may need attention)';
             } else {
                 $lines[] = 'Factual rate stable.';
             }
