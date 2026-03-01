@@ -9,6 +9,7 @@ use ConstraintEngine\App\Mcp\CheckpointRecorder;
 use ConstraintEngine\App\Mcp\PatternViewer;
 use ConstraintEngine\App\Mcp\QuickRecorder;
 use ConstraintEngine\App\Mcp\RecallTracker;
+use ConstraintEngine\App\Mcp\SessionAnalyzer;
 use ConstraintEngine\App\Mcp\SessionManager;
 use Mcp\Server;
 use Mcp\Server\Transport\StdioTransport;
@@ -20,10 +21,11 @@ $sessionManager = $injector->getInstance(SessionManager::class);
 $recorder = $injector->getInstance(CheckpointRecorder::class);
 $viewer = $injector->getInstance(PatternViewer::class);
 $quickRecorder = $injector->getInstance(QuickRecorder::class);
+$sessionAnalyzer = $injector->getInstance(SessionAnalyzer::class);
 $recallTracker = $injector->getInstance(RecallTracker::class);
 
 $server = Server::builder()
-    ->setServerInfo('constraint-engine', '0.2.0')
+    ->setServerInfo('constraint-engine', '0.3.0')
     ->addTool([$recorder, 'recordCheckpoint'], 'record_checkpoint')
     ->addTool([$quickRecorder, 'quickRecord'], 'quick_record')
     ->addTool([$viewer, 'showPattern'], 'show_pattern')
@@ -33,6 +35,7 @@ $server = Server::builder()
     ->addTool([$recallTracker, 'showGoNoGo'], 'show_go_no_go')
     ->addTool([$sessionManager, 'startSession'], 'start_session')
     ->addTool([$sessionManager, 'endSession'], 'end_session')
+    ->addTool([$sessionAnalyzer, 'analyzeSession'], 'analyze_session')
     ->build();
 
 $server->run(new StdioTransport());
