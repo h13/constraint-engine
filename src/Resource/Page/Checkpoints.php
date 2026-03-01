@@ -22,9 +22,11 @@ class Checkpoints extends ResourceObject
     ) {
     }
 
-    public function onGet(): static
+    public function onGet(string $tag = '', string $sessionId = ''): static
     {
-        $this->body = $this->query->list();
+        $this->body = $tag !== '' || $sessionId !== ''
+            ? $this->query->filter($tag, $sessionId)
+            : $this->query->list();
 
         return $this;
     }

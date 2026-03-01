@@ -18,4 +18,7 @@ interface CheckpointCommandInterface
         string $tag,
         string $confidence,
     ): void;
+
+    #[DbQuery('checkpoint_update_tag')]
+    public function updateTag(int $id, string $tag): void;
 }

@@ -106,4 +106,107 @@ class CheckpointsTest extends ResourceTestCase
         $this->assertSame(422, $ro->code);
         $this->assertArrayHasKey('errors', $ro->body);
     }
+
+    public function testFilterByTag(): void
+    {
+        $this->resource->post('page://self/checkpoints', [
+            'sessionId' => 'test-001',
+            'taskContext' => 'テスト',
+            'aiProposal' => '提案A',
+            'humanFinal' => '最終B',
+            'diff' => 'A→B',
+            'tag' => 'factual',
+            'confidence' => 'estimated',
+        ]);
+        $this->resource->post('page://self/checkpoints', [
+            'sessionId' => 'test-002',
+            'taskContext' => 'テスト2',
+            'aiProposal' => '提案C',
+            'humanFinal' => '最終D',
+            'diff' => 'C→D',
+            'tag' => 'strategic',
+            'confidence' => 'estimated',
+        ]);
+
+        $ro = $this->resource->get('page://self/checkpoints', ['tag' => 'factual']);
+        assert($ro instanceof ResourceObject);
+        $this->assertSame(200, $ro->code);
+        $this->assertCount(1, $ro->body);
+        $this->assertSame('factual', $ro->body[0]['tag']);
+    }
+
+    public function testFilterBySessionId(): void
+    {
+        $this->resource->post('page://self/checkpoints', [
+            'sessionId' => 'session-A',
+            'taskContext' => 'テスト',
+            'aiProposal' => '提案A',
+            'humanFinal' => '最終B',
+            'diff' => 'A→B',
+            'tag' => 'factual',
+            'confidence' => 'estimated',
+        ]);
+        $this->resource->post('page://self/checkpoints', [
+            'sessionId' => 'session-B',
+            'taskContext' => 'テスト2',
+            'aiProposal' => '提案C',
+            'humanFinal' => '最終D',
+            'diff' => 'C→D',
+            'tag' => 'strategic',
+            'confidence' => 'estimated',
+        ]);
+
+        $ro = $this->resource->get('page://self/checkpoints', ['sessionId' => 'session-A']);
+        assert($ro instanceof ResourceObject);
+        $this->assertSame(200, $ro->code);
+        $this->assertCount(1, $ro->body);
+        $this->assertSame('session-A', $ro->body[0]['session_id']);
+    }
+
+    public function testFilterByTagAndSessionId(): void
+    {
+        $this->resource->post('page://self/checkpoints', [
+            'sessionId' => 'session-A',
+            'taskContext' => 'テスト',
+            'aiProposal' => '提案A',
+            'humanFinal' => '最終B',
+            'diff' => 'A→B',
+            'tag' => 'factual',
+            'confidence' => 'estimated',
+        ]);
+        $this->resource->post('page://self/checkpoints', [
+            'sessionId' => 'session-A',
+            'taskContext' => 'テスト2',
+            'aiProposal' => '提案C',
+            'humanFinal' => '最終D',
+            'diff' => 'C→D',
+            'tag' => 'strategic',
+            'confidence' => 'estimated',
+        ]);
+
+        $ro = $this->resource->get('page://self/checkpoints', ['tag' => 'factual', 'sessionId' => 'session-A']);
+        assert($ro instanceof ResourceObject);
+        $this->assertSame(200, $ro->code);
+        $this->assertCount(1, $ro->body);
+        $this->assertSame('factual', $ro->body[0]['tag']);
+        $this->assertSame('session-A', $ro->body[0]['session_id']);
+    }
+
+    public function testFilterNoResults(): void
+    {
+        $this->resource->post('page://self/checkpoints', [
+            'sessionId' => 'test-001',
+            'taskContext' => 'テスト',
+            'aiProposal' => '提案A',
+            'humanFinal' => '最終B',
+            'diff' => 'A→B',
+            'tag' => 'factual',
+            'confidence' => 'estimated',
+        ]);
+
+        $ro = $this->resource->get('page://self/checkpoints', ['tag' => 'strategic']);
+        assert($ro instanceof ResourceObject);
+        $this->assertSame(200, $ro->code);
+        $this->assertSame([], $ro->body);
+    }
 }

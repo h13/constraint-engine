@@ -7,6 +7,9 @@ namespace ConstraintEngine\App\Mcp;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use Mcp\Capability\Attribute\McpTool;
 
+use function implode;
+use function number_format;
+
 final class PatternViewer
 {
     public function __construct(

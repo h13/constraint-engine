@@ -23,6 +23,13 @@
   <descriptor id="stylisticCount" title="Stylistic分類の件数" def="https://schema.org/Integer"/>
   <descriptor id="periodStart" title="集計期間の開始日" def="https://schema.org/Date"/>
   <descriptor id="periodEnd" title="集計期間の終了日" def="https://schema.org/Date"/>
+  <descriptor id="recallCount" title="想起回数" def="https://schema.org/Integer"/>
+  <descriptor id="recallTarget" title="想起目標値" def="https://schema.org/Integer"/>
+  <descriptor id="discoveryCount" title="発見回数" def="https://schema.org/Integer"/>
+  <descriptor id="discoveryTarget" title="発見目標値" def="https://schema.org/Integer"/>
+  <descriptor id="frictionCount" title="摩擦回数" def="https://schema.org/Integer"/>
+  <descriptor id="frictionLimit" title="摩擦許容上限" def="https://schema.org/Integer"/>
+  <descriptor id="verdict" title="Go/No-Go判定 (go|no_go|pending)" def="https://schema.org/Text"/>
 
   <!-- Representations -->
   <descriptor id="CheckpointList" title="Checkpoint一覧">
@@ -48,6 +55,7 @@
     <descriptor href="#confidence"/>
     <descriptor href="#dateCreated"/>
     <descriptor href="#goCheckpointList"/>
+    <descriptor href="#doUpdateCheckpoint"/>
   </descriptor>
 
   <descriptor id="PatternDashboard" title="判断パターンダッシュボード">
@@ -57,6 +65,17 @@
     <descriptor href="#stylisticCount"/>
     <descriptor href="#periodStart"/>
     <descriptor href="#periodEnd"/>
+    <descriptor href="#goCheckpointList"/>
+  </descriptor>
+
+  <descriptor id="GoNoGo" title="Go/No-Go メトリクス">
+    <descriptor href="#recallCount"/>
+    <descriptor href="#recallTarget"/>
+    <descriptor href="#discoveryCount"/>
+    <descriptor href="#discoveryTarget"/>
+    <descriptor href="#frictionCount"/>
+    <descriptor href="#frictionLimit"/>
+    <descriptor href="#verdict"/>
     <descriptor href="#goCheckpointList"/>
   </descriptor>
 
@@ -80,9 +99,16 @@
     <descriptor href="#confidence"/>
   </descriptor>
 
+  <descriptor id="doUpdateCheckpoint" type="idempotent" rt="#Checkpoint" title="Checkpointの分類タグを更新">
+    <descriptor href="#checkpointId"/>
+    <descriptor href="#tag"/>
+  </descriptor>
+
   <descriptor id="goPatternDashboard" type="safe" rt="#PatternDashboard" title="判断パターンダッシュボードを表示">
     <descriptor href="#periodStart"/>
     <descriptor href="#periodEnd"/>
   </descriptor>
+
+  <descriptor id="goGoNoGo" type="safe" rt="#GoNoGo" title="Go/No-Goメトリクスを表示"/>
 
 </alps>

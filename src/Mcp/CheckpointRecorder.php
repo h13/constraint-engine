@@ -20,10 +20,10 @@ final class CheckpointRecorder
     /**
      * Record a checkpoint capturing how a human modified an AI proposal.
      *
-     * @param string $aiProposal The original AI-generated proposal
-     * @param string $humanFinal The human's final version after modifications
+     * @param string $aiProposal  The original AI-generated proposal
+     * @param string $humanFinal  The human's final version after modifications
      * @param string $taskContext Description of the task being worked on
-     * @param string $sessionId Unique session identifier
+     * @param string $sessionId   Unique session identifier
      *
      * @return string Confirmation message with classification result and checkpoint ID
      */

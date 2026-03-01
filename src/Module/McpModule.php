@@ -17,9 +17,7 @@ final class McpModule extends AbstractModule
         $this->bind(ClientInterface::class)->to(Client::class)->in(Scope::SINGLETON);
         $this->bind(DiffClassifier::class)->toConstructor(
             DiffClassifier::class,
-            [
-                'apiKey' => 'anthropic_api_key',
-            ],
+            ['apiKey' => 'anthropic_api_key'],
         );
         $this->bind()->annotatedWith('anthropic_api_key')->toInstance(
             $_ENV['ANTHROPIC_API_KEY'] ?? '',

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constraint Engine Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        h1 { font-size: 24px; margin-bottom: 24px; }
+        .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .card { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .card-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 4px; }
+        .card-value { font-size: 32px; font-weight: 700; }
+        .card-sub { font-size: 13px; color: #888; margin-top: 4px; }
+        .card--factual .card-value { color: #3b82f6; }
+        .card--strategic .card-value { color: #f59e0b; }
+        .card--stylistic .card-value { color: #10b981; }
+        .charts { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-bottom: 24px; }
+        .chart-box { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .chart-box h2 { font-size: 16px; margin-bottom: 12px; }
+        .period-selector { margin-bottom: 12px; display: flex; gap: 8px; align-items: center; }
+        .period-selector label { font-size: 13px; color: #666; }
+        .period-selector input { padding: 4px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; }
+        .period-selector button { padding: 4px 12px; border: 1px solid #3b82f6; background: #3b82f6; color: #fff; border-radius: 4px; cursor: pointer; font-size: 13px; }
+        .period-selector button:hover { background: #2563eb; }
+        .table-box { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .table-box h2 { font-size: 16px; margin-bottom: 12px; }
+        .filter-bar { margin-bottom: 12px; display: flex; gap: 8px; }
+        .filter-bar select { padding: 4px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th { text-align: left; padding: 8px 12px; border-bottom: 2px solid #eee; color: #888; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; }
+        tr:hover td { background: #fafafa; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .tag--factual { background: #dbeafe; color: #1d4ed8; }
+        .tag--strategic { background: #fef3c7; color: #b45309; }
+        .tag--stylistic { background: #d1fae5; color: #047857; }
+        .go-no-go { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 24px; }
+        .go-no-go h2 { font-size: 16px; margin-bottom: 12px; }
+        .metrics { display: flex; gap: 24px; align-items: center; }
+        .metric { flex: 1; }
+        .metric-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+        .metric-bar { height: 8px; background: #eee; border-radius: 4px; margin: 6px 0; overflow: hidden; }
+        .metric-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+        .metric-fill--recall { background: #3b82f6; }
+        .metric-fill--discovery { background: #10b981; }
+        .metric-fill--friction { background: #ef4444; }
+        .metric-text { font-size: 13px; font-weight: 600; }
+        .verdict { padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; min-width: 100px; }
+        .verdict--go { background: #d1fae5; color: #047857; }
+        .verdict--no_go { background: #fee2e2; color: #b91c1c; }
+        .verdict--pending { background: #fef3c7; color: #b45309; }
+        .empty { text-align: center; color: #999; padding: 40px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Constraint Engine Dashboard</h1>
+
+        <div class="cards" id="summary-cards">
+            <div class="card"><div class="card-label">Total</div><div class="card-value" id="total">-</div></div>
+            <div class="card card--factual"><div class="card-label">Factual</div><div class="card-value" id="factual">-</div><div class="card-sub" id="factual-pct"></div></div>
+            <div class="card card--strategic"><div class="card-label">Strategic</div><div class="card-value" id="strategic">-</div><div class="card-sub" id="strategic-pct"></div></div>
+            <div class="card card--stylistic"><div class="card-label">Stylistic</div><div class="card-value" id="stylistic">-</div><div class="card-sub" id="stylistic-pct"></div></div>
+        </div>
+
+        <div class="go-no-go" id="go-no-go-section">
+            <h2>Go/No-Go Status</h2>
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-label">Recall</div>
+                    <div class="metric-bar"><div class="metric-fill metric-fill--recall" id="recall-bar"></div></div>
+                    <div class="metric-text" id="recall-text">0 / 3</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Discovery</div>
+                    <div class="metric-bar"><div class="metric-fill metric-fill--discovery" id="discovery-bar"></div></div>
+                    <div class="metric-text" id="discovery-text">0 / 1</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Friction</div>
+                    <div class="metric-bar"><div class="metric-fill metric-fill--friction" id="friction-bar"></div></div>
+                    <div class="metric-text" id="friction-text">0 / 2</div>
+                </div>
+                <div class="verdict verdict--pending" id="verdict">PENDING</div>
+            </div>
+        </div>
+
+        <div class="charts">
+            <div class="chart-box">
+                <h2>Classification Distribution</h2>
+                <canvas id="donut-chart"></canvas>
+            </div>
+            <div class="chart-box">
+                <h2>Trend</h2>
+                <div class="period-selector">
+                    <label>From</label><input type="date" id="period-start">
+                    <label>To</label><input type="date" id="period-end">
+                    <button id="load-trend">Update</button>
+                </div>
+                <canvas id="trend-chart"></canvas>
+            </div>
+        </div>
+
+        <div class="table-box">
+            <h2>Recent Checkpoints</h2>
+            <div class="filter-bar">
+                <select id="tag-filter">
+                    <option value="">All Tags</option>
+                    <option value="factual">Factual</option>
+                    <option value="strategic">Strategic</option>
+                    <option value="stylistic">Stylistic</option>
+                </select>
+            </div>
+            <table>
+                <thead>
+                    <tr><th>ID</th><th>Session</th><th>Task</th><th>Tag</th><th>Confidence</th><th>Date</th></tr>
+                </thead>
+                <tbody id="checkpoint-table"></tbody>
+            </table>
+            <div class="empty" id="table-empty" style="display:none;">No checkpoints recorded yet.</div>
+        </div>
+    </div>
+
+    <script>
+        const API = window.location.origin;
+        const COLORS = { factual: '#3b82f6', strategic: '#f59e0b', stylistic: '#10b981' };
+        const TAG_CLASSES = { factual: 'tag--factual', strategic: 'tag--strategic', stylistic: 'tag--stylistic' };
+        let donutChart = null;
+        let trendChart = null;
+
+        function pct(n, total) {
+            return total > 0 ? (n / total * 100).toFixed(1) + '%' : '0%';
+        }
+
+        async function fetchJSON(path) {
+            const res = await fetch(API + path);
+            return res.json();
+        }
+
+        function setText(id, text) {
+            document.getElementById(id).textContent = text;
+        }
+
+        async function loadDashboard() {
+            const data = await fetchJSON('/pattern-dashboard');
+            const s = data.summary;
+            if (!s) {
+                setText('total', '0');
+                setText('factual', '0');
+                setText('strategic', '0');
+                setText('stylistic', '0');
+                return;
+            }
+            const total = parseInt(s.total, 10);
+            const factual = parseInt(s.factual_count, 10);
+            const strategic = parseInt(s.strategic_count, 10);
+            const stylistic = parseInt(s.stylistic_count, 10);
+            setText('total', String(total));
+            setText('factual', String(factual));
+            setText('factual-pct', pct(factual, total));
+            setText('strategic', String(strategic));
+            setText('strategic-pct', pct(strategic, total));
+            setText('stylistic', String(stylistic));
+            setText('stylistic-pct', pct(stylistic, total));
+
+            renderDonut(data.tagDistribution);
+        }
+
+        function renderDonut(dist) {
+            const labels = dist.map(function(d) { return d.tag; });
+            const values = dist.map(function(d) { return parseInt(d.count, 10); });
+            const colors = labels.map(function(l) { return COLORS[l] || '#999'; });
+
+            if (donutChart) donutChart.destroy();
+            donutChart = new Chart(document.getElementById('donut-chart'), {
+                type: 'doughnut',
+                data: { labels: labels, datasets: [{ data: values, backgroundColor: colors }] },
+                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            });
+        }
+
+        async function loadTrend() {
+            const start = document.getElementById('period-start').value;
+            const end = document.getElementById('period-end').value;
+            if (!start || !end) return;
+            const data = await fetchJSON('/pattern-dashboard?periodStart=' + encodeURIComponent(start) + '&periodEnd=' + encodeURIComponent(end));
+            renderTrend(data.trend || []);
+        }
+
+        function renderTrend(trend) {
+            var dateSet = {};
+            trend.forEach(function(t) { dateSet[t.date] = true; });
+            var dates = Object.keys(dateSet).sort();
+            var tags = ['factual', 'strategic', 'stylistic'];
+            var datasets = tags.map(function(tag) {
+                return {
+                    label: tag,
+                    data: dates.map(function(d) {
+                        var row = trend.find(function(t) { return t.date === d && t.tag === tag; });
+                        return row ? parseInt(row.count, 10) : 0;
+                    }),
+                    borderColor: COLORS[tag],
+                    backgroundColor: COLORS[tag] + '33',
+                    tension: 0.3,
+                    fill: true
+                };
+            });
+
+            if (trendChart) trendChart.destroy();
+            trendChart = new Chart(document.getElementById('trend-chart'), {
+                type: 'line',
+                data: { labels: dates, datasets: datasets },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        function createCell(text) {
+            var td = document.createElement('td');
+            td.textContent = text;
+            return td;
+        }
+
+        function createTagCell(tag) {
+            var td = document.createElement('td');
+            var span = document.createElement('span');
+            span.className = 'tag ' + (TAG_CLASSES[tag] || '');
+            span.textContent = tag;
+            td.appendChild(span);
+            return td;
+        }
+
+        async function loadCheckpoints(tag) {
+            var query = tag ? '?tag=' + encodeURIComponent(tag) : '';
+            var data = await fetchJSON('/checkpoints' + query);
+            var tbody = document.getElementById('checkpoint-table');
+            var empty = document.getElementById('table-empty');
+
+            // Clear existing rows
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+
+            if (!data || data.length === 0) {
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+
+            data.forEach(function(c) {
+                var tr = document.createElement('tr');
+                tr.appendChild(createCell(String(c.id)));
+                tr.appendChild(createCell(c.session_id));
+                tr.appendChild(createCell(c.task_context));
+                tr.appendChild(createTagCell(c.tag));
+                tr.appendChild(createCell(c.confidence));
+                tr.appendChild(createCell(c.date_created));
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function loadGoNoGo() {
+            try {
+                var data = await fetchJSON('/go-no-go');
+                var rc = data.recall_count, rt = data.recall_target;
+                var dc = data.discovery_count, dt = data.discovery_target;
+                var fc = data.friction_count, fl = data.friction_limit;
+                document.getElementById('recall-bar').style.width = Math.min(rc / rt * 100, 100) + '%';
+                setText('recall-text', rc + ' / ' + rt);
+                document.getElementById('discovery-bar').style.width = Math.min(dc / dt * 100, 100) + '%';
+                setText('discovery-text', dc + ' / ' + dt);
+                document.getElementById('friction-bar').style.width = Math.min(fc / fl * 100, 100) + '%';
+                setText('friction-text', fc + ' / ' + fl + ' limit');
+                var el = document.getElementById('verdict');
+                el.textContent = data.verdict.toUpperCase().replace('_', ' ');
+                el.className = 'verdict verdict--' + data.verdict;
+            } catch (e) {
+                // go-no-go endpoint may not be available yet
+            }
+        }
+
+        // Set default period to last 30 days
+        var now = new Date();
+        var thirtyDaysAgo = new Date(now.getTime() - 30 * 86400000);
+        document.getElementById('period-end').value = now.toISOString().slice(0, 10);
+        document.getElementById('period-start').value = thirtyDaysAgo.toISOString().slice(0, 10);
+
+        document.getElementById('load-trend').addEventListener('click', loadTrend);
+        document.getElementById('tag-filter').addEventListener('change', function(e) { loadCheckpoints(e.target.value); });
+
+        // Initial load
+        loadDashboard();
+        loadTrend();
+        loadCheckpoints('');
+        loadGoNoGo();
+    </script>
+</body>
+</html>

@@ -27,4 +27,8 @@ interface CheckpointQueryInterface
     /** @return array<array{tag: string, date: string, count: int}> */
     #[DbQuery('checkpoint_trend')]
     public function trend(string $periodStart, string $periodEnd): array;
+
+    /** @return array<array{id: int, session_id: string, task_context: string, ai_proposal: string, human_final: string, diff: string, tag: string, confidence: string, date_created: string}> */
+    #[DbQuery('checkpoint_filter')]
+    public function filter(string $tag, string $sessionId): array;
 }
