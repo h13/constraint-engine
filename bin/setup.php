@@ -19,6 +19,7 @@ if (str_starts_with($dsn, 'sqlite:')) {
 
     $pdo = new PDO($dsn);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->exec('PRAGMA foreign_keys = ON');
     $sqlFile = './var/sql/sqlite/create_checkpoint.sql';
 } elseif (str_starts_with($dsn, 'pgsql:')) {
     $pdo = new PDO($dsn, $user, $pass);
