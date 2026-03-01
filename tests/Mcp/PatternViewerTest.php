@@ -105,6 +105,57 @@ class PatternViewerTest extends TestCase
         $this->assertStringContainsString('pp)', $result);
     }
 
+    public function testComparePeriodsShowsNewWhenPreviousIsZero(): void
+    {
+        $query = $this->createMock(CheckpointQueryInterface::class);
+        $query->method('periodSummary')
+            ->willReturnMap([
+                [
+                    '2026-01-01',
+                    '2026-01-07',
+                    [
+                        'totalCheckpoints' => 5,
+                        'factualCount' => 3,
+                        'strategicCount' => 2,
+                        'stylisticCount' => 0,
+                    ],
+                ],
+                [
+                    '2025-12-25',
+                    '2025-12-31',
+                    [
+                        'totalCheckpoints' => 5,
+                        'factualCount' => 0,
+                        'strategicCount' => 5,
+                        'stylisticCount' => 0,
+                    ],
+                ],
+            ]);
+
+        $viewer = new PatternViewer($query, 'http://test:8080');
+        $result = $viewer->comparePeriods('2026-01-01', '2026-01-07', '2025-12-25', '2025-12-31');
+
+        $this->assertStringContainsString('(new)', $result);
+        $this->assertStringContainsString('(-)', $result);
+    }
+
+    public function testShowPatternIncludesDashboardUrl(): void
+    {
+        $query = $this->createMock(CheckpointQueryInterface::class);
+        $query->method('summary')->willReturn([
+            'totalCheckpoints' => 1,
+            'factualCount' => 1,
+            'strategicCount' => 0,
+            'stylisticCount' => 0,
+        ]);
+        $query->method('tagDistribution')->willReturn([]);
+
+        $viewer = new PatternViewer($query, 'http://example.com:9090');
+        $result = $viewer->showPattern();
+
+        $this->assertStringContainsString('http://example.com:9090/pattern-dashboard', $result);
+    }
+
     public function testShowImprovementRateNoData(): void
     {
         $query = $this->createMock(CheckpointQueryInterface::class);
