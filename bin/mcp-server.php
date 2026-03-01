@@ -31,7 +31,7 @@ $recallTracker = $injector->getInstance(RecallTracker::class);
 $templateSuggester = $injector->getInstance(TemplateSuggester::class);
 
 $server = Server::builder()
-    ->setServerInfo('constraint-engine', '0.4.7')
+    ->setServerInfo('constraint-engine', '0.4.8')
     ->addTool([$recorder, 'recordCheckpoint'], 'record_checkpoint')
     ->addTool([$quickRecorder, 'quickRecord'], 'quick_record')
     ->addTool([$viewer, 'showPattern'], 'show_pattern')
