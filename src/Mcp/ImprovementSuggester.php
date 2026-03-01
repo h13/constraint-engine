@@ -19,7 +19,6 @@ use const JSON_THROW_ON_ERROR;
 
 final class ImprovementSuggester
 {
-    private const string MODEL = 'claude-sonnet-4-5-20250929';
     private const string API_URL = 'https://api.anthropic.com/v1/messages';
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are an AI proposal improvement assistant. You have access to a history of past modifications that humans made to AI proposals.
@@ -39,6 +38,7 @@ PROMPT;
         private readonly CheckpointQueryInterface $query,
         private readonly ClientInterface $httpClient,
         private readonly string $apiKey,
+        private readonly string $model,
     ) {
     }
 
@@ -91,7 +91,7 @@ PROMPT;
     private function suggest(string $context): string
     {
         $body = json_encode([
-            'model' => self::MODEL,
+            'model' => $this->model,
             'max_tokens' => 500,
             'messages' => [
                 ['role' => 'user', 'content' => "Based on past patterns, suggest improvements for this proposal:\n\n{$context}"],

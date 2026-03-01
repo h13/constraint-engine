@@ -39,6 +39,7 @@ class CheckpointRecorderTest extends TestCase
         return new DiffClassifier(
             new Client(['handler' => HandlerStack::create($mock)]),
             'test-api-key',
+            'test-model',
         );
     }
 

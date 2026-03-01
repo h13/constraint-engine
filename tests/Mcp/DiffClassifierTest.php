@@ -49,7 +49,7 @@ class DiffClassifierTest extends TestCase
     {
         $mock = new MockHandler([]);
         $client = new Client(['handler' => HandlerStack::create($mock)]);
-        $classifier = new DiffClassifier($client, '');
+        $classifier = new DiffClassifier($client, '', 'test-model');
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('ANTHROPIC_API_KEY is not configured');
@@ -62,7 +62,7 @@ class DiffClassifierTest extends TestCase
             new Response(500, [], 'Internal Server Error'),
         ]);
         $client = new Client(['handler' => HandlerStack::create($mock)]);
-        $classifier = new DiffClassifier($client, 'test-key');
+        $classifier = new DiffClassifier($client, 'test-key', 'test-model');
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Anthropic API request failed');
@@ -75,7 +75,7 @@ class DiffClassifierTest extends TestCase
             new Response(200, [], '{"content": []}'),
         ]);
         $client = new Client(['handler' => HandlerStack::create($mock)]);
-        $classifier = new DiffClassifier($client, 'test-key');
+        $classifier = new DiffClassifier($client, 'test-key', 'test-model');
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Unexpected Anthropic API response structure');
@@ -100,7 +100,7 @@ class DiffClassifierTest extends TestCase
             new Response(200, ['Content-Type' => 'application/json'], $responseBody),
         ]);
         $client = new Client(['handler' => HandlerStack::create($mock)]);
-        $classifier = new DiffClassifier($client, 'test-key');
+        $classifier = new DiffClassifier($client, 'test-key', 'test-model');
 
         $result = $classifier->classify('some diff');
         $this->assertSame('stylistic', $result['tag']);
@@ -126,6 +126,6 @@ class DiffClassifierTest extends TestCase
 
         $client = new Client(['handler' => HandlerStack::create($mock)]);
 
-        return new DiffClassifier($client, 'test-api-key');
+        return new DiffClassifier($client, 'test-api-key', 'test-model');
     }
 }

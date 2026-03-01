@@ -19,7 +19,6 @@ use const JSON_THROW_ON_ERROR;
 
 final class SessionAnalyzer
 {
-    private const string MODEL = 'claude-sonnet-4-5-20250929';
     private const string API_URL = 'https://api.anthropic.com/v1/messages';
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are an AI-human collaboration pattern analyst. Given a list of checkpoints from a session, analyze the patterns and provide actionable insights in Japanese.
@@ -36,6 +35,7 @@ PROMPT;
         private readonly CheckpointQueryInterface $query,
         private readonly ClientInterface $httpClient,
         private readonly string $apiKey,
+        private readonly string $model,
     ) {
     }
 
@@ -78,7 +78,7 @@ PROMPT;
     private function analyze(string $summary): string
     {
         $body = json_encode([
-            'model' => self::MODEL,
+            'model' => $this->model,
             'max_tokens' => 500,
             'messages' => [
                 ['role' => 'user', 'content' => "Analyze this session's modification patterns:\n\n{$summary}"],

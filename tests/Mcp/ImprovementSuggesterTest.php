@@ -53,7 +53,7 @@ class ImprovementSuggesterTest extends TestCase
 
         $client = new Client(['handler' => HandlerStack::create($mock)]);
 
-        return new ImprovementSuggester($this->query, $client, 'test-api-key');
+        return new ImprovementSuggester($this->query, $client, 'test-api-key', 'test-model');
     }
 
     public function testSuggestImprovementsNoData(): void

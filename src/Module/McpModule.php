@@ -21,33 +21,19 @@ final class McpModule extends AbstractModule
     protected function configure(): void
     {
         $this->bind(ClientInterface::class)->to(Client::class)->in(Scope::SINGLETON);
-        $this->bind(DiffClassifier::class)->toConstructor(
-            DiffClassifier::class,
-            ['apiKey' => 'anthropic_api_key'],
-        );
         $this->bind()->annotatedWith('anthropic_api_key')->toInstance(
             $_ENV['ANTHROPIC_API_KEY'] ?? '',
         );
-        $this->bind(DescriptionParser::class)->toConstructor(
-            DescriptionParser::class,
-            ['apiKey' => 'anthropic_api_key'],
+        $this->bind()->annotatedWith('anthropic_model')->toInstance(
+            $_ENV['ANTHROPIC_MODEL'] ?? 'claude-sonnet-4-5-20250929',
         );
-        $this->bind(SessionAnalyzer::class)->toConstructor(
-            SessionAnalyzer::class,
-            ['apiKey' => 'anthropic_api_key'],
-        );
-        $this->bind(ImprovementSuggester::class)->toConstructor(
-            ImprovementSuggester::class,
-            ['apiKey' => 'anthropic_api_key'],
-        );
-        $this->bind(InsightGenerator::class)->toConstructor(
-            InsightGenerator::class,
-            ['apiKey' => 'anthropic_api_key'],
-        );
-        $this->bind(TemplateSuggester::class)->toConstructor(
-            TemplateSuggester::class,
-            ['apiKey' => 'anthropic_api_key'],
-        );
+        $apiBindings = ['apiKey' => 'anthropic_api_key', 'model' => 'anthropic_model'];
+        $this->bind(DiffClassifier::class)->toConstructor(DiffClassifier::class, $apiBindings);
+        $this->bind(DescriptionParser::class)->toConstructor(DescriptionParser::class, $apiBindings);
+        $this->bind(SessionAnalyzer::class)->toConstructor(SessionAnalyzer::class, $apiBindings);
+        $this->bind(ImprovementSuggester::class)->toConstructor(ImprovementSuggester::class, $apiBindings);
+        $this->bind(InsightGenerator::class)->toConstructor(InsightGenerator::class, $apiBindings);
+        $this->bind(TemplateSuggester::class)->toConstructor(TemplateSuggester::class, $apiBindings);
         $this->bind(SessionManager::class)->in(Scope::SINGLETON);
     }
 }

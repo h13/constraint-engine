@@ -53,7 +53,7 @@ class InsightGeneratorTest extends TestCase
 
         $client = new Client(['handler' => HandlerStack::create($mock)]);
 
-        return new InsightGenerator($this->query, $client, 'test-api-key');
+        return new InsightGenerator($this->query, $client, 'test-api-key', 'test-model');
     }
 
     public function testGenerateInsightsInsufficientData(): void

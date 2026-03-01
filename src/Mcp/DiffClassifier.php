@@ -17,7 +17,6 @@ use const JSON_THROW_ON_ERROR;
 
 final class DiffClassifier
 {
-    private const string MODEL = 'claude-sonnet-4-5-20250929';
     private const string API_URL = 'https://api.anthropic.com/v1/messages';
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are a diff classifier. Given a diff between an AI proposal and a human's final version, classify the change into exactly one category.
@@ -33,6 +32,7 @@ PROMPT;
     public function __construct(
         private readonly ClientInterface $httpClient,
         private readonly string $apiKey,
+        private readonly string $model,
     ) {
     }
 
@@ -44,7 +44,7 @@ PROMPT;
         }
 
         $body = json_encode([
-            'model' => self::MODEL,
+            'model' => $this->model,
             'max_tokens' => 100,
             'messages' => [
                 ['role' => 'user', 'content' => "Classify this diff:\n\n{$diff}"],

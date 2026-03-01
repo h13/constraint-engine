@@ -20,7 +20,6 @@ use const JSON_THROW_ON_ERROR;
 
 final class InsightGenerator
 {
-    private const string MODEL = 'claude-sonnet-4-5-20250929';
     private const string API_URL = 'https://api.anthropic.com/v1/messages';
     private const int MIN_CHECKPOINTS = 10;
     private const string SYSTEM_PROMPT = <<<'PROMPT'
@@ -39,6 +38,7 @@ PROMPT;
         private readonly CheckpointQueryInterface $query,
         private readonly ClientInterface $httpClient,
         private readonly string $apiKey,
+        private readonly string $model,
     ) {
     }
 
@@ -102,7 +102,7 @@ PROMPT;
     private function analyze(string $context): string
     {
         $body = json_encode([
-            'model' => self::MODEL,
+            'model' => $this->model,
             'max_tokens' => 600,
             'messages' => [
                 ['role' => 'user', 'content' => "Analyze these checkpoint patterns and generate insights:\n\n{$context}"],

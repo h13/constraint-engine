@@ -16,7 +16,6 @@ use const JSON_THROW_ON_ERROR;
 
 final class DescriptionParser
 {
-    private const string MODEL = 'claude-sonnet-4-5-20250929';
     private const string API_URL = 'https://api.anthropic.com/v1/messages';
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are a structured data extractor for an AI-human collaboration tracking system.
@@ -37,6 +36,7 @@ PROMPT;
     public function __construct(
         private readonly ClientInterface $httpClient,
         private readonly string $apiKey,
+        private readonly string $model,
     ) {
     }
 
@@ -48,7 +48,7 @@ PROMPT;
         }
 
         $body = json_encode([
-            'model' => self::MODEL,
+            'model' => $this->model,
             'max_tokens' => 300,
             'messages' => [
                 ['role' => 'user', 'content' => "Extract structured data from this description:\n\n{$description}"],

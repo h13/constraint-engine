@@ -53,7 +53,7 @@ class SessionAnalyzerTest extends TestCase
 
         $client = new Client(['handler' => HandlerStack::create($mock)]);
 
-        return new SessionAnalyzer($this->query, $client, 'test-api-key');
+        return new SessionAnalyzer($this->query, $client, 'test-api-key', 'test-model');
     }
 
     public function testAnalyzeSessionNotFound(): void

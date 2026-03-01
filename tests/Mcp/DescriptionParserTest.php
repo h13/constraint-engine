@@ -97,6 +97,7 @@ class DescriptionParserTest extends TestCase
         return new DescriptionParser(
             new Client(['handler' => HandlerStack::create($mock)]),
             'test-api-key',
+            'test-model',
         );
     }
 }
