@@ -8,7 +8,6 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use JsonException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
@@ -143,7 +142,8 @@ class AnthropicClientTest extends TestCase
 
         $client = new AnthropicClient($http, 'sk-test', 'model');
 
-        $this->expectException(JsonException::class);
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Anthropic API returned invalid JSON');
         $client->complete('sys', 'usr', 100);
     }
 }

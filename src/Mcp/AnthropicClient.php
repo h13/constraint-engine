@@ -7,6 +7,7 @@ namespace ConstraintEngine\App\Mcp;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use JsonException;
 use RuntimeException;
 
 use function json_decode;
@@ -68,7 +69,12 @@ final class AnthropicClient implements AnthropicClientInterface
             throw new RuntimeException('Anthropic API error: HTTP ' . $response->getStatusCode() . ' — ' . $errorBody);
         }
 
-        $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        try {
+            $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw new RuntimeException('Anthropic API returned invalid JSON: ' . $e->getMessage(), 0, $e);
+        }
+
         if (! isset($responseBody['content'][0]['text'])) {
             throw new RuntimeException('Unexpected Anthropic API response structure');
         }
