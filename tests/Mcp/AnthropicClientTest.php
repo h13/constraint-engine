@@ -120,7 +120,7 @@ class AnthropicClientTest extends TestCase
         $client = new AnthropicClient($http, 'sk-test', 'model');
 
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Anthropic API error: HTTP 429');
+        $this->expectExceptionMessage('Anthropic API error: HTTP 429 — {"error": "rate limited"}');
         $client->complete('sys', 'usr', 100);
     }
 

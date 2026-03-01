@@ -63,7 +63,9 @@ final class AnthropicClient implements AnthropicClientInterface
         }
 
         if ($response->getStatusCode() !== 200) {
-            throw new RuntimeException('Anthropic API error: HTTP ' . $response->getStatusCode());
+            $errorBody = (string) $response->getBody();
+
+            throw new RuntimeException('Anthropic API error: HTTP ' . $response->getStatusCode() . ' — ' . $errorBody);
         }
 
         $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
