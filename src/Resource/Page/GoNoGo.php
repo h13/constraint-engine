@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Resource\Page;
 
+use BEAR\Resource\Annotation\Link;
 use BEAR\Resource\ResourceObject;
 use ConstraintEngine\App\Query\RecallQueryInterface;
 
@@ -18,6 +19,7 @@ class GoNoGo extends ResourceObject
     ) {
     }
 
+    #[Link(rel: 'checkpointList', href: '/checkpoints')]
     public function onGet(): static
     {
         $summary = $this->query->summary();

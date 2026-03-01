@@ -6,6 +6,7 @@ namespace ConstraintEngine\App\Resource\Page;
 
 use Be\Framework\BecomingInterface;
 use Be\Framework\Exception\SemanticVariableException;
+use BEAR\Resource\Annotation\Link;
 use BEAR\Resource\Code;
 use BEAR\Resource\ResourceObject;
 use ConstraintEngine\App\Being\RecordedCheckpoint;
@@ -22,6 +23,8 @@ class Checkpoints extends ResourceObject
     ) {
     }
 
+    #[Link(rel: 'checkpoint', href: '/checkpoints/{id}')]
+    #[Link(rel: 'patternDashboard', href: '/pattern-dashboard')]
     public function onGet(string $tag = '', string $sessionId = ''): static
     {
         $this->body = $tag !== '' || $sessionId !== ''
@@ -31,6 +34,7 @@ class Checkpoints extends ResourceObject
         return $this;
     }
 
+    #[Link(rel: 'checkpoint', href: '/checkpoints/{id}')]
     public function onPost(
         string $sessionId,
         string $taskContext,

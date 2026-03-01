@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Resource\Page;
 
+use BEAR\Resource\Annotation\Link;
 use BEAR\Resource\Code;
 use BEAR\Resource\ResourceObject;
 use ConstraintEngine\App\Query\CheckpointCommandInterface;
@@ -21,6 +22,7 @@ class Checkpoint extends ResourceObject
     ) {
     }
 
+    #[Link(rel: 'checkpointList', href: '/checkpoints')]
     public function onGet(int $id): static
     {
         $item = $this->query->item($id);
@@ -36,6 +38,7 @@ class Checkpoint extends ResourceObject
         return $this;
     }
 
+    #[Link(rel: 'checkpointList', href: '/checkpoints')]
     public function onPut(int $id, string $tag): static
     {
         $item = $this->query->item($id);

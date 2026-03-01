@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Resource\Page;
 
+use BEAR\Resource\Annotation\Link;
 use BEAR\Resource\ResourceObject;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 
@@ -14,6 +15,7 @@ class PatternDashboard extends ResourceObject
     ) {
     }
 
+    #[Link(rel: 'checkpointList', href: '/checkpoints')]
     public function onGet(
         string $periodStart = '',
         string $periodEnd = '',

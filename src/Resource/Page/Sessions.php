@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Resource\Page;
 
+use BEAR\Resource\Annotation\Link;
 use BEAR\Resource\ResourceObject;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 
@@ -14,6 +15,7 @@ class Sessions extends ResourceObject
     ) {
     }
 
+    #[Link(rel: 'sessionAnalysis', href: '/sessions/{session_id}/analysis')]
     public function onGet(): static
     {
         $this->body = [
