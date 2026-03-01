@@ -11,7 +11,7 @@ use function in_array;
 
 final class Tag
 {
-    private const array VALID = ['factual', 'strategic', 'stylistic'];
+    public const array VALID = ['factual', 'strategic', 'stylistic'];
 
     #[Validate]
     public function validate(string $tag): void
