@@ -11,3 +11,4 @@ SELECT
 FROM checkpoint
 WHERE tag = 'stylistic'
 ORDER BY date_created DESC
+LIMIT 100
