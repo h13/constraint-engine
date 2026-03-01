@@ -1,12 +1,12 @@
 SELECT
-    CAST(date_created AS DATE) as date,
-    COUNT(*) as total,
-    SUM(CASE WHEN tag = 'factual' THEN 1 ELSE 0 END) as factual_count,
+    CAST(date_created AS DATE) as "date",
+    COUNT(*) as "total",
+    SUM(CASE WHEN tag = 'factual' THEN 1 ELSE 0 END) as "factualCount",
     CASE WHEN COUNT(*) > 0
         THEN ROUND(CAST(SUM(CASE WHEN tag = 'factual' THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) * 100, 1)
         ELSE 0
-    END as factual_rate
+    END as "factualRate"
 FROM checkpoint
 WHERE date_created BETWEEN :periodStart AND :periodEnd
 GROUP BY CAST(date_created AS DATE)
-ORDER BY date
+ORDER BY date_created

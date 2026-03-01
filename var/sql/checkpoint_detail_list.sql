@@ -9,5 +9,4 @@ SELECT
     confidence,
     date_created as "dateCreated"
 FROM checkpoint
-WHERE session_id = :sessionId
-ORDER BY date_created ASC
+ORDER BY date_created DESC
