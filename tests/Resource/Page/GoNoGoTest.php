@@ -16,12 +16,12 @@ class GoNoGoTest extends ResourceTestCase
         $ro = $this->resource->get('page://self/go-no-go');
         assert($ro instanceof ResourceObject);
         $this->assertSame(200, $ro->code);
-        $this->assertSame(0, $ro->body['recall_count']);
-        $this->assertSame(3, $ro->body['recall_target']);
-        $this->assertSame(0, $ro->body['discovery_count']);
-        $this->assertSame(1, $ro->body['discovery_target']);
-        $this->assertSame(0, $ro->body['friction_count']);
-        $this->assertSame(2, $ro->body['friction_limit']);
+        $this->assertSame(0, $ro->body['recallCount']);
+        $this->assertSame(3, $ro->body['recallTarget']);
+        $this->assertSame(0, $ro->body['discoveryCount']);
+        $this->assertSame(1, $ro->body['discoveryTarget']);
+        $this->assertSame(0, $ro->body['frictionCount']);
+        $this->assertSame(2, $ro->body['frictionLimit']);
         $this->assertSame('pending', $ro->body['verdict']);
     }
 
@@ -34,9 +34,9 @@ class GoNoGoTest extends ResourceTestCase
         $ro = $this->resource->get('page://self/go-no-go');
         assert($ro instanceof ResourceObject);
         $this->assertSame('go', $ro->body['verdict']);
-        $this->assertSame(3, $ro->body['recall_count']);
-        $this->assertSame(1, $ro->body['discovery_count']);
-        $this->assertSame(0, $ro->body['friction_count']);
+        $this->assertSame(3, $ro->body['recallCount']);
+        $this->assertSame(1, $ro->body['discoveryCount']);
+        $this->assertSame(0, $ro->body['frictionCount']);
     }
 
     public function testOnGetNoGoVerdict(): void

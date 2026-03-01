@@ -23,7 +23,7 @@ class CheckpointTest extends ResourceTestCase
             'confidence' => 'estimated',
         ]);
         assert($posted instanceof ResourceObject);
-        $id = $posted->body['id'];
+        $id = $posted->body['checkpointId'];
 
         $ro = $this->resource->get('page://self/checkpoint', ['id' => $id]);
         assert($ro instanceof ResourceObject);
@@ -50,7 +50,7 @@ class CheckpointTest extends ResourceTestCase
             'confidence' => 'estimated',
         ]);
         assert($posted instanceof ResourceObject);
-        $id = $posted->body['id'];
+        $id = $posted->body['checkpointId'];
 
         $ro = $this->resource->put('page://self/checkpoint', ['id' => $id, 'tag' => 'strategic']);
         assert($ro instanceof ResourceObject);
@@ -77,7 +77,7 @@ class CheckpointTest extends ResourceTestCase
             'confidence' => 'estimated',
         ]);
         assert($posted instanceof ResourceObject);
-        $id = $posted->body['id'];
+        $id = $posted->body['checkpointId'];
 
         $ro = $this->resource->put('page://self/checkpoint', ['id' => $id, 'tag' => 'invalid']);
         assert($ro instanceof ResourceObject);

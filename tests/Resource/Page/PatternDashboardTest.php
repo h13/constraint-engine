@@ -43,7 +43,7 @@ class PatternDashboardTest extends ResourceTestCase
         $ro = $this->resource->get('page://self/pattern-dashboard');
         assert($ro instanceof ResourceObject);
         $this->assertSame(200, $ro->code);
-        $this->assertEquals(2, $ro->body['summary']['total']);
+        $this->assertEquals(2, $ro->body['summary']['totalCheckpoints']);
         $this->assertCount(2, $ro->body['tagDistribution']);
     }
 

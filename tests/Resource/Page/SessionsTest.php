@@ -58,7 +58,7 @@ class SessionsTest extends ResourceTestCase
         $sessions = $ro->body['sessions'];
         $sess001 = null;
         foreach ($sessions as $s) {
-            if ($s['session_id'] !== 'sess-001') {
+            if ($s['sessionId'] !== 'sess-001') {
                 continue;
             }
 
@@ -66,8 +66,8 @@ class SessionsTest extends ResourceTestCase
         }
 
         $this->assertNotNull($sess001);
-        $this->assertEquals(2, $sess001['checkpoint_count']);
-        $this->assertEquals(1, $sess001['factual_count']);
-        $this->assertEquals(1, $sess001['strategic_count']);
+        $this->assertEquals(2, $sess001['checkpointCount']);
+        $this->assertEquals(1, $sess001['factualCount']);
+        $this->assertEquals(1, $sess001['strategicCount']);
     }
 }

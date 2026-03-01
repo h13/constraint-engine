@@ -61,11 +61,11 @@ class TeamDashboardTest extends ResourceTestCase
         $alice = null;
         $bob = null;
         foreach ($ro->body['members'] as $member) {
-            if ($member['user_id'] === 'alice') {
+            if ($member['userId'] === 'alice') {
                 $alice = $member;
             }
 
-            if ($member['user_id'] !== 'bob') {
+            if ($member['userId'] !== 'bob') {
                 continue;
             }
 
@@ -73,12 +73,12 @@ class TeamDashboardTest extends ResourceTestCase
         }
 
         $this->assertNotNull($alice);
-        $this->assertEquals(2, $alice['checkpoint_count']);
-        $this->assertEquals(1, $alice['factual_count']);
-        $this->assertEquals(1, $alice['strategic_count']);
+        $this->assertEquals(2, $alice['checkpointCount']);
+        $this->assertEquals(1, $alice['factualCount']);
+        $this->assertEquals(1, $alice['strategicCount']);
 
         $this->assertNotNull($bob);
-        $this->assertEquals(1, $bob['checkpoint_count']);
-        $this->assertEquals(1, $bob['stylistic_count']);
+        $this->assertEquals(1, $bob['checkpointCount']);
+        $this->assertEquals(1, $bob['stylisticCount']);
     }
 }

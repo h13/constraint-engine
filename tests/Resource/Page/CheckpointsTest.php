@@ -160,7 +160,7 @@ class CheckpointsTest extends ResourceTestCase
         assert($ro instanceof ResourceObject);
         $this->assertSame(200, $ro->code);
         $this->assertCount(1, $ro->body);
-        $this->assertSame('session-A', $ro->body[0]['session_id']);
+        $this->assertSame('session-A', $ro->body[0]['sessionId']);
     }
 
     public function testFilterByTagAndSessionId(): void
@@ -189,7 +189,7 @@ class CheckpointsTest extends ResourceTestCase
         $this->assertSame(200, $ro->code);
         $this->assertCount(1, $ro->body);
         $this->assertSame('factual', $ro->body[0]['tag']);
-        $this->assertSame('session-A', $ro->body[0]['session_id']);
+        $this->assertSame('session-A', $ro->body[0]['sessionId']);
     }
 
     public function testFilterNoResults(): void

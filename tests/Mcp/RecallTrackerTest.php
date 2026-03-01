@@ -43,9 +43,9 @@ class RecallTrackerTest extends TestCase
             'tag' => 'factual',
             'confidence' => 'estimated',
         ]);
-        assert(isset($ro->body['id']));
+        assert(isset($ro->body['checkpointId']));
 
-        return (int) $ro->body['id'];
+        return (int) $ro->body['checkpointId'];
     }
 
     public function testRecordRecall(): void
