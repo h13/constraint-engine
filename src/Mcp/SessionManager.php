@@ -11,6 +11,7 @@ use function date;
 use function implode;
 use function random_bytes;
 use function sprintf;
+use function trim;
 
 final class SessionManager
 {
@@ -32,6 +33,10 @@ final class SessionManager
     #[McpTool(name: 'start_session')]
     public function startSession(string $taskContext, string $userId = 'default'): string
     {
+        if (trim($taskContext) === '') {
+            return 'Error: taskContext cannot be empty.';
+        }
+
         if ($this->activeSessionId !== null) {
             return "Error: Session '{$this->activeSessionId}' is already active. End it first with end_session.";
         }
