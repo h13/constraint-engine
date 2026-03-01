@@ -9,6 +9,7 @@ use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use ConstraintEngine\App\Query\RecallCommandInterface;
 use ConstraintEngine\App\Query\RecallQueryInterface;
 use Mcp\Capability\Attribute\McpTool;
+use PDOException;
 
 use function implode;
 use function strtoupper;
@@ -99,7 +100,11 @@ final class RecallTracker
             return "Error: Checkpoint #{$checkpointId} not found.";
         }
 
-        $this->command->add($checkpointId, $type, $note);
+        try {
+            $this->command->add($checkpointId, $type, $note);
+        } catch (PDOException $e) {
+            return 'Error: Failed to record ' . $type . ' — ' . $e->getMessage();
+        }
 
         return ucfirst($type) . " recorded for checkpoint #{$checkpointId}.";
     }
