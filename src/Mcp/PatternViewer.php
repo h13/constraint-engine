@@ -6,6 +6,7 @@ namespace ConstraintEngine\App\Mcp;
 
 use ConstraintEngine\App\DateHelper;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
+use InvalidArgumentException;
 use Mcp\Capability\Attribute\McpTool;
 use Ray\Di\Di\Named;
 
@@ -90,8 +91,13 @@ final class PatternViewer
             $previousEnd = date('Y-m-d', strtotime('-8 days'));
         }
 
-        $currentEndExcl = DateHelper::nextDay($currentEnd);
-        $previousEndExcl = DateHelper::nextDay($previousEnd);
+        try {
+            $currentEndExcl = DateHelper::nextDay($currentEnd);
+            $previousEndExcl = DateHelper::nextDay($previousEnd);
+        } catch (InvalidArgumentException) {
+            return 'Error: Invalid date format. Use YYYY-MM-DD.';
+        }
+
         $current = $this->query->periodSummary($currentStart, $currentEndExcl);
         $previous = $this->query->periodSummary($previousStart, $previousEndExcl);
 
@@ -147,7 +153,13 @@ final class PatternViewer
             $periodEnd = date('Y-m-d');
         }
 
-        $rates = $this->query->factualRate($periodStart, DateHelper::nextDay($periodEnd));
+        try {
+            $endExcl = DateHelper::nextDay($periodEnd);
+        } catch (InvalidArgumentException) {
+            return 'Error: Invalid date format. Use YYYY-MM-DD.';
+        }
+
+        $rates = $this->query->factualRate($periodStart, $endExcl);
         if ($rates === []) {
             return "No checkpoints found in period {$periodStart} ~ {$periodEnd}.";
         }

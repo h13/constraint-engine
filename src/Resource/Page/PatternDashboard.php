@@ -8,6 +8,7 @@ use BEAR\Resource\Annotation\Link;
 use BEAR\Resource\ResourceObject;
 use ConstraintEngine\App\DateHelper;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
+use InvalidArgumentException;
 
 class PatternDashboard extends ResourceObject
 {
@@ -23,7 +24,15 @@ class PatternDashboard extends ResourceObject
         string $compareStart = '',
         string $compareEnd = '',
     ): static {
-        $endExcl = $periodEnd !== '' ? DateHelper::nextDay($periodEnd) : '';
+        try {
+            $endExcl = $periodEnd !== '' ? DateHelper::nextDay($periodEnd) : '';
+        } catch (InvalidArgumentException) {
+            $this->code = 400;
+            $this->body = ['error' => 'Invalid periodEnd date format. Use YYYY-MM-DD.'];
+
+            return $this;
+        }
+
         $this->body = [
             'summary' => $this->query->summary(),
             'tagDistribution' => $this->query->tagDistribution(),
@@ -50,9 +59,13 @@ class PatternDashboard extends ResourceObject
             return null;
         }
 
-        return [
-            'current' => $this->query->periodSummary($periodStart, DateHelper::nextDay($periodEnd)),
-            'previous' => $this->query->periodSummary($compareStart, DateHelper::nextDay($compareEnd)),
-        ];
+        try {
+            return [
+                'current' => $this->query->periodSummary($periodStart, DateHelper::nextDay($periodEnd)),
+                'previous' => $this->query->periodSummary($compareStart, DateHelper::nextDay($compareEnd)),
+            ];
+        } catch (InvalidArgumentException) {
+            return null;
+        }
     }
 }
