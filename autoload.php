@@ -323,6 +323,8 @@ require __DIR__ . '/vendor/bear/aura-router-module/src/Provide/Router/Annotation
 require __DIR__ . '/vendor/koriym/semantic-logger/src/SemanticLoggerInterface.php';
 require __DIR__ . '/vendor/koriym/semantic-logger/src/SemanticLogger.php';
 require __DIR__ . '/vendor/be-framework/be/src/Module/BeModule.php';
+require __DIR__ . '/src/Semantic/Tag.php';
+require __DIR__ . '/vendor/be-framework/be/src/Attribute/Validate.php';
 require __DIR__ . '/src/Module/McpModule.php';
 require __DIR__ . '/src/Mcp/SessionManager.php';
 require __DIR__ . '/vendor/mcp/sdk/src/Capability/Attribute/McpTool.php';
