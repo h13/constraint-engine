@@ -8,7 +8,7 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface RecallQueryInterface
 {
-    /** @return array{recall_count: int, discovery_count: int, friction_count: int}|null */
+    /** @return array{recallCount: int, discoveryCount: int, frictionCount: int}|null */
     #[DbQuery('recall_summary', type: 'row')]
     public function summary(): array|null;
 }

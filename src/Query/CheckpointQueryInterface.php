@@ -8,15 +8,15 @@ use Ray\MediaQuery\Annotation\DbQuery;
 
 interface CheckpointQueryInterface
 {
-    /** @return array<array{id: int, session_id: string, task_context: string, ai_proposal: string, human_final: string, diff: string, tag: string, confidence: string, date_created: string}> */
+    /** @return array<array{checkpointId: int, sessionId: string, taskContext: string, tag: string, confidence: string, dateCreated: string}> */
     #[DbQuery('checkpoint_list')]
     public function list(): array;
 
-    /** @return array{id: int, session_id: string, task_context: string, ai_proposal: string, human_final: string, diff: string, tag: string, confidence: string, date_created: string}|null */
+    /** @return array{checkpointId: int, sessionId: string, taskContext: string, aiProposal: string, humanFinal: string, diff: string, tag: string, confidence: string, dateCreated: string}|null */
     #[DbQuery('checkpoint_item', type: 'row')]
     public function item(int $id): array|null;
 
-    /** @return array{total: int, factual_count: int, strategic_count: int, stylistic_count: int}|null */
+    /** @return array{totalCheckpoints: int, factualCount: int, strategicCount: int, stylisticCount: int}|null */
     #[DbQuery('checkpoint_summary', type: 'row')]
     public function summary(): array|null;
 
@@ -28,35 +28,39 @@ interface CheckpointQueryInterface
     #[DbQuery('checkpoint_trend')]
     public function trend(string $periodStart, string $periodEnd): array;
 
-    /** @return array<array{id: int, session_id: string, task_context: string, ai_proposal: string, human_final: string, diff: string, tag: string, confidence: string, date_created: string}> */
+    /** @return array<array{checkpointId: int, sessionId: string, taskContext: string, tag: string, confidence: string, dateCreated: string}> */
     #[DbQuery('checkpoint_filter')]
     public function filter(string $tag, string $sessionId): array;
 
-    /** @return array<array{session_id: string, task_context: string, checkpoint_count: int, factual_count: int, strategic_count: int, stylistic_count: int, first_checkpoint: string, last_checkpoint: string}> */
+    /** @return array<array{sessionId: string, taskContext: string, checkpointCount: int, factualCount: int, strategicCount: int, stylisticCount: int, firstCheckpoint: string, lastCheckpoint: string}> */
     #[DbQuery('session_list')]
     public function sessionList(): array;
 
-    /** @return array<array{id: int, session_id: string, task_context: string, ai_proposal: string, human_final: string, diff: string, tag: string, confidence: string, date_created: string}> */
+    /** @return array<array{checkpointId: int, sessionId: string, taskContext: string, aiProposal: string, humanFinal: string, diff: string, tag: string, confidence: string, dateCreated: string}> */
     #[DbQuery('session_analysis')]
     public function sessionAnalysis(string $sessionId): array;
 
-    /** @return array{session_id: string, task_context: string, checkpoint_count: int, factual_count: int, strategic_count: int, stylistic_count: int}|null */
+    /** @return array{sessionId: string, taskContext: string, checkpointCount: int, factualCount: int, strategicCount: int, stylisticCount: int}|null */
     #[DbQuery('session_analysis_summary', type: 'row')]
     public function sessionAnalysisSummary(string $sessionId): array|null;
 
-    /** @return array{total: int, factual_count: int, strategic_count: int, stylistic_count: int}|null */
+    /** @return array{totalCheckpoints: int, factualCount: int, strategicCount: int, stylisticCount: int}|null */
     #[DbQuery('checkpoint_period_summary', type: 'row')]
     public function periodSummary(string $periodStart, string $periodEnd): array|null;
 
-    /** @return array<array{date: string, total: int, factual_count: int, factual_rate: float}> */
+    /** @return array<array{date: string, total: int, factualCount: int, factualRate: float}> */
     #[DbQuery('checkpoint_factual_rate')]
     public function factualRate(string $periodStart, string $periodEnd): array;
 
-    /** @return array<array{user_id: string, checkpoint_count: int, factual_count: int, strategic_count: int, stylistic_count: int, first_checkpoint: string, last_checkpoint: string}> */
+    /** @return array<array{userId: string, checkpointCount: int, factualCount: int, strategicCount: int, stylisticCount: int, firstCheckpoint: string, lastCheckpoint: string}> */
     #[DbQuery('team_summary')]
     public function teamSummary(): array;
 
-    /** @return array<array{id: int, session_id: string, task_context: string, ai_proposal: string, human_final: string, diff: string, tag: string, confidence: string, date_created: string}> */
+    /** @return array<array{checkpointId: int, sessionId: string, taskContext: string, aiProposal: string, humanFinal: string, diff: string, tag: string, confidence: string, dateCreated: string}> */
+    #[DbQuery('checkpoint_detail_list')]
+    public function detailList(): array;
+
+    /** @return array<array{checkpointId: int, sessionId: string, taskContext: string, aiProposal: string, humanFinal: string, diff: string, tag: string, confidence: string, dateCreated: string}> */
     #[DbQuery('checkpoint_stylistic')]
     public function stylisticCheckpoints(): array;
 }

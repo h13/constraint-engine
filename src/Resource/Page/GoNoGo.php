@@ -23,17 +23,17 @@ class GoNoGo extends ResourceObject
     public function onGet(): static
     {
         $summary = $this->query->summary();
-        $recall = $summary !== null ? (int) $summary['recall_count'] : 0;
-        $discovery = $summary !== null ? (int) $summary['discovery_count'] : 0;
-        $friction = $summary !== null ? (int) $summary['friction_count'] : 0;
+        $recall = $summary !== null ? (int) $summary['recallCount'] : 0;
+        $discovery = $summary !== null ? (int) $summary['discoveryCount'] : 0;
+        $friction = $summary !== null ? (int) $summary['frictionCount'] : 0;
 
         $this->body = [
-            'recall_count' => $recall,
-            'recall_target' => self::RECALL_TARGET,
-            'discovery_count' => $discovery,
-            'discovery_target' => self::DISCOVERY_TARGET,
-            'friction_count' => $friction,
-            'friction_limit' => self::FRICTION_LIMIT,
+            'recallCount' => $recall,
+            'recallTarget' => self::RECALL_TARGET,
+            'discoveryCount' => $discovery,
+            'discoveryTarget' => self::DISCOVERY_TARGET,
+            'frictionCount' => $friction,
+            'frictionLimit' => self::FRICTION_LIMIT,
             'verdict' => $this->computeVerdict($recall, $discovery, $friction),
         ];
 

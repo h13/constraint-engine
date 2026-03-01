@@ -23,7 +23,7 @@ class Checkpoints extends ResourceObject
     ) {
     }
 
-    #[Link(rel: 'checkpoint', href: '/checkpoints/{id}')]
+    #[Link(rel: 'checkpoint', href: '/checkpoints/{checkpointId}')]
     #[Link(rel: 'patternDashboard', href: '/pattern-dashboard')]
     public function onGet(string $tag = '', string $sessionId = ''): static
     {
@@ -34,7 +34,7 @@ class Checkpoints extends ResourceObject
         return $this;
     }
 
-    #[Link(rel: 'checkpoint', href: '/checkpoints/{id}')]
+    #[Link(rel: 'checkpoint', href: '/checkpoints/{checkpointId}')]
     public function onPost(
         string $sessionId,
         string $taskContext,
@@ -68,7 +68,7 @@ class Checkpoints extends ResourceObject
 
         $this->code = Code::CREATED;
         $this->headers['Location'] = "/checkpoints/{$result->id}";
-        $this->body = ['id' => $result->id];
+        $this->body = ['checkpointId' => $result->id];
 
         return $this;
     }

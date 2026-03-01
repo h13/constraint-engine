@@ -28,13 +28,13 @@ class SessionAnalysis extends ResourceObject
         }
 
         $this->body = [
-            'sessionId' => $summary['session_id'],
-            'taskContext' => $summary['task_context'],
-            'checkpointCount' => (int) $summary['checkpoint_count'],
+            'sessionId' => $summary['sessionId'],
+            'taskContext' => $summary['taskContext'],
+            'checkpointCount' => (int) $summary['checkpointCount'],
             'distribution' => [
-                'factual' => (int) $summary['factual_count'],
-                'strategic' => (int) $summary['strategic_count'],
-                'stylistic' => (int) $summary['stylistic_count'],
+                'factual' => (int) $summary['factualCount'],
+                'strategic' => (int) $summary['strategicCount'],
+                'stylistic' => (int) $summary['stylisticCount'],
             ],
             'checkpoints' => $this->query->sessionAnalysis($sessionId),
         ];
