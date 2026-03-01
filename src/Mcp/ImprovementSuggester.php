@@ -6,6 +6,7 @@ namespace ConstraintEngine\App\Mcp;
 
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use Mcp\Capability\Attribute\McpTool;
 
@@ -52,6 +53,10 @@ PROMPT;
     #[McpTool(name: 'suggest_improvements')]
     public function suggestImprovements(string $aiProposal, string $taskContext): string
     {
+        if ($this->apiKey === '') {
+            return 'Error: ANTHROPIC_API_KEY is not configured. Set the environment variable to use improvement suggestions.';
+        }
+
         $checkpoints = $this->query->detailList();
         if ($checkpoints === []) {
             return 'No past modification data available yet. Start recording checkpoints to enable pattern-based suggestions.';
@@ -100,7 +105,16 @@ PROMPT;
             'anthropic-version' => '2023-06-01',
         ], $body);
 
-        $response = $this->httpClient->send($request);
+        try {
+            $response = $this->httpClient->send($request);
+        } catch (GuzzleException $e) {
+            return 'Error: API request failed — ' . $e->getMessage();
+        }
+
+        if ($response->getStatusCode() !== 200) {
+            return 'Error: Anthropic API returned HTTP ' . $response->getStatusCode();
+        }
+
         $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
 
         return $responseBody['content'][0]['text'] ?? 'No suggestions available.';

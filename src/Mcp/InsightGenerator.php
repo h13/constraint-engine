@@ -6,6 +6,7 @@ namespace ConstraintEngine\App\Mcp;
 
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use Mcp\Capability\Attribute\McpTool;
 
@@ -51,6 +52,10 @@ PROMPT;
     #[McpTool(name: 'generate_insights')]
     public function generateInsights(): string
     {
+        if ($this->apiKey === '') {
+            return 'Error: ANTHROPIC_API_KEY is not configured. Set the environment variable to use insight generation.';
+        }
+
         $summary = $this->query->summary();
         if ($summary === null || (int) $summary['totalCheckpoints'] < self::MIN_CHECKPOINTS) {
             $current = $summary !== null ? (int) $summary['totalCheckpoints'] : 0;
@@ -75,11 +80,12 @@ PROMPT;
         $strategic = (int) $summary['strategicCount'];
         $stylistic = (int) $summary['stylisticCount'];
 
+        $pct = static fn (int $part): string => $total > 0 ? number_format($part / $total * 100, 1) : '0.0';
         $lines = [
             "Overall: {$total} checkpoints",
-            "Factual: {$factual} (" . number_format($factual / $total * 100, 1) . '%)',
-            "Strategic: {$strategic} (" . number_format($strategic / $total * 100, 1) . '%)',
-            "Stylistic: {$stylistic} (" . number_format($stylistic / $total * 100, 1) . '%)',
+            "Factual: {$factual} (" . $pct($factual) . '%)',
+            "Strategic: {$strategic} (" . $pct($strategic) . '%)',
+            "Stylistic: {$stylistic} (" . $pct($stylistic) . '%)',
             '',
             'Recent checkpoints (last 20):',
         ];
@@ -110,7 +116,16 @@ PROMPT;
             'anthropic-version' => '2023-06-01',
         ], $body);
 
-        $response = $this->httpClient->send($request);
+        try {
+            $response = $this->httpClient->send($request);
+        } catch (GuzzleException $e) {
+            return 'Error: API request failed — ' . $e->getMessage();
+        }
+
+        if ($response->getStatusCode() !== 200) {
+            return 'Error: Anthropic API returned HTTP ' . $response->getStatusCode();
+        }
+
         $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
 
         return $responseBody['content'][0]['text'] ?? 'Insights unavailable.';

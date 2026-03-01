@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace ConstraintEngine\App\Mcp;
 
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use RuntimeException;
 
 use function json_decode;
 use function json_encode;
@@ -41,6 +43,10 @@ PROMPT;
     /** @return array{aiProposal: string, humanFinal: string, taskContext: string, tag: string, confidence: string} */
     public function parse(string $description): array
     {
+        if ($this->apiKey === '') {
+            throw new RuntimeException('ANTHROPIC_API_KEY is not configured. Set the environment variable before using parsing features.');
+        }
+
         $body = json_encode([
             'model' => self::MODEL,
             'max_tokens' => 300,
@@ -56,10 +62,22 @@ PROMPT;
             'anthropic-version' => '2023-06-01',
         ], $body);
 
-        $response = $this->httpClient->send($request);
-        $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        try {
+            $response = $this->httpClient->send($request);
+        } catch (GuzzleException $e) {
+            throw new RuntimeException('Anthropic API request failed: ' . $e->getMessage(), 0, $e);
+        }
 
-        $text = $responseBody['content'][0]['text'] ?? '';
+        if ($response->getStatusCode() !== 200) {
+            throw new RuntimeException('Anthropic API error: HTTP ' . $response->getStatusCode());
+        }
+
+        $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        if (! isset($responseBody['content'][0]['text'])) {
+            throw new RuntimeException('Unexpected Anthropic API response structure');
+        }
+
+        $text = $responseBody['content'][0]['text'];
         $parsed = json_decode($text, true, 512, JSON_THROW_ON_ERROR);
 
         return [

@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace ConstraintEngine\App\Mcp;
 
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use RuntimeException;
 
+use function in_array;
 use function json_decode;
 use function json_encode;
 
@@ -36,6 +39,10 @@ PROMPT;
     /** @return array{tag: string, confidence: string} */
     public function classify(string $diff): array
     {
+        if ($this->apiKey === '') {
+            throw new RuntimeException('ANTHROPIC_API_KEY is not configured. Set the environment variable before using classification features.');
+        }
+
         $body = json_encode([
             'model' => self::MODEL,
             'max_tokens' => 100,
@@ -51,14 +58,30 @@ PROMPT;
             'anthropic-version' => '2023-06-01',
         ], $body);
 
-        $response = $this->httpClient->send($request);
-        $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        try {
+            $response = $this->httpClient->send($request);
+        } catch (GuzzleException $e) {
+            throw new RuntimeException('Anthropic API request failed: ' . $e->getMessage(), 0, $e);
+        }
 
-        $text = $responseBody['content'][0]['text'] ?? '';
+        if ($response->getStatusCode() !== 200) {
+            throw new RuntimeException('Anthropic API error: HTTP ' . $response->getStatusCode());
+        }
+
+        $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        if (! isset($responseBody['content'][0]['text'])) {
+            throw new RuntimeException('Unexpected Anthropic API response structure');
+        }
+
+        $text = $responseBody['content'][0]['text'];
         $classification = json_decode($text, true, 512, JSON_THROW_ON_ERROR);
+        $tag = $classification['tag'] ?? null;
+        if (! in_array($tag, ['factual', 'strategic', 'stylistic'], true)) {
+            $tag = 'stylistic';
+        }
 
         return [
-            'tag' => $classification['tag'] ?? 'stylistic',
+            'tag' => $tag,
             'confidence' => $classification['confidence'] ?? 'estimated',
         ];
     }
