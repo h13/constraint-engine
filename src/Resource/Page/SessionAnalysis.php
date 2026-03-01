@@ -22,7 +22,7 @@ class SessionAnalysis extends ResourceObject
         $summary = $this->query->sessionAnalysisSummary($sessionId);
         if ($summary === null) {
             $this->code = Code::NOT_FOUND;
-            $this->body = [];
+            $this->body = ['error' => "Session '{$sessionId}' not found"];
 
             return $this;
         }

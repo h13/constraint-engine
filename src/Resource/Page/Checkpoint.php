@@ -7,18 +7,17 @@ namespace ConstraintEngine\App\Resource\Page;
 use BEAR\Resource\Annotation\Link;
 use BEAR\Resource\Code;
 use BEAR\Resource\ResourceObject;
+use ConstraintEngine\App\Exception\InvalidTagException;
 use ConstraintEngine\App\Query\CheckpointCommandInterface;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
-
-use function in_array;
+use ConstraintEngine\App\Semantic\Tag;
 
 class Checkpoint extends ResourceObject
 {
-    private const array VALID_TAGS = ['factual', 'strategic', 'stylistic'];
-
     public function __construct(
         private readonly CheckpointQueryInterface $query,
         private readonly CheckpointCommandInterface $command,
+        private readonly Tag $tagValidator,
     ) {
     }
 
@@ -29,7 +28,7 @@ class Checkpoint extends ResourceObject
         $item = $this->query->item($id);
         if ($item === null) {
             $this->code = Code::NOT_FOUND;
-            $this->body = [];
+            $this->body = ['error' => "Checkpoint #{$id} not found"];
 
             return $this;
         }
@@ -45,14 +44,16 @@ class Checkpoint extends ResourceObject
         $item = $this->query->item($id);
         if ($item === null) {
             $this->code = Code::NOT_FOUND;
-            $this->body = [];
+            $this->body = ['error' => "Checkpoint #{$id} not found"];
 
             return $this;
         }
 
-        if (! in_array($tag, self::VALID_TAGS, true)) {
+        try {
+            $this->tagValidator->validate($tag);
+        } catch (InvalidTagException $e) {
             $this->code = 422;
-            $this->body = ['errors' => ["Invalid tag: \"{$tag}\". Must be one of: factual, strategic, stylistic"]];
+            $this->body = ['errors' => [$e->getMessage()]];
 
             return $this;
         }

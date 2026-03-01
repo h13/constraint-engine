@@ -8,6 +8,7 @@ use Be\Framework\Module\BeModule;
 use BEAR\Package\AbstractAppModule;
 use BEAR\Package\PackageModule;
 use BEAR\Package\Provide\Router\AuraRouterModule;
+use ConstraintEngine\App\Semantic\Tag;
 use Koriym\EnvJson\EnvJson;
 use Koriym\SemanticLogger\SemanticLogger;
 use Koriym\SemanticLogger\SemanticLoggerInterface;
@@ -31,6 +32,7 @@ final class AppModule extends AbstractAppModule
         $this->install(new AuraRouterModule($appDir . '/var/conf/aura.route.php'));
         $this->bind(SemanticLoggerInterface::class)->to(SemanticLogger::class)->in(Scope::SINGLETON);
         $this->install(new BeModule('ConstraintEngine\App\Semantic'));
+        $this->bind(Tag::class);
         $this->install(new McpModule());
         $this->install(new PackageModule());
     }
