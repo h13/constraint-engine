@@ -6,6 +6,7 @@ namespace ConstraintEngine\App\Mcp;
 
 use Aura\Sql\ExtendedPdoInterface;
 use ConstraintEngine\App\Query\CheckpointCommandInterface;
+use PDOException;
 use PHPUnit\Framework\TestCase;
 
 use function json_encode;
@@ -125,6 +126,65 @@ class CheckpointRecorderTest extends TestCase
 
         $this->assertStringContainsString('Error', $result);
         $this->assertStringContainsString('No sessionId', $result);
+    }
+
+    public function testRecordCheckpointReturnsErrorWhenLastInsertIdReturnsFalse(): void
+    {
+        $classifier = $this->createClassifier('factual');
+        $command = $this->createMock(CheckpointCommandInterface::class);
+        $pdo = $this->createMock(ExtendedPdoInterface::class);
+        $pdo->method('lastInsertId')->willReturn(false);
+        $sessionManager = new SessionManager();
+
+        $recorder = new CheckpointRecorder($classifier, $command, $pdo, $sessionManager);
+        $result = $recorder->recordCheckpoint(
+            aiProposal: 'AI',
+            humanFinal: 'Human',
+            taskContext: 'Task',
+            sessionId: 'test-session',
+        );
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('database write', $result);
+    }
+
+    public function testRecordCheckpointReturnsErrorWhenLastInsertIdReturnsZero(): void
+    {
+        $classifier = $this->createClassifier('factual');
+        $command = $this->createMock(CheckpointCommandInterface::class);
+        $pdo = $this->createMock(ExtendedPdoInterface::class);
+        $pdo->method('lastInsertId')->willReturn('0');
+        $sessionManager = new SessionManager();
+
+        $recorder = new CheckpointRecorder($classifier, $command, $pdo, $sessionManager);
+        $result = $recorder->recordCheckpoint(
+            aiProposal: 'AI',
+            humanFinal: 'Human',
+            taskContext: 'Task',
+            sessionId: 'test-session',
+        );
+
+        $this->assertStringContainsString('Error', $result);
+    }
+
+    public function testRecordCheckpointReturnsErrorOnPdoException(): void
+    {
+        $classifier = $this->createClassifier('factual');
+        $command = $this->createMock(CheckpointCommandInterface::class);
+        $command->method('add')->willThrowException(new PDOException('UNIQUE constraint failed'));
+        $pdo = $this->createMock(ExtendedPdoInterface::class);
+        $sessionManager = new SessionManager();
+
+        $recorder = new CheckpointRecorder($classifier, $command, $pdo, $sessionManager);
+        $result = $recorder->recordCheckpoint(
+            aiProposal: 'AI',
+            humanFinal: 'Human',
+            taskContext: 'Task',
+            sessionId: 'test-session',
+        );
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('UNIQUE constraint failed', $result);
     }
 
     public function testRecordCheckpointTracksInSession(): void

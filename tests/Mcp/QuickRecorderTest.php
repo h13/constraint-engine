@@ -6,6 +6,7 @@ namespace ConstraintEngine\App\Mcp;
 
 use Aura\Sql\ExtendedPdoInterface;
 use ConstraintEngine\App\Query\CheckpointCommandInterface;
+use PDOException;
 use PHPUnit\Framework\TestCase;
 
 use function json_encode;
@@ -113,6 +114,54 @@ class QuickRecorderTest extends TestCase
         $result = $recorder->quickRecord('AをBに変更');
 
         $this->assertStringContainsString('strategic', $result);
+    }
+
+    public function testQuickRecordReturnsErrorWhenLastInsertIdReturnsFalse(): void
+    {
+        $parser = $this->createParser([
+            'aiProposal' => 'A',
+            'humanFinal' => 'B',
+            'taskContext' => 'Test',
+            'tag' => 'factual',
+            'confidence' => 'estimated',
+        ]);
+
+        $command = $this->createMock(CheckpointCommandInterface::class);
+        $pdo = $this->createMock(ExtendedPdoInterface::class);
+        $pdo->method('lastInsertId')->willReturn(false);
+
+        $sessionManager = new SessionManager();
+        $sessionManager->startSession('Test');
+
+        $recorder = new QuickRecorder($parser, $command, $pdo, $sessionManager);
+        $result = $recorder->quickRecord('AをBに変更');
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('database write', $result);
+    }
+
+    public function testQuickRecordReturnsErrorOnPdoException(): void
+    {
+        $parser = $this->createParser([
+            'aiProposal' => 'A',
+            'humanFinal' => 'B',
+            'taskContext' => 'Test',
+            'tag' => 'factual',
+            'confidence' => 'estimated',
+        ]);
+
+        $command = $this->createMock(CheckpointCommandInterface::class);
+        $command->method('add')->willThrowException(new PDOException('disk I/O error'));
+        $pdo = $this->createMock(ExtendedPdoInterface::class);
+
+        $sessionManager = new SessionManager();
+        $sessionManager->startSession('Test');
+
+        $recorder = new QuickRecorder($parser, $command, $pdo, $sessionManager);
+        $result = $recorder->quickRecord('AをBに変更');
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('disk I/O error', $result);
     }
 
     public function testQuickRecordTracksInSession(): void
