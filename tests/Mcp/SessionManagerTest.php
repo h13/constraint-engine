@@ -26,6 +26,23 @@ class SessionManagerTest extends TestCase
         $this->assertSame('Salesforce設計', $this->manager->getActiveTaskContext());
     }
 
+    public function testStartSessionWithEmptyTaskContext(): void
+    {
+        $result = $this->manager->startSession('');
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('taskContext cannot be empty', $result);
+        $this->assertNull($this->manager->getActiveSessionId());
+    }
+
+    public function testStartSessionWithWhitespaceTaskContext(): void
+    {
+        $result = $this->manager->startSession('   ');
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertNull($this->manager->getActiveSessionId());
+    }
+
     public function testStartSessionWhileActive(): void
     {
         $this->manager->startSession('Task 1');
