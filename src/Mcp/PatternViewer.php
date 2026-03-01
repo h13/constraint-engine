@@ -7,8 +7,11 @@ namespace ConstraintEngine\App\Mcp;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use Mcp\Capability\Attribute\McpTool;
 
+use function date;
 use function implode;
 use function number_format;
+use function strtotime;
+use function ucfirst;
 
 final class PatternViewer
 {
@@ -58,8 +61,85 @@ final class PatternViewer
         return implode("\n", $lines);
     }
 
+    /**
+     * Compare classification patterns between two time periods.
+     *
+     * @param string $currentStart  Start of current period (YYYY-MM-DD)
+     * @param string $currentEnd    End of current period (YYYY-MM-DD)
+     * @param string $previousStart Start of previous period (YYYY-MM-DD)
+     * @param string $previousEnd   End of previous period (YYYY-MM-DD)
+     *
+     * @return string Comparison summary with change rates
+     */
+    #[McpTool(name: 'compare_periods')]
+    public function comparePeriods(
+        string $currentStart = '',
+        string $currentEnd = '',
+        string $previousStart = '',
+        string $previousEnd = '',
+    ): string {
+        if ($currentStart === '') {
+            $currentStart = date('Y-m-d', strtotime('-7 days'));
+            $currentEnd = date('Y-m-d');
+            $previousStart = date('Y-m-d', strtotime('-14 days'));
+            $previousEnd = date('Y-m-d', strtotime('-7 days'));
+        }
+
+        $current = $this->query->periodSummary($currentStart, $currentEnd);
+        $previous = $this->query->periodSummary($previousStart, $previousEnd);
+
+        $curTotal = $current !== null ? (int) $current['total'] : 0;
+        $prevTotal = $previous !== null ? (int) $previous['total'] : 0;
+
+        if ($curTotal === 0 && $prevTotal === 0) {
+            return 'No checkpoints in either period.';
+        }
+
+        $lines = [
+            'Period Comparison',
+            '---',
+            "Current:  {$currentStart} ~ {$currentEnd} ({$curTotal} checkpoints)",
+            "Previous: {$previousStart} ~ {$previousEnd} ({$prevTotal} checkpoints)",
+            '---',
+        ];
+
+        foreach (['factual', 'strategic', 'stylistic'] as $tag) {
+            $key = "{$tag}_count";
+            $curCount = $current !== null ? (int) $current[$key] : 0;
+            $prevCount = $previous !== null ? (int) $previous[$key] : 0;
+            $curPct = $curTotal > 0 ? $curCount / $curTotal * 100 : 0;
+            $prevPct = $prevTotal > 0 ? $prevCount / $prevTotal * 100 : 0;
+            $change = $this->formatChange($prevPct, $curPct);
+            $tagLabel = ucfirst($tag);
+            $lines[] = "{$tagLabel}: {$curCount} (" . number_format($curPct, 1) . "%) {$change}";
+        }
+
+        $lines[] = '';
+        $lines[] = 'Dashboard: http://localhost:8080/pattern-dashboard'
+            . "?periodStart={$currentStart}&periodEnd={$currentEnd}"
+            . "&compareStart={$previousStart}&compareEnd={$previousEnd}";
+
+        return implode("\n", $lines);
+    }
+
     private function percentage(int $part, int $total): string
     {
         return number_format($part / $total * 100, 1);
+    }
+
+    private function formatChange(float $previous, float $current): string
+    {
+        if ($previous === 0.0 && $current === 0.0) {
+            return '(-)';
+        }
+
+        if ($previous === 0.0) {
+            return '(new)';
+        }
+
+        $diff = $current - $previous;
+        $sign = $diff >= 0 ? '+' : '';
+
+        return '(' . $sign . number_format($diff, 1) . 'pp)';
     }
 }

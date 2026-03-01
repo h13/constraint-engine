@@ -39,4 +39,8 @@ interface CheckpointQueryInterface
     /** @return array<array{id: int, session_id: string, task_context: string, ai_proposal: string, human_final: string, diff: string, tag: string, confidence: string, date_created: string}> */
     #[DbQuery('session_analysis')]
     public function sessionAnalysis(string $sessionId): array;
+
+    /** @return array{total: int, factual_count: int, strategic_count: int, stylistic_count: int}|null */
+    #[DbQuery('checkpoint_period_summary', type: 'row')]
+    public function periodSummary(string $periodStart, string $periodEnd): array|null;
 }
