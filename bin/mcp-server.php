@@ -7,6 +7,7 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 use ConstraintEngine\App\Injector;
 use ConstraintEngine\App\Mcp\CheckpointRecorder;
 use ConstraintEngine\App\Mcp\PatternViewer;
+use ConstraintEngine\App\Mcp\QuickRecorder;
 use ConstraintEngine\App\Mcp\RecallTracker;
 use ConstraintEngine\App\Mcp\SessionManager;
 use Mcp\Server;
@@ -18,11 +19,13 @@ $injector = Injector::getInstance($context);
 $sessionManager = $injector->getInstance(SessionManager::class);
 $recorder = $injector->getInstance(CheckpointRecorder::class);
 $viewer = $injector->getInstance(PatternViewer::class);
+$quickRecorder = $injector->getInstance(QuickRecorder::class);
 $recallTracker = $injector->getInstance(RecallTracker::class);
 
 $server = Server::builder()
     ->setServerInfo('constraint-engine', '0.2.0')
     ->addTool([$recorder, 'recordCheckpoint'], 'record_checkpoint')
+    ->addTool([$quickRecorder, 'quickRecord'], 'quick_record')
     ->addTool([$viewer, 'showPattern'], 'show_pattern')
     ->addTool([$recallTracker, 'recordRecall'], 'record_recall')
     ->addTool([$recallTracker, 'recordDiscovery'], 'record_discovery')
