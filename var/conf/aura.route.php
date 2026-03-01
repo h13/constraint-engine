@@ -8,3 +8,5 @@ $map->route('/checkpoint', '/checkpoints/{id}')->tokens(['id' => '\d+']);
 $map->route('/pattern-dashboard', '/pattern-dashboard');
 $map->route('/go-no-go', '/go-no-go');
 $map->route('/health', '/health');
+$map->route('/sessions', '/sessions');
+$map->route('/session-analysis', '/sessions/{sessionId}/analysis');

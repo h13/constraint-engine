@@ -31,4 +31,12 @@ interface CheckpointQueryInterface
     /** @return array<array{id: int, session_id: string, task_context: string, ai_proposal: string, human_final: string, diff: string, tag: string, confidence: string, date_created: string}> */
     #[DbQuery('checkpoint_filter')]
     public function filter(string $tag, string $sessionId): array;
+
+    /** @return array<array{session_id: string, task_context: string, checkpoint_count: int, factual_count: int, strategic_count: int, stylistic_count: int, first_checkpoint: string, last_checkpoint: string}> */
+    #[DbQuery('session_list')]
+    public function sessionList(): array;
+
+    /** @return array<array{id: int, session_id: string, task_context: string, ai_proposal: string, human_final: string, diff: string, tag: string, confidence: string, date_created: string}> */
+    #[DbQuery('session_analysis')]
+    public function sessionAnalysis(string $sessionId): array;
 }
