@@ -14,6 +14,17 @@
     <testsuite name="mcp">
       <directory>tests/Mcp</directory>
     </testsuite>
+    <testsuite name="semantic">
+      <directory>tests/Semantic</directory>
+    </testsuite>
+    <testsuite name="unit">
+      <directory>tests</directory>
+      <exclude>tests/Resource</exclude>
+      <exclude>tests/Hypermedia</exclude>
+      <exclude>tests/Http</exclude>
+      <exclude>tests/Mcp</exclude>
+      <exclude>tests/Semantic</exclude>
+    </testsuite>
   </testsuites>
   <source>
     <include>

@@ -84,6 +84,11 @@ class EmptyFieldValidatorTest extends TestCase
         $this->assertInvalid($this->paramFor('userId'), '');
     }
 
+    public function testWhitespaceUserId(): void
+    {
+        $this->assertInvalid($this->paramFor('userId'), '   ');
+    }
+
     private function paramFor(string $name): ReflectionParameter
     {
         $closures = [
