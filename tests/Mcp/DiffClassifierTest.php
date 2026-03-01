@@ -79,6 +79,28 @@ class DiffClassifierTest extends TestCase
         $this->assertSame('estimated', $result['confidence']);
     }
 
+    public function testClassifyInvalidConfidenceFallsBackToEstimated(): void
+    {
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')->willReturn(
+            json_encode(['tag' => 'factual', 'confidence' => 'hallucinated_value'], JSON_THROW_ON_ERROR),
+        );
+
+        $classifier = new DiffClassifier($client);
+        $result = $classifier->classify('some diff');
+        $this->assertSame('factual', $result['tag']);
+        $this->assertSame('estimated', $result['confidence']);
+    }
+
+    public function testClassifyStatedConfidenceIsAllowed(): void
+    {
+        $classifier = $this->createClassifier('factual', 'stated');
+
+        $result = $classifier->classify('Text → LongTextArea');
+
+        $this->assertSame('stated', $result['confidence']);
+    }
+
     public function testClassifyInvalidTagFallsBackToStylistic(): void
     {
         $client = $this->createMock(AnthropicClientInterface::class);

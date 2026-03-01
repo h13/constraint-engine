@@ -29,6 +29,16 @@ class AnthropicClientTest extends TestCase
         $client->complete('system', 'hello', 100);
     }
 
+    public function testCompleteThrowsOnEmptyModel(): void
+    {
+        $http = $this->createMock(ClientInterface::class);
+        $client = new AnthropicClient($http, 'sk-test', '');
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('ANTHROPIC_MODEL is not configured');
+        $client->complete('system', 'hello', 100);
+    }
+
     public function testCompleteReturnsText(): void
     {
         $body = json_encode([

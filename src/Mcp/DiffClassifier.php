@@ -50,9 +50,14 @@ PROMPT;
             $tag = 'stylistic';
         }
 
+        $confidence = $classification['confidence'] ?? 'estimated';
+        if (! in_array($confidence, ['estimated', 'stated'], true)) {
+            $confidence = 'estimated';
+        }
+
         return [
             'tag' => $tag,
-            'confidence' => $classification['confidence'] ?? 'estimated',
+            'confidence' => $confidence,
         ];
     }
 }

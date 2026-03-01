@@ -37,6 +37,10 @@ final class AnthropicClient implements AnthropicClientInterface
             throw new RuntimeException('ANTHROPIC_API_KEY is not configured. Set the environment variable before using AI features.');
         }
 
+        if ($this->model === '') {
+            throw new RuntimeException('ANTHROPIC_MODEL is not configured. Set the environment variable or provide a default model.');
+        }
+
         $body = json_encode([
             'model' => $this->model,
             'max_tokens' => $maxTokens,
