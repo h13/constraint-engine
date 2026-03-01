@@ -14,6 +14,9 @@ use Ray\Di\Scope;
 
 final class McpModule extends AbstractModule
 {
+    private const string DEFAULT_MODEL = 'claude-sonnet-4-5-20250929';
+    private const string DEFAULT_API_BASE_URL = 'http://localhost:8080';
+
     protected function configure(): void
     {
         $this->bind(ClientInterface::class)->to(Client::class)->in(Scope::SINGLETON);
@@ -28,10 +31,10 @@ final class McpModule extends AbstractModule
             $_ENV['ANTHROPIC_API_KEY'] ?? '',
         );
         $this->bind()->annotatedWith('anthropic_model')->toInstance(
-            $_ENV['ANTHROPIC_MODEL'] ?? 'claude-sonnet-4-5-20250929',
+            $_ENV['ANTHROPIC_MODEL'] ?? self::DEFAULT_MODEL,
         );
         $this->bind()->annotatedWith('api_base_url')->toInstance(
-            $_ENV['API_BASE_URL'] ?? 'http://localhost:8080',
+            $_ENV['API_BASE_URL'] ?? self::DEFAULT_API_BASE_URL,
         );
         $this->bind(SessionManager::class)->in(Scope::SINGLETON);
     }

@@ -14,7 +14,7 @@ class PatternViewerTest extends TestCase
         $query = $this->createMock(CheckpointQueryInterface::class);
         $query->method('summary')->willReturn(null);
 
-        $viewer = new PatternViewer($query);
+        $viewer = new PatternViewer($query, 'http://test:8080');
         $this->assertSame('No checkpoints recorded yet.', $viewer->showPattern());
     }
 
@@ -28,7 +28,7 @@ class PatternViewerTest extends TestCase
             'stylisticCount' => 0,
         ]);
 
-        $viewer = new PatternViewer($query);
+        $viewer = new PatternViewer($query, 'http://test:8080');
         $this->assertSame('No checkpoints recorded yet.', $viewer->showPattern());
     }
 
@@ -47,7 +47,7 @@ class PatternViewerTest extends TestCase
             ['tag' => 'stylistic', 'count' => 2],
         ]);
 
-        $viewer = new PatternViewer($query);
+        $viewer = new PatternViewer($query, 'http://test:8080');
         $result = $viewer->showPattern();
 
         $this->assertStringContainsString('10 checkpoints', $result);
@@ -62,7 +62,7 @@ class PatternViewerTest extends TestCase
         $query = $this->createMock(CheckpointQueryInterface::class);
         $query->method('periodSummary')->willReturn(null);
 
-        $viewer = new PatternViewer($query);
+        $viewer = new PatternViewer($query, 'http://test:8080');
         $result = $viewer->comparePeriods('2026-01-01', '2026-01-07', '2025-12-25', '2025-12-31');
 
         $this->assertSame('No checkpoints in either period.', $result);
@@ -95,7 +95,7 @@ class PatternViewerTest extends TestCase
                 ],
             ]);
 
-        $viewer = new PatternViewer($query);
+        $viewer = new PatternViewer($query, 'http://test:8080');
         $result = $viewer->comparePeriods('2026-01-01', '2026-01-07', '2025-12-25', '2025-12-31');
 
         $this->assertStringContainsString('Period Comparison', $result);
@@ -110,7 +110,7 @@ class PatternViewerTest extends TestCase
         $query = $this->createMock(CheckpointQueryInterface::class);
         $query->method('factualRate')->willReturn([]);
 
-        $viewer = new PatternViewer($query);
+        $viewer = new PatternViewer($query, 'http://test:8080');
         $result = $viewer->showImprovementRate('2026-01-01', '2026-01-31');
 
         $this->assertStringContainsString('No checkpoints found', $result);
@@ -124,7 +124,7 @@ class PatternViewerTest extends TestCase
             ['date' => '2026-01-02', 'total' => 8, 'factualCount' => 2, 'factualRate' => 25.0],
         ]);
 
-        $viewer = new PatternViewer($query);
+        $viewer = new PatternViewer($query, 'http://test:8080');
         $result = $viewer->showImprovementRate('2026-01-01', '2026-01-02');
 
         $this->assertStringContainsString('Factual Correction Rate', $result);
@@ -139,7 +139,7 @@ class PatternViewerTest extends TestCase
             ['date' => '2026-01-02', 'total' => 5, 'factualCount' => 3, 'factualRate' => 60.0],
         ]);
 
-        $viewer = new PatternViewer($query);
+        $viewer = new PatternViewer($query, 'http://test:8080');
         $result = $viewer->showImprovementRate('2026-01-01', '2026-01-02');
 
         $this->assertStringContainsString('may need attention', $result);
@@ -153,7 +153,7 @@ class PatternViewerTest extends TestCase
             ['date' => '2026-01-02', 'total' => 5, 'factualCount' => 2, 'factualRate' => 40.0],
         ]);
 
-        $viewer = new PatternViewer($query);
+        $viewer = new PatternViewer($query, 'http://test:8080');
         $result = $viewer->showImprovementRate('2026-01-01', '2026-01-02');
 
         $this->assertStringContainsString('Factual rate stable', $result);
@@ -166,7 +166,7 @@ class PatternViewerTest extends TestCase
             ['date' => '2026-01-01', 'total' => 5, 'factualCount' => 2, 'factualRate' => 40.0],
         ]);
 
-        $viewer = new PatternViewer($query);
+        $viewer = new PatternViewer($query, 'http://test:8080');
         $result = $viewer->showImprovementRate('2026-01-01', '2026-01-01');
 
         $this->assertStringContainsString('40.0%', $result);

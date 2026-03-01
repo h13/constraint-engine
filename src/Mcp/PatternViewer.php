@@ -20,7 +20,7 @@ final class PatternViewer
     public function __construct(
         private readonly CheckpointQueryInterface $query,
         #[Named('api_base_url')]
-        private readonly string $apiBaseUrl = 'http://localhost:8080',
+        private readonly string $apiBaseUrl,
     ) {
     }
 
