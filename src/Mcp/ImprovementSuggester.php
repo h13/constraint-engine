@@ -5,21 +5,14 @@ declare(strict_types=1);
 namespace ConstraintEngine\App\Mcp;
 
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Request;
 use Mcp\Capability\Attribute\McpTool;
+use RuntimeException;
 
 use function array_slice;
 use function implode;
-use function json_decode;
-use function json_encode;
-
-use const JSON_THROW_ON_ERROR;
 
 final class ImprovementSuggester
 {
-    private const string API_URL = 'https://api.anthropic.com/v1/messages';
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are an AI proposal improvement assistant. You have access to a history of past modifications that humans made to AI proposals.
 
@@ -36,9 +29,7 @@ PROMPT;
 
     public function __construct(
         private readonly CheckpointQueryInterface $query,
-        private readonly ClientInterface $httpClient,
-        private readonly string $apiKey,
-        private readonly string $model,
+        private readonly AnthropicClientInterface $client,
     ) {
     }
 
@@ -53,10 +44,6 @@ PROMPT;
     #[McpTool(name: 'suggest_improvements')]
     public function suggestImprovements(string $aiProposal, string $taskContext): string
     {
-        if ($this->apiKey === '') {
-            return 'Error: ANTHROPIC_API_KEY is not configured. Set the environment variable to use improvement suggestions.';
-        }
-
         $checkpoints = $this->query->detailList();
         if ($checkpoints === []) {
             return 'No past modification data available yet. Start recording checkpoints to enable pattern-based suggestions.';
@@ -64,7 +51,15 @@ PROMPT;
 
         $context = $this->buildContext($aiProposal, $taskContext, $checkpoints);
 
-        return $this->suggest($context);
+        try {
+            return $this->client->complete(
+                self::SYSTEM_PROMPT,
+                "Based on past patterns, suggest improvements for this proposal:\n\n{$context}",
+                500,
+            );
+        } catch (RuntimeException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
     }
 
     /** @param array<array{tag: string, diff: string, taskContext: string, aiProposal: string, humanFinal: string}> $checkpoints */
@@ -86,37 +81,5 @@ PROMPT;
         }
 
         return implode("\n", $lines);
-    }
-
-    private function suggest(string $context): string
-    {
-        $body = json_encode([
-            'model' => $this->model,
-            'max_tokens' => 500,
-            'messages' => [
-                ['role' => 'user', 'content' => "Based on past patterns, suggest improvements for this proposal:\n\n{$context}"],
-            ],
-            'system' => self::SYSTEM_PROMPT,
-        ], JSON_THROW_ON_ERROR);
-
-        $request = new Request('POST', self::API_URL, [
-            'Content-Type' => 'application/json',
-            'x-api-key' => $this->apiKey,
-            'anthropic-version' => '2023-06-01',
-        ], $body);
-
-        try {
-            $response = $this->httpClient->send($request);
-        } catch (GuzzleException $e) {
-            return 'Error: API request failed — ' . $e->getMessage();
-        }
-
-        if ($response->getStatusCode() !== 200) {
-            return 'Error: Anthropic API returned HTTP ' . $response->getStatusCode();
-        }
-
-        $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-
-        return $responseBody['content'][0]['text'] ?? 'No suggestions available.';
     }
 }

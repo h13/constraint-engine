@@ -5,21 +5,14 @@ declare(strict_types=1);
 namespace ConstraintEngine\App\Mcp;
 
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Request;
 use Mcp\Capability\Attribute\McpTool;
+use RuntimeException;
 
 use function count;
 use function implode;
-use function json_decode;
-use function json_encode;
-
-use const JSON_THROW_ON_ERROR;
 
 final class SessionAnalyzer
 {
-    private const string API_URL = 'https://api.anthropic.com/v1/messages';
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are an AI-human collaboration pattern analyst. Given a list of checkpoints from a session, analyze the patterns and provide actionable insights in Japanese.
 
@@ -33,9 +26,7 @@ PROMPT;
 
     public function __construct(
         private readonly CheckpointQueryInterface $query,
-        private readonly ClientInterface $httpClient,
-        private readonly string $apiKey,
-        private readonly string $model,
+        private readonly AnthropicClientInterface $client,
     ) {
     }
 
@@ -49,10 +40,6 @@ PROMPT;
     #[McpTool(name: 'analyze_session')]
     public function analyzeSession(string $sessionId): string
     {
-        if ($this->apiKey === '') {
-            return 'Error: ANTHROPIC_API_KEY is not configured. Set the environment variable to use analysis features.';
-        }
-
         $checkpoints = $this->query->sessionAnalysis($sessionId);
         if ($checkpoints === []) {
             return "Error: No checkpoints found for session '{$sessionId}'.";
@@ -60,7 +47,15 @@ PROMPT;
 
         $summary = $this->buildSummary($checkpoints);
 
-        return $this->analyze($summary);
+        try {
+            return $this->client->complete(
+                self::SYSTEM_PROMPT,
+                "Analyze this session's modification patterns:\n\n{$summary}",
+                500,
+            );
+        } catch (RuntimeException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
     }
 
     /** @param array<array{tag: string, aiProposal: string, humanFinal: string, diff: string, taskContext: string}> $checkpoints */
@@ -73,37 +68,5 @@ PROMPT;
         }
 
         return implode("\n", $lines);
-    }
-
-    private function analyze(string $summary): string
-    {
-        $body = json_encode([
-            'model' => $this->model,
-            'max_tokens' => 500,
-            'messages' => [
-                ['role' => 'user', 'content' => "Analyze this session's modification patterns:\n\n{$summary}"],
-            ],
-            'system' => self::SYSTEM_PROMPT,
-        ], JSON_THROW_ON_ERROR);
-
-        $request = new Request('POST', self::API_URL, [
-            'Content-Type' => 'application/json',
-            'x-api-key' => $this->apiKey,
-            'anthropic-version' => '2023-06-01',
-        ], $body);
-
-        try {
-            $response = $this->httpClient->send($request);
-        } catch (GuzzleException $e) {
-            return 'Error: API request failed — ' . $e->getMessage();
-        }
-
-        if ($response->getStatusCode() !== 200) {
-            return 'Error: Anthropic API returned HTTP ' . $response->getStatusCode();
-        }
-
-        $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-
-        return $responseBody['content'][0]['text'] ?? 'Analysis unavailable.';
     }
 }

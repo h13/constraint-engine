@@ -5,22 +5,15 @@ declare(strict_types=1);
 namespace ConstraintEngine\App\Mcp;
 
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Request;
 use Mcp\Capability\Attribute\McpTool;
+use RuntimeException;
 
 use function array_slice;
 use function implode;
-use function json_decode;
-use function json_encode;
 use function number_format;
-
-use const JSON_THROW_ON_ERROR;
 
 final class InsightGenerator
 {
-    private const string API_URL = 'https://api.anthropic.com/v1/messages';
     private const int MIN_CHECKPOINTS = 10;
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are an AI-human collaboration pattern analyst. Given checkpoint statistics and recent modification history, generate actionable insights in Japanese.
@@ -36,9 +29,7 @@ PROMPT;
 
     public function __construct(
         private readonly CheckpointQueryInterface $query,
-        private readonly ClientInterface $httpClient,
-        private readonly string $apiKey,
-        private readonly string $model,
+        private readonly AnthropicClientInterface $client,
     ) {
     }
 
@@ -52,10 +43,6 @@ PROMPT;
     #[McpTool(name: 'generate_insights')]
     public function generateInsights(): string
     {
-        if ($this->apiKey === '') {
-            return 'Error: ANTHROPIC_API_KEY is not configured. Set the environment variable to use insight generation.';
-        }
-
         $summary = $this->query->summary();
         if ($summary === null || (int) $summary['totalCheckpoints'] < self::MIN_CHECKPOINTS) {
             $current = $summary !== null ? (int) $summary['totalCheckpoints'] : 0;
@@ -66,7 +53,15 @@ PROMPT;
         $checkpoints = $this->query->detailList();
         $dataContext = $this->buildContext($summary, $checkpoints);
 
-        return $this->analyze($dataContext);
+        try {
+            return $this->client->complete(
+                self::SYSTEM_PROMPT,
+                "Analyze these checkpoint patterns and generate insights:\n\n{$dataContext}",
+                600,
+            );
+        } catch (RuntimeException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
     }
 
     /**
@@ -97,37 +92,5 @@ PROMPT;
         }
 
         return implode("\n", $lines);
-    }
-
-    private function analyze(string $context): string
-    {
-        $body = json_encode([
-            'model' => $this->model,
-            'max_tokens' => 600,
-            'messages' => [
-                ['role' => 'user', 'content' => "Analyze these checkpoint patterns and generate insights:\n\n{$context}"],
-            ],
-            'system' => self::SYSTEM_PROMPT,
-        ], JSON_THROW_ON_ERROR);
-
-        $request = new Request('POST', self::API_URL, [
-            'Content-Type' => 'application/json',
-            'x-api-key' => $this->apiKey,
-            'anthropic-version' => '2023-06-01',
-        ], $body);
-
-        try {
-            $response = $this->httpClient->send($request);
-        } catch (GuzzleException $e) {
-            return 'Error: API request failed — ' . $e->getMessage();
-        }
-
-        if ($response->getStatusCode() !== 200) {
-            return 'Error: Anthropic API returned HTTP ' . $response->getStatusCode();
-        }
-
-        $responseBody = json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-
-        return $responseBody['content'][0]['text'] ?? 'Insights unavailable.';
     }
 }
