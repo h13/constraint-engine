@@ -9,16 +9,9 @@ use BEAR\Resource\ResourceInterface;
 use ConstraintEngine\App\Injector;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use ConstraintEngine\App\TestModule;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 use function file_get_contents;
-use function json_encode;
-
-use const JSON_THROW_ON_ERROR;
 
 class InsightGeneratorTest extends TestCase
 {
@@ -41,19 +34,10 @@ class InsightGeneratorTest extends TestCase
 
     private function createGenerator(string $aiResponse): InsightGenerator
     {
-        $responseBody = json_encode([
-            'content' => [
-                ['type' => 'text', 'text' => $aiResponse],
-            ],
-        ], JSON_THROW_ON_ERROR);
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')->willReturn($aiResponse);
 
-        $mock = new MockHandler([
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody),
-        ]);
-
-        $client = new Client(['handler' => HandlerStack::create($mock)]);
-
-        return new InsightGenerator($this->query, $client, 'test-api-key', 'test-model');
+        return new InsightGenerator($this->query, $client);
     }
 
     public function testGenerateInsightsInsufficientData(): void

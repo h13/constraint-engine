@@ -6,10 +6,6 @@ namespace ConstraintEngine\App\Mcp;
 
 use Aura\Sql\ExtendedPdoInterface;
 use ConstraintEngine\App\Query\CheckpointCommandInterface;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 use function json_encode;
@@ -21,24 +17,12 @@ class QuickRecorderTest extends TestCase
     /** @param array<string, string> $responseData */
     private function createParser(array $responseData): DescriptionParser
     {
-        $responseBody = json_encode([
-            'content' => [
-                [
-                    'type' => 'text',
-                    'text' => json_encode($responseData, JSON_THROW_ON_ERROR),
-                ],
-            ],
-        ], JSON_THROW_ON_ERROR);
-
-        $mock = new MockHandler([
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody),
-        ]);
-
-        return new DescriptionParser(
-            new Client(['handler' => HandlerStack::create($mock)]),
-            'test-api-key',
-            'test-model',
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')->willReturn(
+            json_encode($responseData, JSON_THROW_ON_ERROR),
         );
+
+        return new DescriptionParser($client);
     }
 
     public function testQuickRecord(): void

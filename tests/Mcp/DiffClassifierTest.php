@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Mcp;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+use JsonException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
@@ -47,9 +44,11 @@ class DiffClassifierTest extends TestCase
 
     public function testClassifyMissingApiKey(): void
     {
-        $mock = new MockHandler([]);
-        $client = new Client(['handler' => HandlerStack::create($mock)]);
-        $classifier = new DiffClassifier($client, '', 'test-model');
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')
+            ->willThrowException(new RuntimeException('ANTHROPIC_API_KEY is not configured'));
+
+        $classifier = new DiffClassifier($client);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('ANTHROPIC_API_KEY is not configured');
@@ -58,11 +57,11 @@ class DiffClassifierTest extends TestCase
 
     public function testClassifyHttpError(): void
     {
-        $mock = new MockHandler([
-            new Response(500, [], 'Internal Server Error'),
-        ]);
-        $client = new Client(['handler' => HandlerStack::create($mock)]);
-        $classifier = new DiffClassifier($client, 'test-key', 'test-model');
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')
+            ->willThrowException(new RuntimeException('Anthropic API request failed'));
+
+        $classifier = new DiffClassifier($client);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Anthropic API request failed');
@@ -71,61 +70,34 @@ class DiffClassifierTest extends TestCase
 
     public function testClassifyMalformedResponse(): void
     {
-        $mock = new MockHandler([
-            new Response(200, [], '{"content": []}'),
-        ]);
-        $client = new Client(['handler' => HandlerStack::create($mock)]);
-        $classifier = new DiffClassifier($client, 'test-key', 'test-model');
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')->willReturn('not json');
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unexpected Anthropic API response structure');
+        $classifier = new DiffClassifier($client);
+
+        $this->expectException(JsonException::class);
         $classifier->classify('some diff');
     }
 
     public function testClassifyInvalidTagFallsBackToStylistic(): void
     {
-        $responseBody = json_encode([
-            'content' => [
-                [
-                    'type' => 'text',
-                    'text' => json_encode([
-                        'tag' => 'unknown_tag',
-                        'confidence' => 'estimated',
-                    ], JSON_THROW_ON_ERROR),
-                ],
-            ],
-        ], JSON_THROW_ON_ERROR);
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')->willReturn(
+            json_encode(['tag' => 'unknown_tag', 'confidence' => 'estimated'], JSON_THROW_ON_ERROR),
+        );
 
-        $mock = new MockHandler([
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody),
-        ]);
-        $client = new Client(['handler' => HandlerStack::create($mock)]);
-        $classifier = new DiffClassifier($client, 'test-key', 'test-model');
-
+        $classifier = new DiffClassifier($client);
         $result = $classifier->classify('some diff');
         $this->assertSame('stylistic', $result['tag']);
     }
 
     private function createClassifier(string $tag, string $confidence): DiffClassifier
     {
-        $responseBody = json_encode([
-            'content' => [
-                [
-                    'type' => 'text',
-                    'text' => json_encode([
-                        'tag' => $tag,
-                        'confidence' => $confidence,
-                    ], JSON_THROW_ON_ERROR),
-                ],
-            ],
-        ], JSON_THROW_ON_ERROR);
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')->willReturn(
+            json_encode(['tag' => $tag, 'confidence' => $confidence], JSON_THROW_ON_ERROR),
+        );
 
-        $mock = new MockHandler([
-            new Response(200, ['Content-Type' => 'application/json'], $responseBody),
-        ]);
-
-        $client = new Client(['handler' => HandlerStack::create($mock)]);
-
-        return new DiffClassifier($client, 'test-api-key', 'test-model');
+        return new DiffClassifier($client);
     }
 }
