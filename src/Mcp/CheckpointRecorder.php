@@ -57,7 +57,12 @@ final class CheckpointRecorder
             confidence: $classification['confidence'],
         );
 
-        $id = (int) $this->pdo->lastInsertId();
+        $lastId = $this->pdo->lastInsertId();
+        if ($lastId === false || $lastId === '0') {
+            return 'Error: Failed to record checkpoint — database write did not return a valid insert ID.';
+        }
+
+        $id = (int) $lastId;
         $this->sessionManager->trackCheckpoint($classification['tag']);
 
         return "Checkpoint recorded. Classification: {$classification['tag']}. ID: {$id}";
