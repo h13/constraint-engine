@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Module;
 
-use BEAR\Package\AbstractAppModule;
-use BEAR\Sunday\Extension\Error\ThrowableHandlerInterface;
-use BEAR\Sunday\Provide\Error\VndErrorHandler;
+use BEAR\Package\Provide\Error\ErrorPageFactoryInterface;
+use BEAR\Package\Provide\Error\ProdVndErrorPageFactory;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use Ray\Di\AbstractModule;
 use Ray\Di\Scope;
 
-final class ProdModule extends AbstractAppModule
+final class ProdModule extends AbstractModule
 {
     protected function configure(): void
     {
-        $this->install(new AppModule());
         $this->bind(LoggerInterface::class)->toConstructor(
             Logger::class,
             [
@@ -28,6 +27,6 @@ final class ProdModule extends AbstractAppModule
         $this->bind()->annotatedWith('logger_handlers')->toInstance([
             new StreamHandler('php://stderr'),
         ]);
-        $this->bind(ThrowableHandlerInterface::class)->to(VndErrorHandler::class);
+        $this->bind(ErrorPageFactoryInterface::class)->to(ProdVndErrorPageFactory::class);
     }
 }

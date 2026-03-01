@@ -9,7 +9,10 @@ use BEAR\Package\AbstractAppModule;
 use BEAR\Package\PackageModule;
 use BEAR\Package\Provide\Router\AuraRouterModule;
 use Koriym\EnvJson\EnvJson;
+use Koriym\SemanticLogger\SemanticLogger;
+use Koriym\SemanticLogger\SemanticLoggerInterface;
 use Ray\AuraSqlModule\AuraSqlModule;
+use Ray\Di\Scope;
 use Ray\MediaQuery\MediaQuerySqlModule;
 
 use function dirname;
@@ -26,6 +29,7 @@ final class AppModule extends AbstractAppModule
         $this->install(new AuraSqlModule($dsn, $user, $pass));
         $this->install(new MediaQuerySqlModule($appDir . '/src/Query', $appDir . '/var/sql'));
         $this->install(new AuraRouterModule($appDir . '/var/conf/aura.route.php'));
+        $this->bind(SemanticLoggerInterface::class)->to(SemanticLogger::class)->in(Scope::SINGLETON);
         $this->install(new BeModule('ConstraintEngine\App\Semantic'));
         $this->install(new McpModule());
         $this->install(new PackageModule());

@@ -6,13 +6,6 @@ parameters:
   excludePaths:
     - tests/Http/index.php
   ignoreErrors:
-    # ProdModule: BEAR.Sunday version compatibility
-    - message: '#Class BEAR\\Sunday\\Provide\\Error\\VndErrorHandler not found#'
-      paths:
-        - src/Module/ProdModule.php
-    - message: '#AppModule constructor invoked with 0 parameters#'
-      paths:
-        - src/Module/ProdModule.php
     # PHPUnit with() named arguments: PHPUnit annotates @no-named-arguments but tests use snake_case named args for readability
     -
       identifier: argument.named
