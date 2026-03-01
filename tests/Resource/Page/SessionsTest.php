@@ -16,8 +16,7 @@ class SessionsTest extends ResourceTestCase
         $ro = $this->resource->get('page://self/sessions');
         assert($ro instanceof ResourceObject);
         $this->assertSame(200, $ro->code);
-        $this->assertArrayHasKey('sessions', $ro->body);
-        $this->assertSame([], $ro->body['sessions']);
+        $this->assertSame([], $ro->body);
     }
 
     public function testOnGetWithData(): void
@@ -53,11 +52,10 @@ class SessionsTest extends ResourceTestCase
         $ro = $this->resource->get('page://self/sessions');
         assert($ro instanceof ResourceObject);
         $this->assertSame(200, $ro->code);
-        $this->assertCount(2, $ro->body['sessions']);
+        $this->assertCount(2, $ro->body);
 
-        $sessions = $ro->body['sessions'];
         $sess001 = null;
-        foreach ($sessions as $s) {
+        foreach ($ro->body as $s) {
             if ($s['sessionId'] !== 'sess-001') {
                 continue;
             }

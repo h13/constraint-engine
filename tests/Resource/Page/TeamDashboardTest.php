@@ -16,8 +16,7 @@ class TeamDashboardTest extends ResourceTestCase
         $ro = $this->resource->get('page://self/team-dashboard');
         assert($ro instanceof ResourceObject);
         $this->assertSame(200, $ro->code);
-        $this->assertArrayHasKey('members', $ro->body);
-        $this->assertSame([], $ro->body['members']);
+        $this->assertSame([], $ro->body);
     }
 
     public function testOnGetWithMultipleUsers(): void
@@ -56,11 +55,11 @@ class TeamDashboardTest extends ResourceTestCase
         $ro = $this->resource->get('page://self/team-dashboard');
         assert($ro instanceof ResourceObject);
         $this->assertSame(200, $ro->code);
-        $this->assertCount(2, $ro->body['members']);
+        $this->assertCount(2, $ro->body);
 
         $alice = null;
         $bob = null;
-        foreach ($ro->body['members'] as $member) {
+        foreach ($ro->body as $member) {
             if ($member['userId'] === 'alice') {
                 $alice = $member;
             }
