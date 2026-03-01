@@ -6,14 +6,11 @@ namespace ConstraintEngine\App\Resource\Page;
 
 use BEAR\Resource\Annotation\Link;
 use BEAR\Resource\ResourceObject;
+use ConstraintEngine\App\GoNoGoVerdict;
 use ConstraintEngine\App\Query\RecallQueryInterface;
 
 class GoNoGo extends ResourceObject
 {
-    private const int RECALL_TARGET = 3;
-    private const int DISCOVERY_TARGET = 1;
-    private const int FRICTION_LIMIT = 2;
-
     public function __construct(
         private readonly RecallQueryInterface $query,
     ) {
@@ -29,27 +26,14 @@ class GoNoGo extends ResourceObject
 
         $this->body = [
             'recallCount' => $recall,
-            'recallTarget' => self::RECALL_TARGET,
+            'recallTarget' => GoNoGoVerdict::RECALL_TARGET,
             'discoveryCount' => $discovery,
-            'discoveryTarget' => self::DISCOVERY_TARGET,
+            'discoveryTarget' => GoNoGoVerdict::DISCOVERY_TARGET,
             'frictionCount' => $friction,
-            'frictionLimit' => self::FRICTION_LIMIT,
-            'verdict' => $this->computeVerdict($recall, $discovery, $friction),
+            'frictionLimit' => GoNoGoVerdict::FRICTION_LIMIT,
+            'verdict' => GoNoGoVerdict::compute($recall, $discovery, $friction),
         ];
 
         return $this;
-    }
-
-    private function computeVerdict(int $recall, int $discovery, int $friction): string
-    {
-        if ($friction > self::FRICTION_LIMIT) {
-            return 'no_go';
-        }
-
-        if ($recall >= self::RECALL_TARGET && $discovery >= self::DISCOVERY_TARGET) {
-            return 'go';
-        }
-
-        return 'pending';
     }
 }

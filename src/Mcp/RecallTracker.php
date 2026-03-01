@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Mcp;
 
+use ConstraintEngine\App\GoNoGoVerdict;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use ConstraintEngine\App\Query\RecallCommandInterface;
 use ConstraintEngine\App\Query\RecallQueryInterface;
@@ -15,10 +16,6 @@ use function ucfirst;
 
 final class RecallTracker
 {
-    private const int RECALL_TARGET = 3;
-    private const int DISCOVERY_TARGET = 1;
-    private const int FRICTION_LIMIT = 2;
-
     public function __construct(
         private readonly RecallCommandInterface $command,
         private readonly RecallQueryInterface $query,
@@ -80,14 +77,14 @@ final class RecallTracker
         $recall = $summary !== null ? (int) $summary['recallCount'] : 0;
         $discovery = $summary !== null ? (int) $summary['discoveryCount'] : 0;
         $friction = $summary !== null ? (int) $summary['frictionCount'] : 0;
-        $verdict = $this->computeVerdict($recall, $discovery, $friction);
+        $verdict = GoNoGoVerdict::compute($recall, $discovery, $friction);
 
         $lines = [
             'Go/No-Go Status',
             '---',
-            "Recall:    {$recall} / " . self::RECALL_TARGET . ' (checkpoint reuse in decisions)',
-            "Discovery: {$discovery} / " . self::DISCOVERY_TARGET . ' (unexpected trend findings)',
-            "Friction:  {$friction} / " . self::FRICTION_LIMIT . ' limit (obstruction events)',
+            "Recall:    {$recall} / " . GoNoGoVerdict::RECALL_TARGET . ' (checkpoint reuse in decisions)',
+            "Discovery: {$discovery} / " . GoNoGoVerdict::DISCOVERY_TARGET . ' (unexpected trend findings)',
+            "Friction:  {$friction} / " . GoNoGoVerdict::FRICTION_LIMIT . ' limit (obstruction events)',
             '---',
             'Verdict: ' . strtoupper($verdict),
         ];
@@ -105,18 +102,5 @@ final class RecallTracker
         $this->command->add($checkpointId, $type, $note);
 
         return ucfirst($type) . " recorded for checkpoint #{$checkpointId}.";
-    }
-
-    private function computeVerdict(int $recall, int $discovery, int $friction): string
-    {
-        if ($friction > self::FRICTION_LIMIT) {
-            return 'no_go';
-        }
-
-        if ($recall >= self::RECALL_TARGET && $discovery >= self::DISCOVERY_TARGET) {
-            return 'go';
-        }
-
-        return 'pending';
     }
 }
