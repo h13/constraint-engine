@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace ConstraintEngine\App;
 
 use BEAR\Resource\ResourceObject;
-use ConstraintEngine\App\Module\App;
 use BEAR\Sunday\Extension\Application\AppInterface;
 use BEAR\Sunday\Extension\Router\RouterInterface;
+use ConstraintEngine\App\Module\App;
 use Throwable;
 
 use function assert;

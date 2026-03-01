@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Resource\Page;
 
-use Aura\Sql\ExtendedPdoInterface;
+use Be\Framework\BecomingInterface;
+use Be\Framework\Exception\SemanticVariableException;
 use BEAR\Resource\Code;
 use BEAR\Resource\ResourceObject;
-use ConstraintEngine\App\Query\CheckpointCommandInterface;
+use ConstraintEngine\App\Being\RecordedCheckpoint;
+use ConstraintEngine\App\Input\CheckpointInput;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
+
+use function assert;
 
 class Checkpoints extends ResourceObject
 {
     public function __construct(
         private readonly CheckpointQueryInterface $query,
-        private readonly CheckpointCommandInterface $command,
-        private readonly ExtendedPdoInterface $pdo,
+        private readonly BecomingInterface $becoming,
     ) {
     }
 
@@ -35,19 +38,29 @@ class Checkpoints extends ResourceObject
         string $tag,
         string $confidence,
     ): static {
-        $this->command->add(
-            session_id: $sessionId,
-            task_context: $taskContext,
-            ai_proposal: $aiProposal,
-            human_final: $humanFinal,
+        $input = new CheckpointInput(
+            sessionId: $sessionId,
+            taskContext: $taskContext,
+            aiProposal: $aiProposal,
+            humanFinal: $humanFinal,
             diff: $diff,
             tag: $tag,
             confidence: $confidence,
         );
-        $id = $this->pdo->lastInsertId();
+
+        try {
+            $result = ($this->becoming)($input);
+            assert($result instanceof RecordedCheckpoint);
+        } catch (SemanticVariableException $e) {
+            $this->code = 422;
+            $this->body = ['errors' => $e->getErrors()->getMessages('en')];
+
+            return $this;
+        }
+
         $this->code = Code::CREATED;
-        $this->headers['Location'] = "/checkpoints/{$id}";
-        $this->body = ['id' => (int) $id];
+        $this->headers['Location'] = "/checkpoints/{$result->id}";
+        $this->body = ['id' => $result->id];
 
         return $this;
     }
