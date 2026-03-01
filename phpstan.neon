@@ -4,4 +4,23 @@ parameters:
     - src
     - tests
   excludePaths:
-  	- tests/Http/index.php
+    - tests/Http/index.php
+  ignoreErrors:
+    # ProdModule: BEAR.Sunday version compatibility
+    - message: '#Class BEAR\\Sunday\\Provide\\Error\\VndErrorHandler not found#'
+      paths:
+        - src/Module/ProdModule.php
+    - message: '#AppModule constructor invoked with 0 parameters#'
+      paths:
+        - src/Module/ProdModule.php
+    # PHPUnit with() named arguments: PHPUnit annotates @no-named-arguments but tests use snake_case named args for readability
+    -
+      identifier: argument.named
+      path: tests/
+    # BEAR.Sunday test pattern: assert($ro instanceof ResourceObject) is idiomatic
+    -
+      identifier: instanceof.alwaysTrue
+      path: tests/
+    -
+      identifier: function.alreadyNarrowedType
+      path: tests/
