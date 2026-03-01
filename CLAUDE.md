@@ -74,7 +74,7 @@ MCPツール:
 
 1. **record_checkpoint**
    - 入力: `aiProposal`, `humanFinal`, `taskContext`, `sessionId`
-   - 処理: diff検出 → Claude API (claude-sonnet-4-5-20250929) で3分類判定 → `POST http://localhost:8080/checkpoint` に送信
+   - 処理: diff検出 → Claude API (claude-sonnet-4-5-20250929) で3分類判定 → `POST http://localhost:8080/checkpoints` に送信
    - 分類プロンプト: 差分テキストを受け取り、`{"tag": "factual"|"strategic"|"stylistic", "confidence": "estimated"}` だけ返す
 
 2. **show_pattern**
@@ -89,13 +89,16 @@ composer test             # テスト全パス
 composer serve            # dev server at localhost:8080
 
 # 別ターミナル
-curl -X POST http://localhost:8080/checkpoint \
+curl -X POST http://localhost:8080/checkpoints \
   -H "Content-Type: application/json" \
   -d '{"sessionId":"test-001","taskContext":"Salesforce項目設計","aiProposal":"Textフィールドを使用","humanFinal":"LongTextAreaに変更","diff":"Text→LongTextArea","tag":"factual","confidence":"estimated"}'
 
 curl http://localhost:8080/checkpoints
-curl http://localhost:8080/checkpoints/{id}
+curl http://localhost:8080/checkpoints/1
 curl http://localhost:8080/pattern-dashboard
+curl http://localhost:8080/sessions
+curl http://localhost:8080/go-no-go
+curl http://localhost:8080/team-dashboard
 ```
 
 ### Phase F: ALPS再抽出

@@ -14,6 +14,8 @@ CREATE INDEX IF NOT EXISTS idx_checkpoint_tag ON checkpoint (tag);
 CREATE INDEX IF NOT EXISTS idx_checkpoint_session ON checkpoint (session_id);
 CREATE INDEX IF NOT EXISTS idx_checkpoint_date ON checkpoint (date_created);
 CREATE INDEX IF NOT EXISTS idx_checkpoint_user ON checkpoint (user_id);
+CREATE INDEX IF NOT EXISTS idx_checkpoint_tag_session ON checkpoint (tag, session_id);
+CREATE INDEX IF NOT EXISTS idx_checkpoint_date_tag ON checkpoint (date_created, tag);
 
 CREATE TABLE IF NOT EXISTS checkpoint_recall (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
