@@ -102,6 +102,7 @@ class PatternViewerTest extends TestCase
         $this->assertStringContainsString('2026-01-01 ~ 2026-01-07 (10 checkpoints)', $result);
         $this->assertStringContainsString('2025-12-25 ~ 2025-12-31 (8 checkpoints)', $result);
         $this->assertStringContainsString('Factual:', $result);
+        $this->assertStringContainsString('vs', $result);
         $this->assertStringContainsString('pp)', $result);
     }
 
@@ -236,15 +237,26 @@ class PatternViewerTest extends TestCase
         $this->assertSame('No checkpoints in either period.', $result);
     }
 
-    public function testComparePeriodsUsesDefaultDatesWhenPartialArgs(): void
+    public function testComparePeriodsRejectsPartialArgs(): void
     {
         $query = $this->createMock(CheckpointQueryInterface::class);
-        $query->method('periodSummary')->willReturn(null);
 
         $viewer = new PatternViewer($query, 'http://test:8080');
         $result = $viewer->comparePeriods(currentStart: '2026-01-01');
 
-        $this->assertSame('No checkpoints in either period.', $result);
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('All four date parameters', $result);
+    }
+
+    public function testShowImprovementRateRejectsPartialArgs(): void
+    {
+        $query = $this->createMock(CheckpointQueryInterface::class);
+
+        $viewer = new PatternViewer($query, 'http://test:8080');
+        $result = $viewer->showImprovementRate(periodStart: '2026-01-01');
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('Both periodStart and periodEnd', $result);
     }
 
     public function testShowImprovementRateUsesDefaultDatesWhenNoArgs(): void

@@ -84,11 +84,13 @@ final class PatternViewer
         string $previousStart = '',
         string $previousEnd = '',
     ): string {
-        if ($currentStart === '' || $currentEnd === '' || $previousStart === '' || $previousEnd === '') {
-            $currentStart = date('Y-m-d', strtotime('-7 days'));
+        if ($currentStart === '' && $currentEnd === '' && $previousStart === '' && $previousEnd === '') {
+            $currentStart = date('Y-m-d', (int) strtotime('-7 days'));
             $currentEnd = date('Y-m-d');
-            $previousStart = date('Y-m-d', strtotime('-14 days'));
-            $previousEnd = date('Y-m-d', strtotime('-8 days'));
+            $previousStart = date('Y-m-d', (int) strtotime('-14 days'));
+            $previousEnd = date('Y-m-d', (int) strtotime('-8 days'));
+        } elseif ($currentStart === '' || $currentEnd === '' || $previousStart === '' || $previousEnd === '') {
+            return 'Error: All four date parameters must be provided, or all left empty to use defaults.';
         }
 
         try {
@@ -124,7 +126,8 @@ final class PatternViewer
             $prevPct = $prevTotal > 0 ? $prevCount / $prevTotal * 100 : 0;
             $change = $this->formatChange($prevPct, $curPct);
             $tagLabel = ucfirst($tag);
-            $lines[] = "{$tagLabel}: {$curCount} (" . number_format($curPct, 1) . "%) {$change}";
+            $lines[] = "{$tagLabel}: {$curCount} (" . number_format($curPct, 1) . '%) vs '
+                . "{$prevCount} (" . number_format($prevPct, 1) . "%) {$change}";
         }
 
         $lines[] = '';
@@ -148,9 +151,11 @@ final class PatternViewer
         string $periodStart = '',
         string $periodEnd = '',
     ): string {
-        if ($periodStart === '' || $periodEnd === '') {
-            $periodStart = date('Y-m-d', strtotime('-30 days'));
+        if ($periodStart === '' && $periodEnd === '') {
+            $periodStart = date('Y-m-d', (int) strtotime('-30 days'));
             $periodEnd = date('Y-m-d');
+        } elseif ($periodStart === '' || $periodEnd === '') {
+            return 'Error: Both periodStart and periodEnd must be provided, or both left empty to use defaults.';
         }
 
         try {
