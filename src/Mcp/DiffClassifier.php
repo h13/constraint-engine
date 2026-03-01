@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Mcp;
 
+use JsonException;
+
 use function in_array;
 use function json_decode;
 
@@ -37,7 +39,12 @@ PROMPT;
             self::MAX_TOKENS,
         );
 
-        $classification = json_decode($text, true, 512, JSON_THROW_ON_ERROR);
+        try {
+            $classification = json_decode($text, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException) {
+            return ['tag' => 'stylistic', 'confidence' => 'estimated'];
+        }
+
         $tag = $classification['tag'] ?? null;
         if (! in_array($tag, ['factual', 'strategic', 'stylistic'], true)) {
             $tag = 'stylistic';

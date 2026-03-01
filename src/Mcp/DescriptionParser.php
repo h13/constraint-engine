@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Mcp;
 
+use JsonException;
+
+use function in_array;
 use function json_decode;
 
 use const JSON_THROW_ON_ERROR;
@@ -41,13 +44,28 @@ PROMPT;
             self::MAX_TOKENS,
         );
 
-        $parsed = json_decode($text, true, 512, JSON_THROW_ON_ERROR);
+        try {
+            $parsed = json_decode($text, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException) {
+            return [
+                'aiProposal' => '',
+                'humanFinal' => '',
+                'taskContext' => '',
+                'tag' => 'stylistic',
+                'confidence' => 'estimated',
+            ];
+        }
+
+        $tag = $parsed['tag'] ?? 'stylistic';
+        if (! in_array($tag, ['factual', 'strategic', 'stylistic'], true)) {
+            $tag = 'stylistic';
+        }
 
         return [
             'aiProposal' => $parsed['aiProposal'] ?? '',
             'humanFinal' => $parsed['humanFinal'] ?? '',
             'taskContext' => $parsed['taskContext'] ?? '',
-            'tag' => $parsed['tag'] ?? 'stylistic',
+            'tag' => $tag,
             'confidence' => 'estimated',
         ];
     }
