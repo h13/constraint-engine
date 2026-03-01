@@ -4,7 +4,7 @@
     "license": "proprietary",
     "description": "",
     "require": {
-        "php": "^8.5.0",
+        "php": "^8.4",
         "be-framework/be": "@dev",
         "bear/aura-router-module": "^2.0",
         "bear/package": "^1.14",
