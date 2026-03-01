@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Mcp;
 
-use JsonException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
@@ -68,15 +67,16 @@ class DiffClassifierTest extends TestCase
         $classifier->classify('some diff');
     }
 
-    public function testClassifyMalformedResponse(): void
+    public function testClassifyMalformedResponseFallsBackToStylistic(): void
     {
         $client = $this->createMock(AnthropicClientInterface::class);
         $client->method('complete')->willReturn('not json');
 
         $classifier = new DiffClassifier($client);
+        $result = $classifier->classify('some diff');
 
-        $this->expectException(JsonException::class);
-        $classifier->classify('some diff');
+        $this->assertSame('stylistic', $result['tag']);
+        $this->assertSame('estimated', $result['confidence']);
     }
 
     public function testClassifyInvalidTagFallsBackToStylistic(): void

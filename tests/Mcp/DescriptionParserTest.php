@@ -74,6 +74,36 @@ class DescriptionParserTest extends TestCase
         $this->assertSame('estimated', $result['confidence']);
     }
 
+    public function testParseMalformedResponseFallsBack(): void
+    {
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')->willReturn('not valid json');
+
+        $parser = new DescriptionParser($client);
+        $result = $parser->parse('Some description');
+
+        $this->assertSame('', $result['aiProposal']);
+        $this->assertSame('', $result['humanFinal']);
+        $this->assertSame('', $result['taskContext']);
+        $this->assertSame('stylistic', $result['tag']);
+        $this->assertSame('estimated', $result['confidence']);
+    }
+
+    public function testParseInvalidTagFallsBackToStylistic(): void
+    {
+        $parser = $this->createParser([
+            'aiProposal' => 'proposal',
+            'humanFinal' => 'final',
+            'taskContext' => 'task',
+            'tag' => 'invalid_tag',
+            'confidence' => 'estimated',
+        ]);
+
+        $result = $parser->parse('Some description');
+
+        $this->assertSame('stylistic', $result['tag']);
+    }
+
     /** @param array<string, string> $responseData */
     private function createParser(array $responseData): DescriptionParser
     {
