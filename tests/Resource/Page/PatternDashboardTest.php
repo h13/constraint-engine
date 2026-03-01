@@ -66,4 +66,58 @@ class PatternDashboardTest extends ResourceTestCase
         $this->assertSame(200, $ro->code);
         $this->assertNotEmpty($ro->body['trend']);
     }
+
+    public function testOnGetWithComparison(): void
+    {
+        $this->resource->post('page://self/checkpoints', [
+            'sessionId' => 'test-001',
+            'taskContext' => 'test',
+            'aiProposal' => 'a',
+            'humanFinal' => 'b',
+            'diff' => 'a→b',
+            'tag' => 'factual',
+            'confidence' => 'estimated',
+        ]);
+        $ro = $this->resource->get('page://self/pattern-dashboard', [
+            'periodStart' => '2020-01-01',
+            'periodEnd' => '2030-12-31',
+            'compareStart' => '2010-01-01',
+            'compareEnd' => '2019-12-31',
+        ]);
+        assert($ro instanceof ResourceObject);
+        $this->assertSame(200, $ro->code);
+        $this->assertNotNull($ro->body['comparison']);
+        $this->assertArrayHasKey('current', $ro->body['comparison']);
+        $this->assertArrayHasKey('previous', $ro->body['comparison']);
+    }
+
+    public function testOnGetComparisonNullWhenPartialParams(): void
+    {
+        $ro = $this->resource->get('page://self/pattern-dashboard', [
+            'periodStart' => '2020-01-01',
+            'periodEnd' => '2030-12-31',
+        ]);
+        assert($ro instanceof ResourceObject);
+        $this->assertSame(200, $ro->code);
+        $this->assertNull($ro->body['comparison']);
+    }
+
+    public function testOnGetFactualRateWithPeriod(): void
+    {
+        $this->resource->post('page://self/checkpoints', [
+            'sessionId' => 'test-001',
+            'taskContext' => 'test',
+            'aiProposal' => 'a',
+            'humanFinal' => 'b',
+            'diff' => 'a→b',
+            'tag' => 'factual',
+            'confidence' => 'estimated',
+        ]);
+        $ro = $this->resource->get('page://self/pattern-dashboard', [
+            'periodStart' => '2020-01-01',
+            'periodEnd' => '2030-12-31',
+        ]);
+        assert($ro instanceof ResourceObject);
+        $this->assertNotEmpty($ro->body['factualRate']);
+    }
 }

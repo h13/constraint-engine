@@ -224,4 +224,37 @@ class PatternViewerTest extends TestCase
         $this->assertStringNotContainsString('Improvement', $result);
         $this->assertStringNotContainsString('Note:', $result);
     }
+
+    public function testComparePeriodsUsesDefaultDatesWhenNoArgs(): void
+    {
+        $query = $this->createMock(CheckpointQueryInterface::class);
+        $query->method('periodSummary')->willReturn(null);
+
+        $viewer = new PatternViewer($query, 'http://test:8080');
+        $result = $viewer->comparePeriods();
+
+        $this->assertSame('No checkpoints in either period.', $result);
+    }
+
+    public function testComparePeriodsUsesDefaultDatesWhenPartialArgs(): void
+    {
+        $query = $this->createMock(CheckpointQueryInterface::class);
+        $query->method('periodSummary')->willReturn(null);
+
+        $viewer = new PatternViewer($query, 'http://test:8080');
+        $result = $viewer->comparePeriods(currentStart: '2026-01-01');
+
+        $this->assertSame('No checkpoints in either period.', $result);
+    }
+
+    public function testShowImprovementRateUsesDefaultDatesWhenNoArgs(): void
+    {
+        $query = $this->createMock(CheckpointQueryInterface::class);
+        $query->method('factualRate')->willReturn([]);
+
+        $viewer = new PatternViewer($query, 'http://test:8080');
+        $result = $viewer->showImprovementRate();
+
+        $this->assertStringContainsString('No checkpoints found', $result);
+    }
 }
