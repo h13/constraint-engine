@@ -25,6 +25,7 @@ class Checkpoints extends ResourceObject
 
     #[Link(rel: 'checkpoint', href: '/checkpoints/{checkpointId}')]
     #[Link(rel: 'patternDashboard', href: '/pattern-dashboard')]
+    #[Link(rel: 'recordCheckpoint', href: '/checkpoints')]
     public function onGet(string $tag = '', string $sessionId = ''): static
     {
         $this->body = $tag !== '' || $sessionId !== ''
