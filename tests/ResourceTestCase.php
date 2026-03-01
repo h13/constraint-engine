@@ -19,9 +19,11 @@ abstract class ResourceTestCase extends TestCase
         $injector = Injector::getOverrideInstance('app', new TestModule());
         $this->resource = $injector->getInstance(ResourceInterface::class);
         $pdo = $injector->getInstance(ExtendedPdoInterface::class);
-        $sql = file_get_contents(__DIR__ . '/../var/sql/create_checkpoint.sql');
-        if ($sql !== false) {
-            $pdo->exec($sql);
+        $sql = file_get_contents(__DIR__ . '/../var/sql/sqlite/create_checkpoint.sql');
+        if ($sql === false) {
+            return;
         }
+
+        $pdo->exec($sql);
     }
 }

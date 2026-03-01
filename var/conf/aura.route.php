@@ -6,3 +6,4 @@ declare(strict_types=1);
 $map->route('/checkpoints', '/checkpoints');
 $map->route('/checkpoint', '/checkpoints/{id}')->tokens(['id' => '\d+']);
 $map->route('/pattern-dashboard', '/pattern-dashboard');
+$map->route('/health', '/health');

@@ -1,8 +1,8 @@
 SELECT
     tag,
-    DATE(date_created) as date,
+    CAST(date_created AS DATE) as date,
     COUNT(*) as count
 FROM checkpoint
 WHERE date_created BETWEEN :periodStart AND :periodEnd
-GROUP BY tag, DATE(date_created)
+GROUP BY tag, CAST(date_created AS DATE)
 ORDER BY date

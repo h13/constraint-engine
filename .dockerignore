@@ -1,0 +1,10 @@
+.git
+.github
+.claude
+.phpcs-cache
+.env
+mcp-server/node_modules
+mcp-server/dist
+var/tmp/*
+var/log/*
+build/

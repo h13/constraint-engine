@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS checkpoint (
     ai_proposal TEXT NOT NULL,
     human_final TEXT NOT NULL,
     diff TEXT NOT NULL,
-    tag TEXT NOT NULL,
-    confidence TEXT NOT NULL,
+    tag TEXT NOT NULL CHECK(tag IN ('factual', 'strategic', 'stylistic')),
+    confidence TEXT NOT NULL CHECK(confidence IN ('estimated', 'stated')),
     date_created TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS idx_checkpoint_tag ON checkpoint (tag);

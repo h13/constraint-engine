@@ -1,0 +1,16 @@
+# Production overrides: docker compose -f compose.yaml -f compose.prod.yaml up -d
+services:
+  app:
+    build:
+      target: runtime
+    volumes: []
+    restart: always
+
+  nginx:
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: always
+
+  db:
+    ports: []
+    restart: always
