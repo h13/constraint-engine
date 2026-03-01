@@ -75,7 +75,7 @@ class PatternViewerTest extends TestCase
             ->willReturnMap([
                 [
                     '2026-01-01',
-                    '2026-01-07',
+                    '2026-01-08',
                     [
                         'totalCheckpoints' => 10,
                         'factualCount' => 3,
@@ -85,7 +85,7 @@ class PatternViewerTest extends TestCase
                 ],
                 [
                     '2025-12-25',
-                    '2025-12-31',
+                    '2026-01-01',
                     [
                         'totalCheckpoints' => 8,
                         'factualCount' => 4,
@@ -112,7 +112,7 @@ class PatternViewerTest extends TestCase
             ->willReturnMap([
                 [
                     '2026-01-01',
-                    '2026-01-07',
+                    '2026-01-08',
                     [
                         'totalCheckpoints' => 5,
                         'factualCount' => 3,
@@ -122,7 +122,7 @@ class PatternViewerTest extends TestCase
                 ],
                 [
                     '2025-12-25',
-                    '2025-12-31',
+                    '2026-01-01',
                     [
                         'totalCheckpoints' => 5,
                         'factualCount' => 0,

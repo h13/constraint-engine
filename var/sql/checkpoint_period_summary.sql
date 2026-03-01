@@ -5,4 +5,4 @@ SELECT
     SUM(CASE WHEN tag = 'stylistic' THEN 1 ELSE 0 END) as "stylisticCount"
 FROM checkpoint
 WHERE date_created >= :periodStart
-  AND date_created < date(:periodEnd, '+1 day')
+  AND date_created < :periodEnd

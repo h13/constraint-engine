@@ -89,8 +89,10 @@ final class PatternViewer
             $previousEnd = date('Y-m-d', strtotime('-8 days'));
         }
 
-        $current = $this->query->periodSummary($currentStart, $currentEnd);
-        $previous = $this->query->periodSummary($previousStart, $previousEnd);
+        $currentEndExcl = self::nextDay($currentEnd);
+        $previousEndExcl = self::nextDay($previousEnd);
+        $current = $this->query->periodSummary($currentStart, $currentEndExcl);
+        $previous = $this->query->periodSummary($previousStart, $previousEndExcl);
 
         $curTotal = $current !== null ? (int) $current['totalCheckpoints'] : 0;
         $prevTotal = $previous !== null ? (int) $previous['totalCheckpoints'] : 0;
@@ -144,7 +146,7 @@ final class PatternViewer
             $periodEnd = date('Y-m-d');
         }
 
-        $rates = $this->query->factualRate($periodStart, $periodEnd);
+        $rates = $this->query->factualRate($periodStart, self::nextDay($periodEnd));
         if ($rates === []) {
             return "No checkpoints found in period {$periodStart} ~ {$periodEnd}.";
         }
@@ -188,6 +190,11 @@ final class PatternViewer
         }
 
         return number_format($part / $total * 100, 1);
+    }
+
+    private static function nextDay(string $date): string
+    {
+        return date('Y-m-d', strtotime($date . ' +1 day'));
     }
 
     private function formatChange(float $previous, float $current): string

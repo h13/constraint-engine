@@ -24,7 +24,12 @@ interface CheckpointQueryInterface
     #[DbQuery('checkpoint_tag_distribution')]
     public function tagDistribution(): array;
 
-    /** @return array<array{tag: string, date: string, count: int}> */
+    /**
+     * @param string $periodStart Inclusive start date (YYYY-MM-DD)
+     * @param string $periodEnd   Exclusive end date (YYYY-MM-DD) — pass the day AFTER the desired range
+     *
+     * @return array<array{tag: string, date: string, count: int}>
+     */
     #[DbQuery('checkpoint_trend')]
     public function trend(string $periodStart, string $periodEnd): array;
 
@@ -44,11 +49,21 @@ interface CheckpointQueryInterface
     #[DbQuery('session_analysis_summary', type: 'row')]
     public function sessionAnalysisSummary(string $sessionId): array|null;
 
-    /** @return array{totalCheckpoints: int, factualCount: int, strategicCount: int, stylisticCount: int}|null */
+    /**
+     * @param string $periodStart Inclusive start date (YYYY-MM-DD)
+     * @param string $periodEnd   Exclusive end date (YYYY-MM-DD) — pass the day AFTER the desired range
+     *
+     * @return array{totalCheckpoints: int, factualCount: int, strategicCount: int, stylisticCount: int}|null
+     */
     #[DbQuery('checkpoint_period_summary', type: 'row')]
     public function periodSummary(string $periodStart, string $periodEnd): array|null;
 
-    /** @return array<array{date: string, total: int, factualCount: int, factualRate: float}> */
+    /**
+     * @param string $periodStart Inclusive start date (YYYY-MM-DD)
+     * @param string $periodEnd   Exclusive end date (YYYY-MM-DD) — pass the day AFTER the desired range
+     *
+     * @return array<array{date: string, total: int, factualCount: int, factualRate: float}>
+     */
     #[DbQuery('checkpoint_factual_rate')]
     public function factualRate(string $periodStart, string $periodEnd): array;
 
