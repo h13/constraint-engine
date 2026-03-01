@@ -40,6 +40,10 @@ interface CheckpointQueryInterface
     #[DbQuery('session_analysis')]
     public function sessionAnalysis(string $sessionId): array;
 
+    /** @return array{session_id: string, task_context: string, checkpoint_count: int, factual_count: int, strategic_count: int, stylistic_count: int}|null */
+    #[DbQuery('session_analysis_summary', type: 'row')]
+    public function sessionAnalysisSummary(string $sessionId): array|null;
+
     /** @return array{total: int, factual_count: int, strategic_count: int, stylistic_count: int}|null */
     #[DbQuery('checkpoint_period_summary', type: 'row')]
     public function periodSummary(string $periodStart, string $periodEnd): array|null;

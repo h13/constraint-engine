@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Resource\Page;
 
+use BEAR\Resource\Annotation\Link;
+use BEAR\Resource\Code;
 use BEAR\Resource\ResourceObject;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
-
-use function count;
 
 class SessionAnalysis extends ResourceObject
 {
@@ -16,28 +16,27 @@ class SessionAnalysis extends ResourceObject
     ) {
     }
 
+    #[Link(rel: 'checkpointList', href: '/checkpoints{?sessionId}')]
     public function onGet(string $sessionId): static
     {
-        $checkpoints = $this->query->sessionAnalysis($sessionId);
-        if ($checkpoints === []) {
-            $this->code = 404;
+        $summary = $this->query->sessionAnalysisSummary($sessionId);
+        if ($summary === null) {
+            $this->code = Code::NOT_FOUND;
             $this->body = [];
 
             return $this;
         }
 
-        $tagCounts = ['factual' => 0, 'strategic' => 0, 'stylistic' => 0];
-        foreach ($checkpoints as $cp) {
-            $tag = $cp['tag'];
-            $tagCounts[$tag] = ($tagCounts[$tag] ?? 0) + 1;
-        }
-
         $this->body = [
-            'sessionId' => $sessionId,
-            'taskContext' => $checkpoints[0]['task_context'],
-            'checkpointCount' => count($checkpoints),
-            'distribution' => $tagCounts,
-            'checkpoints' => $checkpoints,
+            'sessionId' => $summary['session_id'],
+            'taskContext' => $summary['task_context'],
+            'checkpointCount' => (int) $summary['checkpoint_count'],
+            'distribution' => [
+                'factual' => (int) $summary['factual_count'],
+                'strategic' => (int) $summary['strategic_count'],
+                'stylistic' => (int) $summary['stylistic_count'],
+            ],
+            'checkpoints' => $this->query->sessionAnalysis($sessionId),
         ];
 
         return $this;
