@@ -52,6 +52,9 @@ final class PatternViewer
             }
         }
 
+        $lines[] = '';
+        $lines[] = 'Dashboard: http://localhost:8080/pattern-dashboard';
+
         return implode("\n", $lines);
     }
 
