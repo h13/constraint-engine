@@ -41,6 +41,8 @@
   <descriptor id="checkpointCount" title="Checkpoint件数" def="https://schema.org/Integer"/>
   <descriptor id="firstCheckpoint" title="最初のCheckpoint日時" def="https://schema.org/dateCreated"/>
   <descriptor id="lastCheckpoint" title="最後のCheckpoint日時" def="https://schema.org/dateModified"/>
+  <descriptor id="status" title="システムステータス" def="https://schema.org/Text"/>
+  <descriptor id="db" title="データベース接続状態" def="https://schema.org/Text"/>
 
   <!-- Representations -->
   <descriptor id="Home" title="ホームページ">
@@ -153,6 +155,11 @@
     <descriptor href="#stylisticCount"/>
     <descriptor href="#Checkpoint"/>
     <descriptor href="#goCheckpointList"/>
+  </descriptor>
+
+  <descriptor id="Health" title="システムヘルスチェック">
+    <descriptor href="#status"/>
+    <descriptor href="#db"/>
   </descriptor>
 
   <descriptor id="GoNoGo" title="Go/No-Go メトリクス">
