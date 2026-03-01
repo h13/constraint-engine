@@ -1,0 +1,44 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '\\n[Constraint Engine] record_checkpoint / quick_record で判断の差分を記録しましたか？' >&2"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git branch:*)",
+      "Bash(gh repo:*)",
+      "Bash(git:*)",
+      "Bash(asd:*)",
+      "Bash(composer global:*)",
+      "WebSearch",
+      "Bash(gh api:*)",
+      "Bash(gh search:*)",
+      "Bash(brew:*)",
+      "Bash(rsync:*)",
+      "Bash(composer install:*)",
+      "Bash(composer require:*)",
+      "Bash(composer show:*)",
+      "Bash(php:*)",
+      "Bash(composer dump-autoload:*)",
+      "Bash(./vendor/bin/phpunit:*)",
+      "Bash(kill 89997:*)",
+      "Skill(claude-developer-platform)",
+      "Bash(./vendor/bin/phpcbf src:*)",
+      "Bash(composer scripts:*)",
+      "Bash(composer list:*)",
+      "Bash(composer update:*)",
+      "Bash(python3:*)",
+      "Bash(composer cs:*)",
+      "Bash(composer cs-fix:*)"
+    ]
+  }
+}
