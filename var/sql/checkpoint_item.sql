@@ -7,6 +7,7 @@ SELECT
     diff,
     tag,
     confidence,
+    user_id as "userId",
     date_created as "dateCreated"
 FROM checkpoint
 WHERE id = :id

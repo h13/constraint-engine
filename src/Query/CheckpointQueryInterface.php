@@ -12,7 +12,7 @@ interface CheckpointQueryInterface
     #[DbQuery('checkpoint_list')]
     public function list(): array;
 
-    /** @return array{checkpointId: int, sessionId: string, taskContext: string, aiProposal: string, humanFinal: string, diff: string, tag: string, confidence: string, dateCreated: string}|null */
+    /** @return array{checkpointId: int, sessionId: string, taskContext: string, aiProposal: string, humanFinal: string, diff: string, tag: string, confidence: string, userId: string, dateCreated: string}|null */
     #[DbQuery('checkpoint_item', type: 'row')]
     public function item(int $id): array|null;
 
