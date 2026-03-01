@@ -30,6 +30,10 @@
   <descriptor id="frictionCount" title="摩擦回数" def="https://schema.org/Integer"/>
   <descriptor id="frictionLimit" title="摩擦許容上限" def="https://schema.org/Integer"/>
   <descriptor id="verdict" title="Go/No-Go判定 (go|no_go|pending)" def="https://schema.org/Text"/>
+  <descriptor id="userId" title="ユーザー識別子" def="https://schema.org/identifier"/>
+  <descriptor id="checkpointCount" title="Checkpoint件数" def="https://schema.org/Integer"/>
+  <descriptor id="firstCheckpoint" title="最初のCheckpoint日時" def="https://schema.org/dateCreated"/>
+  <descriptor id="lastCheckpoint" title="最後のCheckpoint日時" def="https://schema.org/dateModified"/>
 
   <!-- Representations -->
   <descriptor id="CheckpointList" title="Checkpoint一覧">
@@ -65,6 +69,39 @@
     <descriptor href="#stylisticCount"/>
     <descriptor href="#periodStart"/>
     <descriptor href="#periodEnd"/>
+    <descriptor href="#goCheckpointList"/>
+  </descriptor>
+
+  <descriptor id="TeamDashboard" title="チーム集計ダッシュボード">
+    <descriptor href="#userId"/>
+    <descriptor href="#checkpointCount"/>
+    <descriptor href="#factualCount"/>
+    <descriptor href="#strategicCount"/>
+    <descriptor href="#stylisticCount"/>
+    <descriptor href="#firstCheckpoint"/>
+    <descriptor href="#lastCheckpoint"/>
+    <descriptor href="#goCheckpointList"/>
+  </descriptor>
+
+  <descriptor id="SessionList" title="セッション一覧">
+    <descriptor href="#sessionId"/>
+    <descriptor href="#taskContext"/>
+    <descriptor href="#checkpointCount"/>
+    <descriptor href="#factualCount"/>
+    <descriptor href="#strategicCount"/>
+    <descriptor href="#stylisticCount"/>
+    <descriptor href="#firstCheckpoint"/>
+    <descriptor href="#lastCheckpoint"/>
+    <descriptor href="#goSessionAnalysis"/>
+  </descriptor>
+
+  <descriptor id="SessionAnalysis" title="セッション分析">
+    <descriptor href="#sessionId"/>
+    <descriptor href="#taskContext"/>
+    <descriptor href="#checkpointCount"/>
+    <descriptor href="#factualCount"/>
+    <descriptor href="#strategicCount"/>
+    <descriptor href="#stylisticCount"/>
     <descriptor href="#goCheckpointList"/>
   </descriptor>
 
@@ -110,5 +147,13 @@
   </descriptor>
 
   <descriptor id="goGoNoGo" type="safe" rt="#GoNoGo" title="Go/No-Goメトリクスを表示"/>
+
+  <descriptor id="goTeamDashboard" type="safe" rt="#TeamDashboard" title="チームダッシュボードを表示"/>
+
+  <descriptor id="goSessionList" type="safe" rt="#SessionList" title="セッション一覧を表示"/>
+
+  <descriptor id="goSessionAnalysis" type="safe" rt="#SessionAnalysis" title="セッション分析を表示">
+    <descriptor href="#sessionId"/>
+  </descriptor>
 
 </alps>

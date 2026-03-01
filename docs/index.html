@@ -35,8 +35,8 @@
     document.addEventListener('DOMContentLoaded', async function() {
         try {
             await Promise.all([
-                    renderGraph("#asd-graph-id", 'digraph application_state_diagram {  graph [    labelloc="t";    fontname="Helvetica"  ];  node [shape = box, style = "bold,filled" fillcolor="lightgray", margin="0.3,0.1"];    Checkpoint [margin=0.1, label="Checkpoint", shape=box, URL="#Checkpoint" target="_parent"]    CheckpointList [margin=0.1, label="CheckpointList", shape=box, URL="#CheckpointList" target="_parent"]    PatternDashboard [margin=0.1, label="PatternDashboard", shape=box, URL="#PatternDashboard" target="_parent"]    Checkpoint -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> goCheckpointList</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    CheckpointList -> Checkpoint [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" align="left" href="#doRecordCheckpoint" tooltip="Checkpointを記録 (unsafe)"><font color="#FF4136">■</font> doRecordCheckpoint</td></tr><tr><td valign="middle" align="left" href="#goCheckpoint" tooltip="Checkpoint詳細を表示 (safe)"><font color="#00A86B">■</font> goCheckpoint</td></tr></table>> URL="#doRecordCheckpoint" target="_parent" fontsize=13 class="doRecordCheckpoint" penwidth=1.5];    CheckpointList -> PatternDashboard [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goPatternDashboard" tooltip="判断パターンダッシュボードを表示 (safe)"><font color="#00A86B">■</font> goPatternDashboard</td></tr></table>> URL="#goPatternDashboard" target="_parent" fontsize=13 class="goPatternDashboard" penwidth=1.5];    PatternDashboard -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> goCheckpointList</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    Checkpoint [label="Checkpoint" URL="#Checkpoint" target="_parent"]    CheckpointList [label="CheckpointList" URL="#CheckpointList" target="_parent"]    PatternDashboard [label="PatternDashboard" URL="#PatternDashboard" target="_parent"]}'),
-                    renderGraph("#asd-graph-name", 'digraph application_state_diagram {  graph [    labelloc="t";    fontname="Helvetica"  ];  node [shape = box, style = "bold,filled" fillcolor="lightgray", margin="0.3,0.1"];    Checkpoint [margin=0.1, label="Checkpoint詳細", shape=box, URL="#Checkpoint" target="_parent"]    CheckpointList [margin=0.1, label="Checkpoint一覧", shape=box, URL="#CheckpointList" target="_parent"]    PatternDashboard [margin=0.1, label="判断パターンダッシュボード", shape=box, URL="#PatternDashboard" target="_parent"]    Checkpoint -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> Checkpoint一覧を表示</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    CheckpointList -> Checkpoint [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" align="left" href="#doRecordCheckpoint" tooltip="Checkpointを記録 (unsafe)"><font color="#FF4136">■</font> Checkpointを記録</td></tr><tr><td valign="middle" align="left" href="#goCheckpoint" tooltip="Checkpoint詳細を表示 (safe)"><font color="#00A86B">■</font> Checkpoint詳細を表示</td></tr></table>> URL="#doRecordCheckpoint" target="_parent" fontsize=13 class="doRecordCheckpoint" penwidth=1.5];    CheckpointList -> PatternDashboard [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goPatternDashboard" tooltip="判断パターンダッシュボードを表示 (safe)"><font color="#00A86B">■</font> 判断パターンダッシュボードを表示</td></tr></table>> URL="#goPatternDashboard" target="_parent" fontsize=13 class="goPatternDashboard" penwidth=1.5];    PatternDashboard -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> Checkpoint一覧を表示</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    Checkpoint [label="Checkpoint詳細" URL="#Checkpoint" target="_parent"]    CheckpointList [label="Checkpoint一覧" URL="#CheckpointList" target="_parent"]    PatternDashboard [label="判断パターンダッシュボード" URL="#PatternDashboard" target="_parent"]}')
+                    renderGraph("#asd-graph-id", 'digraph application_state_diagram {  graph [    labelloc="t";    fontname="Helvetica"  ];  node [shape = box, style = "bold,filled" fillcolor="lightgray", margin="0.3,0.1"];    Checkpoint [margin=0.1, label="Checkpoint", shape=box, URL="#Checkpoint" target="_parent"]    CheckpointList [margin=0.1, label="CheckpointList", shape=box, URL="#CheckpointList" target="_parent"]    GoNoGo [margin=0.1, label="GoNoGo", shape=box, URL="#GoNoGo" target="_parent"]    PatternDashboard [margin=0.1, label="PatternDashboard", shape=box, URL="#PatternDashboard" target="_parent"]    SessionAnalysis [margin=0.1, label="SessionAnalysis", shape=box, URL="#SessionAnalysis" target="_parent"]    SessionList [margin=0.1, label="SessionList", shape=box, URL="#SessionList" target="_parent"]    TeamDashboard [margin=0.1, label="TeamDashboard", shape=box, URL="#TeamDashboard" target="_parent"]    Checkpoint -> Checkpoint [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#doUpdateCheckpoint" tooltip="Checkpointの分類タグを更新 (idempotent)"><font color="#FFDC00">■</font> doUpdateCheckpoint</td></tr></table>> URL="#doUpdateCheckpoint" target="_parent" fontsize=13 class="doUpdateCheckpoint" penwidth=1.5];    Checkpoint -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> goCheckpointList</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    CheckpointList -> Checkpoint [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" align="left" href="#doRecordCheckpoint" tooltip="Checkpointを記録 (unsafe)"><font color="#FF4136">■</font> doRecordCheckpoint</td></tr><tr><td valign="middle" align="left" href="#goCheckpoint" tooltip="Checkpoint詳細を表示 (safe)"><font color="#00A86B">■</font> goCheckpoint</td></tr></table>> URL="#doRecordCheckpoint" target="_parent" fontsize=13 class="doRecordCheckpoint" penwidth=1.5];    CheckpointList -> PatternDashboard [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goPatternDashboard" tooltip="判断パターンダッシュボードを表示 (safe)"><font color="#00A86B">■</font> goPatternDashboard</td></tr></table>> URL="#goPatternDashboard" target="_parent" fontsize=13 class="goPatternDashboard" penwidth=1.5];    GoNoGo -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> goCheckpointList</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    PatternDashboard -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> goCheckpointList</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    SessionAnalysis -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> goCheckpointList</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    SessionList -> SessionAnalysis [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goSessionAnalysis" tooltip="セッション分析を表示 (safe)"><font color="#00A86B">■</font> goSessionAnalysis</td></tr></table>> URL="#goSessionAnalysis" target="_parent" fontsize=13 class="goSessionAnalysis" penwidth=1.5];    TeamDashboard -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> goCheckpointList</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    Checkpoint [label="Checkpoint" URL="#Checkpoint" target="_parent"]    CheckpointList [label="CheckpointList" URL="#CheckpointList" target="_parent"]    PatternDashboard [label="PatternDashboard" URL="#PatternDashboard" target="_parent"]    GoNoGo [label="GoNoGo" URL="#GoNoGo" target="_parent"]    SessionAnalysis [label="SessionAnalysis" URL="#SessionAnalysis" target="_parent"]    SessionList [label="SessionList" URL="#SessionList" target="_parent"]    TeamDashboard [label="TeamDashboard" URL="#TeamDashboard" target="_parent"]}'),
+                    renderGraph("#asd-graph-name", 'digraph application_state_diagram {  graph [    labelloc="t";    fontname="Helvetica"  ];  node [shape = box, style = "bold,filled" fillcolor="lightgray", margin="0.3,0.1"];    Checkpoint [margin=0.1, label="Checkpoint詳細", shape=box, URL="#Checkpoint" target="_parent"]    CheckpointList [margin=0.1, label="Checkpoint一覧", shape=box, URL="#CheckpointList" target="_parent"]    GoNoGo [margin=0.1, label="Go/No-Go メトリクス", shape=box, URL="#GoNoGo" target="_parent"]    PatternDashboard [margin=0.1, label="判断パターンダッシュボード", shape=box, URL="#PatternDashboard" target="_parent"]    SessionAnalysis [margin=0.1, label="セッション分析", shape=box, URL="#SessionAnalysis" target="_parent"]    SessionList [margin=0.1, label="セッション一覧", shape=box, URL="#SessionList" target="_parent"]    TeamDashboard [margin=0.1, label="チーム集計ダッシュボード", shape=box, URL="#TeamDashboard" target="_parent"]    Checkpoint -> Checkpoint [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#doUpdateCheckpoint" tooltip="Checkpointの分類タグを更新 (idempotent)"><font color="#FFDC00">■</font> Checkpointの分類タグを更新</td></tr></table>> URL="#doUpdateCheckpoint" target="_parent" fontsize=13 class="doUpdateCheckpoint" penwidth=1.5];    Checkpoint -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> Checkpoint一覧を表示</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    CheckpointList -> Checkpoint [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" align="left" href="#doRecordCheckpoint" tooltip="Checkpointを記録 (unsafe)"><font color="#FF4136">■</font> Checkpointを記録</td></tr><tr><td valign="middle" align="left" href="#goCheckpoint" tooltip="Checkpoint詳細を表示 (safe)"><font color="#00A86B">■</font> Checkpoint詳細を表示</td></tr></table>> URL="#doRecordCheckpoint" target="_parent" fontsize=13 class="doRecordCheckpoint" penwidth=1.5];    CheckpointList -> PatternDashboard [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goPatternDashboard" tooltip="判断パターンダッシュボードを表示 (safe)"><font color="#00A86B">■</font> 判断パターンダッシュボードを表示</td></tr></table>> URL="#goPatternDashboard" target="_parent" fontsize=13 class="goPatternDashboard" penwidth=1.5];    GoNoGo -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> Checkpoint一覧を表示</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    PatternDashboard -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> Checkpoint一覧を表示</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    SessionAnalysis -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> Checkpoint一覧を表示</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    SessionList -> SessionAnalysis [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goSessionAnalysis" tooltip="セッション分析を表示 (safe)"><font color="#00A86B">■</font> セッション分析を表示</td></tr></table>> URL="#goSessionAnalysis" target="_parent" fontsize=13 class="goSessionAnalysis" penwidth=1.5];    TeamDashboard -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> Checkpoint一覧を表示</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    Checkpoint [label="Checkpoint詳細" URL="#Checkpoint" target="_parent"]    CheckpointList [label="Checkpoint一覧" URL="#CheckpointList" target="_parent"]    PatternDashboard [label="判断パターンダッシュボード" URL="#PatternDashboard" target="_parent"]    GoNoGo [label="Go/No-Go メトリクス" URL="#GoNoGo" target="_parent"]    SessionAnalysis [label="セッション分析" URL="#SessionAnalysis" target="_parent"]    SessionList [label="セッション一覧" URL="#SessionList" target="_parent"]    TeamDashboard [label="チーム集計ダッシュボード" URL="#TeamDashboard" target="_parent"]}')
             ]);
             setupTagTrigger();
             setupModeSwitch('asd-show-id', 'asd-graph-id', 'asd-graph-name');
@@ -111,8 +111,15 @@
   <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
   <td align="left"><a id="Checkpoint"></a><a href="#Checkpoint">Checkpoint</a></td>
   <td align="left"><span style="white-space: normal;">Checkpoint詳細</span></td>
-  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#checkpointId">checkpointId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#taskContext">taskContext</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#aiProposal">aiProposal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#humanFinal">humanFinal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#diff">diff</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#tag">tag</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#confidence">confidence</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#dateCreated">dateCreated</a><br><span class="type-indicator-small safe" title="Safe"></span><a href="#goCheckpointList">goCheckpointList</a></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#checkpointId">checkpointId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#taskContext">taskContext</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#aiProposal">aiProposal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#humanFinal">humanFinal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#diff">diff</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#tag">tag</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#confidence">confidence</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#dateCreated">dateCreated</a><br><span class="type-indicator-small safe" title="Safe"></span><a href="#goCheckpointList">goCheckpointList</a><br><span class="type-indicator-small idempotent" title="Idempotent"></span><a href="#doUpdateCheckpoint">doUpdateCheckpoint</a></td>
   <td align="left"><span style="white-space: normal;"></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="checkpointCount"></a><a href="#checkpointCount">checkpointCount</a></td>
+  <td align="left"><span style="white-space: normal;">Checkpoint件数</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
 </tr>
 <tr>
   <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
@@ -150,6 +157,20 @@
   <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/text" target="_blank">schema.org/text</a></span></span></span></span></td>
 </tr>
 <tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="discoveryCount"></a><a href="#discoveryCount">discoveryCount</a></td>
+  <td align="left"><span style="white-space: normal;">発見回数</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="discoveryTarget"></a><a href="#discoveryTarget">discoveryTarget</a></td>
+  <td align="left"><span style="white-space: normal;">発見目標値</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+<tr>
   <td align="center"><span class="legend"><span class="legend-icon unsafe"></span></span></td>
   <td align="left"><a id="doRecordCheckpoint"></a><a href="#doRecordCheckpoint">doRecordCheckpoint</a></td>
   <td align="left"><span style="white-space: normal;">Checkpointを記録</span></td>
@@ -157,9 +178,37 @@
   <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#Checkpoint">Checkpoint</a></span></span></span></span></td>
 </tr>
 <tr>
+  <td align="center"><span class="legend"><span class="legend-icon idempotent"></span></span></td>
+  <td align="left"><a id="doUpdateCheckpoint"></a><a href="#doUpdateCheckpoint">doUpdateCheckpoint</a></td>
+  <td align="left"><span style="white-space: normal;">Checkpointの分類タグを更新</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#checkpointId">checkpointId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#tag">tag</a></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#Checkpoint">Checkpoint</a></span></span></span></span></td>
+</tr>
+<tr>
   <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
   <td align="left"><a id="factualCount"></a><a href="#factualCount">factualCount</a></td>
   <td align="left"><span style="white-space: normal;">Factual分類の件数</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="firstCheckpoint"></a><a href="#firstCheckpoint">firstCheckpoint</a></td>
+  <td align="left"><span style="white-space: normal;">最初のCheckpoint日時</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/dateCreated" target="_blank">schema.org/dateCreated</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="frictionCount"></a><a href="#frictionCount">frictionCount</a></td>
+  <td align="left"><span style="white-space: normal;">摩擦回数</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="frictionLimit"></a><a href="#frictionLimit">frictionLimit</a></td>
+  <td align="left"><span style="white-space: normal;">摩擦許容上限</span></td>
   <td align="left"></td>
   <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
 </tr>
@@ -179,10 +228,45 @@
 </tr>
 <tr>
   <td align="center"><span class="legend"><span class="legend-icon safe"></span></span></td>
+  <td align="left"><a id="goGoNoGo"></a><a href="#goGoNoGo">goGoNoGo</a></td>
+  <td align="left"><span style="white-space: normal;">Go/No-Goメトリクスを表示</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#GoNoGo">GoNoGo</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="GoNoGo"></a><a href="#GoNoGo">GoNoGo</a></td>
+  <td align="left"><span style="white-space: normal;">Go/No-Go メトリクス</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#recallCount">recallCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#recallTarget">recallTarget</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#discoveryCount">discoveryCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#discoveryTarget">discoveryTarget</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#frictionCount">frictionCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#frictionLimit">frictionLimit</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#verdict">verdict</a><br><span class="type-indicator-small safe" title="Safe"></span><a href="#goCheckpointList">goCheckpointList</a></td>
+  <td align="left"><span style="white-space: normal;"></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon safe"></span></span></td>
   <td align="left"><a id="goPatternDashboard"></a><a href="#goPatternDashboard">goPatternDashboard</a></td>
   <td align="left"><span style="white-space: normal;">判断パターンダッシュボードを表示</span></td>
   <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#periodStart">periodStart</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#periodEnd">periodEnd</a></td>
   <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#PatternDashboard">PatternDashboard</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon safe"></span></span></td>
+  <td align="left"><a id="goSessionAnalysis"></a><a href="#goSessionAnalysis">goSessionAnalysis</a></td>
+  <td align="left"><span style="white-space: normal;">セッション分析を表示</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#SessionAnalysis">SessionAnalysis</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon safe"></span></span></td>
+  <td align="left"><a id="goSessionList"></a><a href="#goSessionList">goSessionList</a></td>
+  <td align="left"><span style="white-space: normal;">セッション一覧を表示</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#SessionList">SessionList</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon safe"></span></span></td>
+  <td align="left"><a id="goTeamDashboard"></a><a href="#goTeamDashboard">goTeamDashboard</a></td>
+  <td align="left"><span style="white-space: normal;">チームダッシュボードを表示</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#TeamDashboard">TeamDashboard</a></span></span></span></span></td>
 </tr>
 <tr>
   <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
@@ -190,6 +274,13 @@
   <td align="left"><span style="white-space: normal;">人間が最終的に出した内容</span></td>
   <td align="left"></td>
   <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/text" target="_blank">schema.org/text</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="lastCheckpoint"></a><a href="#lastCheckpoint">lastCheckpoint</a></td>
+  <td align="left"><span style="white-space: normal;">最後のCheckpoint日時</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/dateModified" target="_blank">schema.org/dateModified</a></span></span></span></span></td>
 </tr>
 <tr>
   <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
@@ -214,10 +305,38 @@
 </tr>
 <tr>
   <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="recallCount"></a><a href="#recallCount">recallCount</a></td>
+  <td align="left"><span style="white-space: normal;">想起回数</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="recallTarget"></a><a href="#recallTarget">recallTarget</a></td>
+  <td align="left"><span style="white-space: normal;">想起目標値</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="SessionAnalysis"></a><a href="#SessionAnalysis">SessionAnalysis</a></td>
+  <td align="left"><span style="white-space: normal;">セッション分析</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#taskContext">taskContext</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#checkpointCount">checkpointCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#factualCount">factualCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#strategicCount">strategicCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#stylisticCount">stylisticCount</a><br><span class="type-indicator-small safe" title="Safe"></span><a href="#goCheckpointList">goCheckpointList</a></td>
+  <td align="left"><span style="white-space: normal;"></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
   <td align="left"><a id="sessionId"></a><a href="#sessionId">sessionId</a></td>
   <td align="left"><span style="white-space: normal;">AI対話セッション識別子</span></td>
   <td align="left"></td>
   <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/identifier" target="_blank">schema.org/identifier</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="SessionList"></a><a href="#SessionList">SessionList</a></td>
+  <td align="left"><span style="white-space: normal;">セッション一覧</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#taskContext">taskContext</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#checkpointCount">checkpointCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#factualCount">factualCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#strategicCount">strategicCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#stylisticCount">stylisticCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#firstCheckpoint">firstCheckpoint</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#lastCheckpoint">lastCheckpoint</a><br><span class="type-indicator-small safe" title="Safe"></span><a href="#goSessionAnalysis">goSessionAnalysis</a></td>
+  <td align="left"><span style="white-space: normal;"></span></td>
 </tr>
 <tr>
   <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
@@ -249,10 +368,31 @@
 </tr>
 <tr>
   <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="TeamDashboard"></a><a href="#TeamDashboard">TeamDashboard</a></td>
+  <td align="left"><span style="white-space: normal;">チーム集計ダッシュボード</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#userId">userId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#checkpointCount">checkpointCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#factualCount">factualCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#strategicCount">strategicCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#stylisticCount">stylisticCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#firstCheckpoint">firstCheckpoint</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#lastCheckpoint">lastCheckpoint</a><br><span class="type-indicator-small safe" title="Safe"></span><a href="#goCheckpointList">goCheckpointList</a></td>
+  <td align="left"><span style="white-space: normal;"></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
   <td align="left"><a id="totalCheckpoints"></a><a href="#totalCheckpoints">totalCheckpoints</a></td>
   <td align="left"><span style="white-space: normal;">合計Checkpoint数</span></td>
   <td align="left"></td>
   <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="userId"></a><a href="#userId">userId</a></td>
+  <td align="left"><span style="white-space: normal;">ユーザー識別子</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/identifier" target="_blank">schema.org/identifier</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="verdict"></a><a href="#verdict">verdict</a></td>
+  <td align="left"><span style="white-space: normal;">Go/No-Go判定 (go</td>
+  <td align="left">no_go</td>
+  <td align="left">pending)</span> |  | <span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Text" target="_blank">schema.org/Text</a></span></span></span></span></td>
 </tr>
 </tbody>
 </table>
@@ -261,118 +401,165 @@
 
 <h2>Profile</h2>
 
-<pre><code>{
-  &quot;$schema&quot;: &quot;https://alps-io.github.io/schemas/alps.json&quot;,
-  &quot;alps&quot;: {
-    &quot;title&quot;: &quot;Constraint Engine API&quot;,
-    &quot;doc&quot;: {&quot;value&quot;: &quot;AI×人間の協働における判断プロセスの記録・可視化プラットフォーム&quot;},
-    &quot;descriptor&quot;: [
-      {&quot;id&quot;: &quot;checkpointId&quot;, &quot;title&quot;: &quot;Checkpoint ID&quot;, &quot;def&quot;: &quot;https://schema.org/identifier&quot;},
-      {&quot;id&quot;: &quot;sessionId&quot;, &quot;title&quot;: &quot;AI対話セッション識別子&quot;, &quot;def&quot;: &quot;https://schema.org/identifier&quot;},
-      {&quot;id&quot;: &quot;taskContext&quot;, &quot;title&quot;: &quot;業務タスクの説明&quot;, &quot;def&quot;: &quot;https://schema.org/description&quot;},
-      {&quot;id&quot;: &quot;aiProposal&quot;, &quot;title&quot;: &quot;AIが提案した内容&quot;, &quot;def&quot;: &quot;https://schema.org/text&quot;},
-      {&quot;id&quot;: &quot;humanFinal&quot;, &quot;title&quot;: &quot;人間が最終的に出した内容&quot;, &quot;def&quot;: &quot;https://schema.org/text&quot;},
-      {&quot;id&quot;: &quot;diff&quot;, &quot;title&quot;: &quot;提案と最終の差分&quot;, &quot;def&quot;: &quot;https://schema.org/text&quot;},
-      {&quot;id&quot;: &quot;tag&quot;, &quot;title&quot;: &quot;分類タグ (factual|strategic|stylistic)&quot;, &quot;def&quot;: &quot;https://schema.org/category&quot;},
-      {&quot;id&quot;: &quot;confidence&quot;, &quot;title&quot;: &quot;タグの確信度 (estimated|stated)&quot;, &quot;def&quot;: &quot;https://schema.org/category&quot;},
-      {&quot;id&quot;: &quot;dateCreated&quot;, &quot;title&quot;: &quot;作成日時&quot;, &quot;def&quot;: &quot;https://schema.org/dateCreated&quot;},
-      {&quot;id&quot;: &quot;totalCheckpoints&quot;, &quot;title&quot;: &quot;合計Checkpoint数&quot;, &quot;def&quot;: &quot;https://schema.org/Integer&quot;},
-      {&quot;id&quot;: &quot;factualCount&quot;, &quot;title&quot;: &quot;Factual分類の件数&quot;, &quot;def&quot;: &quot;https://schema.org/Integer&quot;},
-      {&quot;id&quot;: &quot;strategicCount&quot;, &quot;title&quot;: &quot;Strategic分類の件数&quot;, &quot;def&quot;: &quot;https://schema.org/Integer&quot;},
-      {&quot;id&quot;: &quot;stylisticCount&quot;, &quot;title&quot;: &quot;Stylistic分類の件数&quot;, &quot;def&quot;: &quot;https://schema.org/Integer&quot;},
-      {&quot;id&quot;: &quot;periodStart&quot;, &quot;title&quot;: &quot;集計期間の開始日&quot;, &quot;def&quot;: &quot;https://schema.org/Date&quot;},
-      {&quot;id&quot;: &quot;periodEnd&quot;, &quot;title&quot;: &quot;集計期間の終了日&quot;, &quot;def&quot;: &quot;https://schema.org/Date&quot;},
-      {
-        &quot;id&quot;: &quot;CheckpointList&quot;,
-        &quot;title&quot;: &quot;Checkpoint一覧&quot;,
-        &quot;descriptor&quot;: [
-          {&quot;href&quot;: &quot;#checkpointId&quot;},
-          {&quot;href&quot;: &quot;#sessionId&quot;},
-          {&quot;href&quot;: &quot;#taskContext&quot;},
-          {&quot;href&quot;: &quot;#tag&quot;},
-          {&quot;href&quot;: &quot;#confidence&quot;},
-          {&quot;href&quot;: &quot;#dateCreated&quot;},
-          {&quot;href&quot;: &quot;#goCheckpoint&quot;},
-          {&quot;href&quot;: &quot;#goPatternDashboard&quot;},
-          {&quot;href&quot;: &quot;#doRecordCheckpoint&quot;}
-        ]
-      },
-      {
-        &quot;id&quot;: &quot;Checkpoint&quot;,
-        &quot;title&quot;: &quot;Checkpoint詳細&quot;,
-        &quot;descriptor&quot;: [
-          {&quot;href&quot;: &quot;#checkpointId&quot;},
-          {&quot;href&quot;: &quot;#sessionId&quot;},
-          {&quot;href&quot;: &quot;#taskContext&quot;},
-          {&quot;href&quot;: &quot;#aiProposal&quot;},
-          {&quot;href&quot;: &quot;#humanFinal&quot;},
-          {&quot;href&quot;: &quot;#diff&quot;},
-          {&quot;href&quot;: &quot;#tag&quot;},
-          {&quot;href&quot;: &quot;#confidence&quot;},
-          {&quot;href&quot;: &quot;#dateCreated&quot;},
-          {&quot;href&quot;: &quot;#goCheckpointList&quot;}
-        ]
-      },
-      {
-        &quot;id&quot;: &quot;PatternDashboard&quot;,
-        &quot;title&quot;: &quot;判断パターンダッシュボード&quot;,
-        &quot;descriptor&quot;: [
-          {&quot;href&quot;: &quot;#totalCheckpoints&quot;},
-          {&quot;href&quot;: &quot;#factualCount&quot;},
-          {&quot;href&quot;: &quot;#strategicCount&quot;},
-          {&quot;href&quot;: &quot;#stylisticCount&quot;},
-          {&quot;href&quot;: &quot;#periodStart&quot;},
-          {&quot;href&quot;: &quot;#periodEnd&quot;},
-          {&quot;href&quot;: &quot;#goCheckpointList&quot;}
-        ]
-      },
-      {
-        &quot;id&quot;: &quot;goCheckpointList&quot;,
-        &quot;type&quot;: &quot;safe&quot;,
-        &quot;rt&quot;: &quot;#CheckpointList&quot;,
-        &quot;title&quot;: &quot;Checkpoint一覧を表示&quot;,
-        &quot;descriptor&quot;: [
-          {&quot;href&quot;: &quot;#tag&quot;},
-          {&quot;href&quot;: &quot;#sessionId&quot;}
-        ]
-      },
-      {
-        &quot;id&quot;: &quot;goCheckpoint&quot;,
-        &quot;type&quot;: &quot;safe&quot;,
-        &quot;rt&quot;: &quot;#Checkpoint&quot;,
-        &quot;title&quot;: &quot;Checkpoint詳細を表示&quot;,
-        &quot;descriptor&quot;: [
-          {&quot;href&quot;: &quot;#checkpointId&quot;}
-        ]
-      },
-      {
-        &quot;id&quot;: &quot;doRecordCheckpoint&quot;,
-        &quot;type&quot;: &quot;unsafe&quot;,
-        &quot;rt&quot;: &quot;#Checkpoint&quot;,
-        &quot;title&quot;: &quot;Checkpointを記録&quot;,
-        &quot;descriptor&quot;: [
-          {&quot;href&quot;: &quot;#sessionId&quot;},
-          {&quot;href&quot;: &quot;#taskContext&quot;},
-          {&quot;href&quot;: &quot;#aiProposal&quot;},
-          {&quot;href&quot;: &quot;#humanFinal&quot;},
-          {&quot;href&quot;: &quot;#diff&quot;},
-          {&quot;href&quot;: &quot;#tag&quot;},
-          {&quot;href&quot;: &quot;#confidence&quot;}
-        ]
-      },
-      {
-        &quot;id&quot;: &quot;goPatternDashboard&quot;,
-        &quot;type&quot;: &quot;safe&quot;,
-        &quot;rt&quot;: &quot;#PatternDashboard&quot;,
-        &quot;title&quot;: &quot;判断パターンダッシュボードを表示&quot;,
-        &quot;descriptor&quot;: [
-          {&quot;href&quot;: &quot;#periodStart&quot;},
-          {&quot;href&quot;: &quot;#periodEnd&quot;}
-        ]
-      }
-    ]
-  }
-}
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;alps
+  version=&quot;1.0&quot;
+  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:noNamespaceSchemaLocation=&quot;https://alps-io.github.io/schemas/alps.xsd&quot;&gt;
+
+  &lt;title&gt;Constraint Engine API&lt;/title&gt;
+  &lt;doc&gt;AI×人間の協働における判断プロセスの記録・可視化プラットフォーム&lt;/doc&gt;
+
+  &lt;!-- Semantic Descriptors --&gt;
+  &lt;descriptor id=&quot;checkpointId&quot; title=&quot;Checkpoint ID&quot; def=&quot;https://schema.org/identifier&quot;/&gt;
+  &lt;descriptor id=&quot;sessionId&quot; title=&quot;AI対話セッション識別子&quot; def=&quot;https://schema.org/identifier&quot;/&gt;
+  &lt;descriptor id=&quot;taskContext&quot; title=&quot;業務タスクの説明&quot; def=&quot;https://schema.org/description&quot;/&gt;
+  &lt;descriptor id=&quot;aiProposal&quot; title=&quot;AIが提案した内容&quot; def=&quot;https://schema.org/text&quot;/&gt;
+  &lt;descriptor id=&quot;humanFinal&quot; title=&quot;人間が最終的に出した内容&quot; def=&quot;https://schema.org/text&quot;/&gt;
+  &lt;descriptor id=&quot;diff&quot; title=&quot;提案と最終の差分&quot; def=&quot;https://schema.org/text&quot;/&gt;
+  &lt;descriptor id=&quot;tag&quot; title=&quot;分類タグ (factual|strategic|stylistic)&quot; def=&quot;https://schema.org/category&quot;/&gt;
+  &lt;descriptor id=&quot;confidence&quot; title=&quot;タグの確信度 (estimated|stated)&quot; def=&quot;https://schema.org/category&quot;/&gt;
+  &lt;descriptor id=&quot;dateCreated&quot; title=&quot;作成日時&quot; def=&quot;https://schema.org/dateCreated&quot;/&gt;
+  &lt;descriptor id=&quot;totalCheckpoints&quot; title=&quot;合計Checkpoint数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;factualCount&quot; title=&quot;Factual分類の件数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;strategicCount&quot; title=&quot;Strategic分類の件数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;stylisticCount&quot; title=&quot;Stylistic分類の件数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;periodStart&quot; title=&quot;集計期間の開始日&quot; def=&quot;https://schema.org/Date&quot;/&gt;
+  &lt;descriptor id=&quot;periodEnd&quot; title=&quot;集計期間の終了日&quot; def=&quot;https://schema.org/Date&quot;/&gt;
+  &lt;descriptor id=&quot;recallCount&quot; title=&quot;想起回数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;recallTarget&quot; title=&quot;想起目標値&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;discoveryCount&quot; title=&quot;発見回数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;discoveryTarget&quot; title=&quot;発見目標値&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;frictionCount&quot; title=&quot;摩擦回数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;frictionLimit&quot; title=&quot;摩擦許容上限&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;verdict&quot; title=&quot;Go/No-Go判定 (go|no_go|pending)&quot; def=&quot;https://schema.org/Text&quot;/&gt;
+  &lt;descriptor id=&quot;userId&quot; title=&quot;ユーザー識別子&quot; def=&quot;https://schema.org/identifier&quot;/&gt;
+  &lt;descriptor id=&quot;checkpointCount&quot; title=&quot;Checkpoint件数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
+  &lt;descriptor id=&quot;firstCheckpoint&quot; title=&quot;最初のCheckpoint日時&quot; def=&quot;https://schema.org/dateCreated&quot;/&gt;
+  &lt;descriptor id=&quot;lastCheckpoint&quot; title=&quot;最後のCheckpoint日時&quot; def=&quot;https://schema.org/dateModified&quot;/&gt;
+
+  &lt;!-- Representations --&gt;
+  &lt;descriptor id=&quot;CheckpointList&quot; title=&quot;Checkpoint一覧&quot;&gt;
+    &lt;descriptor href=&quot;#checkpointId&quot;/&gt;
+    &lt;descriptor href=&quot;#sessionId&quot;/&gt;
+    &lt;descriptor href=&quot;#taskContext&quot;/&gt;
+    &lt;descriptor href=&quot;#tag&quot;/&gt;
+    &lt;descriptor href=&quot;#confidence&quot;/&gt;
+    &lt;descriptor href=&quot;#dateCreated&quot;/&gt;
+    &lt;descriptor href=&quot;#goCheckpoint&quot;/&gt;
+    &lt;descriptor href=&quot;#goPatternDashboard&quot;/&gt;
+    &lt;descriptor href=&quot;#doRecordCheckpoint&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;Checkpoint&quot; title=&quot;Checkpoint詳細&quot;&gt;
+    &lt;descriptor href=&quot;#checkpointId&quot;/&gt;
+    &lt;descriptor href=&quot;#sessionId&quot;/&gt;
+    &lt;descriptor href=&quot;#taskContext&quot;/&gt;
+    &lt;descriptor href=&quot;#aiProposal&quot;/&gt;
+    &lt;descriptor href=&quot;#humanFinal&quot;/&gt;
+    &lt;descriptor href=&quot;#diff&quot;/&gt;
+    &lt;descriptor href=&quot;#tag&quot;/&gt;
+    &lt;descriptor href=&quot;#confidence&quot;/&gt;
+    &lt;descriptor href=&quot;#dateCreated&quot;/&gt;
+    &lt;descriptor href=&quot;#goCheckpointList&quot;/&gt;
+    &lt;descriptor href=&quot;#doUpdateCheckpoint&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;PatternDashboard&quot; title=&quot;判断パターンダッシュボード&quot;&gt;
+    &lt;descriptor href=&quot;#totalCheckpoints&quot;/&gt;
+    &lt;descriptor href=&quot;#factualCount&quot;/&gt;
+    &lt;descriptor href=&quot;#strategicCount&quot;/&gt;
+    &lt;descriptor href=&quot;#stylisticCount&quot;/&gt;
+    &lt;descriptor href=&quot;#periodStart&quot;/&gt;
+    &lt;descriptor href=&quot;#periodEnd&quot;/&gt;
+    &lt;descriptor href=&quot;#goCheckpointList&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;TeamDashboard&quot; title=&quot;チーム集計ダッシュボード&quot;&gt;
+    &lt;descriptor href=&quot;#userId&quot;/&gt;
+    &lt;descriptor href=&quot;#checkpointCount&quot;/&gt;
+    &lt;descriptor href=&quot;#factualCount&quot;/&gt;
+    &lt;descriptor href=&quot;#strategicCount&quot;/&gt;
+    &lt;descriptor href=&quot;#stylisticCount&quot;/&gt;
+    &lt;descriptor href=&quot;#firstCheckpoint&quot;/&gt;
+    &lt;descriptor href=&quot;#lastCheckpoint&quot;/&gt;
+    &lt;descriptor href=&quot;#goCheckpointList&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;SessionList&quot; title=&quot;セッション一覧&quot;&gt;
+    &lt;descriptor href=&quot;#sessionId&quot;/&gt;
+    &lt;descriptor href=&quot;#taskContext&quot;/&gt;
+    &lt;descriptor href=&quot;#checkpointCount&quot;/&gt;
+    &lt;descriptor href=&quot;#factualCount&quot;/&gt;
+    &lt;descriptor href=&quot;#strategicCount&quot;/&gt;
+    &lt;descriptor href=&quot;#stylisticCount&quot;/&gt;
+    &lt;descriptor href=&quot;#firstCheckpoint&quot;/&gt;
+    &lt;descriptor href=&quot;#lastCheckpoint&quot;/&gt;
+    &lt;descriptor href=&quot;#goSessionAnalysis&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;SessionAnalysis&quot; title=&quot;セッション分析&quot;&gt;
+    &lt;descriptor href=&quot;#sessionId&quot;/&gt;
+    &lt;descriptor href=&quot;#taskContext&quot;/&gt;
+    &lt;descriptor href=&quot;#checkpointCount&quot;/&gt;
+    &lt;descriptor href=&quot;#factualCount&quot;/&gt;
+    &lt;descriptor href=&quot;#strategicCount&quot;/&gt;
+    &lt;descriptor href=&quot;#stylisticCount&quot;/&gt;
+    &lt;descriptor href=&quot;#goCheckpointList&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;GoNoGo&quot; title=&quot;Go/No-Go メトリクス&quot;&gt;
+    &lt;descriptor href=&quot;#recallCount&quot;/&gt;
+    &lt;descriptor href=&quot;#recallTarget&quot;/&gt;
+    &lt;descriptor href=&quot;#discoveryCount&quot;/&gt;
+    &lt;descriptor href=&quot;#discoveryTarget&quot;/&gt;
+    &lt;descriptor href=&quot;#frictionCount&quot;/&gt;
+    &lt;descriptor href=&quot;#frictionLimit&quot;/&gt;
+    &lt;descriptor href=&quot;#verdict&quot;/&gt;
+    &lt;descriptor href=&quot;#goCheckpointList&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;!-- Transitions --&gt;
+  &lt;descriptor id=&quot;goCheckpointList&quot; type=&quot;safe&quot; rt=&quot;#CheckpointList&quot; title=&quot;Checkpoint一覧を表示&quot;&gt;
+    &lt;descriptor href=&quot;#tag&quot;/&gt;
+    &lt;descriptor href=&quot;#sessionId&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;goCheckpoint&quot; type=&quot;safe&quot; rt=&quot;#Checkpoint&quot; title=&quot;Checkpoint詳細を表示&quot;&gt;
+    &lt;descriptor href=&quot;#checkpointId&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;doRecordCheckpoint&quot; type=&quot;unsafe&quot; rt=&quot;#Checkpoint&quot; title=&quot;Checkpointを記録&quot;&gt;
+    &lt;descriptor href=&quot;#sessionId&quot;/&gt;
+    &lt;descriptor href=&quot;#taskContext&quot;/&gt;
+    &lt;descriptor href=&quot;#aiProposal&quot;/&gt;
+    &lt;descriptor href=&quot;#humanFinal&quot;/&gt;
+    &lt;descriptor href=&quot;#diff&quot;/&gt;
+    &lt;descriptor href=&quot;#tag&quot;/&gt;
+    &lt;descriptor href=&quot;#confidence&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;doUpdateCheckpoint&quot; type=&quot;idempotent&quot; rt=&quot;#Checkpoint&quot; title=&quot;Checkpointの分類タグを更新&quot;&gt;
+    &lt;descriptor href=&quot;#checkpointId&quot;/&gt;
+    &lt;descriptor href=&quot;#tag&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;goPatternDashboard&quot; type=&quot;safe&quot; rt=&quot;#PatternDashboard&quot; title=&quot;判断パターンダッシュボードを表示&quot;&gt;
+    &lt;descriptor href=&quot;#periodStart&quot;/&gt;
+    &lt;descriptor href=&quot;#periodEnd&quot;/&gt;
+  &lt;/descriptor&gt;
+
+  &lt;descriptor id=&quot;goGoNoGo&quot; type=&quot;safe&quot; rt=&quot;#GoNoGo&quot; title=&quot;Go/No-Goメトリクスを表示&quot;/&gt;
+
+  &lt;descriptor id=&quot;goTeamDashboard&quot; type=&quot;safe&quot; rt=&quot;#TeamDashboard&quot; title=&quot;チームダッシュボードを表示&quot;/&gt;
+
+  &lt;descriptor id=&quot;goSessionList&quot; type=&quot;safe&quot; rt=&quot;#SessionList&quot; title=&quot;セッション一覧を表示&quot;/&gt;
+
+  &lt;descriptor id=&quot;goSessionAnalysis&quot; type=&quot;safe&quot; rt=&quot;#SessionAnalysis&quot; title=&quot;セッション分析を表示&quot;&gt;
+    &lt;descriptor href=&quot;#sessionId&quot;/&gt;
+  &lt;/descriptor&gt;
+
+&lt;/alps&gt;
 </code></pre>
 
     </div>
