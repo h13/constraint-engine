@@ -77,9 +77,9 @@ final class RecallTracker
     public function showGoNoGo(): string
     {
         $summary = $this->query->summary();
-        $recall = $summary !== null ? (int) $summary['recall_count'] : 0;
-        $discovery = $summary !== null ? (int) $summary['discovery_count'] : 0;
-        $friction = $summary !== null ? (int) $summary['friction_count'] : 0;
+        $recall = $summary !== null ? (int) $summary['recallCount'] : 0;
+        $discovery = $summary !== null ? (int) $summary['discoveryCount'] : 0;
+        $friction = $summary !== null ? (int) $summary['frictionCount'] : 0;
         $verdict = $this->computeVerdict($recall, $discovery, $friction);
 
         $lines = [

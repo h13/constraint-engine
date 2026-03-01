@@ -58,13 +58,13 @@ PROMPT;
         return $this->analyze($summary);
     }
 
-    /** @param array<array{tag: string, ai_proposal: string, human_final: string, diff: string, task_context: string}> $checkpoints */
+    /** @param array<array{tag: string, aiProposal: string, humanFinal: string, diff: string, taskContext: string}> $checkpoints */
     private function buildSummary(array $checkpoints): string
     {
         $lines = ['Session checkpoints (' . count($checkpoints) . ' total):'];
         foreach ($checkpoints as $i => $cp) {
             $num = $i + 1;
-            $lines[] = "#{$num} [{$cp['tag']}] {$cp['task_context']}: {$cp['diff']}";
+            $lines[] = "#{$num} [{$cp['tag']}] {$cp['taskContext']}: {$cp['diff']}";
         }
 
         return implode("\n", $lines);

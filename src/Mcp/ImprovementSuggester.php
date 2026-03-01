@@ -52,7 +52,7 @@ PROMPT;
     #[McpTool(name: 'suggest_improvements')]
     public function suggestImprovements(string $aiProposal, string $taskContext): string
     {
-        $checkpoints = $this->query->list();
+        $checkpoints = $this->query->detailList();
         if ($checkpoints === []) {
             return 'No past modification data available yet. Start recording checkpoints to enable pattern-based suggestions.';
         }
@@ -62,7 +62,7 @@ PROMPT;
         return $this->suggest($context);
     }
 
-    /** @param array<array{tag: string, diff: string, task_context: string, ai_proposal: string, human_final: string}> $checkpoints */
+    /** @param array<array{tag: string, diff: string, taskContext: string, aiProposal: string, humanFinal: string}> $checkpoints */
     private function buildContext(string $aiProposal, string $taskContext, array $checkpoints): string
     {
         $recent = array_slice($checkpoints, 0, 30);
@@ -77,7 +77,7 @@ PROMPT;
 
         foreach ($recent as $i => $cp) {
             $num = $i + 1;
-            $lines[] = "#{$num} [{$cp['tag']}] {$cp['task_context']}: {$cp['ai_proposal']} → {$cp['human_final']}";
+            $lines[] = "#{$num} [{$cp['tag']}] {$cp['taskContext']}: {$cp['aiProposal']} → {$cp['humanFinal']}";
         }
 
         return implode("\n", $lines);

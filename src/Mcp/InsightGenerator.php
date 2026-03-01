@@ -52,28 +52,28 @@ PROMPT;
     public function generateInsights(): string
     {
         $summary = $this->query->summary();
-        if ($summary === null || (int) $summary['total'] < self::MIN_CHECKPOINTS) {
-            $current = $summary !== null ? (int) $summary['total'] : 0;
+        if ($summary === null || (int) $summary['totalCheckpoints'] < self::MIN_CHECKPOINTS) {
+            $current = $summary !== null ? (int) $summary['totalCheckpoints'] : 0;
 
             return "Insufficient data: {$current} checkpoints recorded (minimum " . self::MIN_CHECKPOINTS . ' required). Keep recording to unlock insights.';
         }
 
-        $checkpoints = $this->query->list();
+        $checkpoints = $this->query->detailList();
         $dataContext = $this->buildContext($summary, $checkpoints);
 
         return $this->analyze($dataContext);
     }
 
     /**
-     * @param array{total: int, factual_count: int, strategic_count: int, stylistic_count: int} $summary
-     * @param array<array{tag: string, diff: string, task_context: string, session_id: string}> $checkpoints
+     * @param array{totalCheckpoints: int, factualCount: int, strategicCount: int, stylisticCount: int} $summary
+     * @param array<array{tag: string, diff: string, taskContext: string, sessionId: string}>           $checkpoints
      */
     private function buildContext(array $summary, array $checkpoints): string
     {
-        $total = (int) $summary['total'];
-        $factual = (int) $summary['factual_count'];
-        $strategic = (int) $summary['strategic_count'];
-        $stylistic = (int) $summary['stylistic_count'];
+        $total = (int) $summary['totalCheckpoints'];
+        $factual = (int) $summary['factualCount'];
+        $strategic = (int) $summary['strategicCount'];
+        $stylistic = (int) $summary['stylisticCount'];
 
         $lines = [
             "Overall: {$total} checkpoints",
@@ -87,7 +87,7 @@ PROMPT;
         $recent = array_slice($checkpoints, 0, 20);
         foreach ($recent as $i => $cp) {
             $num = $i + 1;
-            $lines[] = "#{$num} [{$cp['tag']}] {$cp['task_context']}: {$cp['diff']}";
+            $lines[] = "#{$num} [{$cp['tag']}] {$cp['taskContext']}: {$cp['diff']}";
         }
 
         return implode("\n", $lines);

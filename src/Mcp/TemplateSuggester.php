@@ -65,7 +65,7 @@ PROMPT;
         return $this->generate($context, $total);
     }
 
-    /** @param array<array{task_context: string, ai_proposal: string, human_final: string, diff: string}> $checkpoints */
+    /** @param array<array{taskContext: string, aiProposal: string, humanFinal: string, diff: string}> $checkpoints */
     private function buildContext(array $checkpoints): string
     {
         $recent = array_slice($checkpoints, 0, 50);
@@ -73,7 +73,7 @@ PROMPT;
         $lines = ['STYLISTIC MODIFICATION HISTORY:'];
         foreach ($recent as $i => $cp) {
             $num = $i + 1;
-            $lines[] = "#{$num} [{$cp['task_context']}] {$cp['ai_proposal']} → {$cp['human_final']}";
+            $lines[] = "#{$num} [{$cp['taskContext']}] {$cp['aiProposal']} → {$cp['humanFinal']}";
         }
 
         return implode("\n", $lines);

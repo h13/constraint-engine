@@ -30,14 +30,14 @@ final class PatternViewer
     public function showPattern(): string
     {
         $summary = $this->query->summary();
-        if ($summary === null || (int) $summary['total'] === 0) {
+        if ($summary === null || (int) $summary['totalCheckpoints'] === 0) {
             return 'No checkpoints recorded yet.';
         }
 
-        $total = (int) $summary['total'];
-        $factual = (int) $summary['factual_count'];
-        $strategic = (int) $summary['strategic_count'];
-        $stylistic = (int) $summary['stylistic_count'];
+        $total = (int) $summary['totalCheckpoints'];
+        $factual = (int) $summary['factualCount'];
+        $strategic = (int) $summary['strategicCount'];
+        $stylistic = (int) $summary['stylisticCount'];
 
         $lines = [
             "Pattern Dashboard ({$total} checkpoints)",
@@ -89,8 +89,8 @@ final class PatternViewer
         $current = $this->query->periodSummary($currentStart, $currentEnd);
         $previous = $this->query->periodSummary($previousStart, $previousEnd);
 
-        $curTotal = $current !== null ? (int) $current['total'] : 0;
-        $prevTotal = $previous !== null ? (int) $previous['total'] : 0;
+        $curTotal = $current !== null ? (int) $current['totalCheckpoints'] : 0;
+        $prevTotal = $previous !== null ? (int) $previous['totalCheckpoints'] : 0;
 
         if ($curTotal === 0 && $prevTotal === 0) {
             return 'No checkpoints in either period.';
@@ -105,7 +105,7 @@ final class PatternViewer
         ];
 
         foreach (['factual', 'strategic', 'stylistic'] as $tag) {
-            $key = "{$tag}_count";
+            $key = $tag . 'Count';
             $curCount = $current !== null ? (int) $current[$key] : 0;
             $prevCount = $previous !== null ? (int) $previous[$key] : 0;
             $curPct = $curTotal > 0 ? $curCount / $curTotal * 100 : 0;
@@ -154,7 +154,7 @@ final class PatternViewer
         $firstRate = null;
         $lastRate = null;
         foreach ($rates as $row) {
-            $rate = (float) $row['factual_rate'];
+            $rate = (float) $row['factualRate'];
             $lines[] = "{$row['date']}: {$row['total']} checkpoints, factual rate " . number_format($rate, 1) . '%';
             if ($firstRate === null) {
                 $firstRate = $rate;
