@@ -23,6 +23,8 @@
   <descriptor id="stylisticCount" title="Stylistic分類の件数" def="https://schema.org/Integer"/>
   <descriptor id="periodStart" title="集計期間の開始日" def="https://schema.org/Date"/>
   <descriptor id="periodEnd" title="集計期間の終了日" def="https://schema.org/Date"/>
+  <descriptor id="compareStart" title="比較期間の開始日" def="https://schema.org/Date"/>
+  <descriptor id="compareEnd" title="比較期間の終了日" def="https://schema.org/Date"/>
   <descriptor id="recallCount" title="想起回数" def="https://schema.org/Integer"/>
   <descriptor id="recallTarget" title="想起目標値" def="https://schema.org/Integer"/>
   <descriptor id="discoveryCount" title="発見回数" def="https://schema.org/Integer"/>
@@ -134,6 +136,7 @@
     <descriptor href="#diff"/>
     <descriptor href="#tag"/>
     <descriptor href="#confidence"/>
+    <descriptor href="#userId"/>
   </descriptor>
 
   <descriptor id="doUpdateCheckpoint" type="idempotent" rt="#Checkpoint" title="Checkpointの分類タグを更新">
@@ -144,6 +147,8 @@
   <descriptor id="goPatternDashboard" type="safe" rt="#PatternDashboard" title="判断パターンダッシュボードを表示">
     <descriptor href="#periodStart"/>
     <descriptor href="#periodEnd"/>
+    <descriptor href="#compareStart"/>
+    <descriptor href="#compareEnd"/>
   </descriptor>
 
   <descriptor id="goGoNoGo" type="safe" rt="#GoNoGo" title="Go/No-Goメトリクスを表示"/>

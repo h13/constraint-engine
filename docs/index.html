@@ -137,6 +137,20 @@
 </tr>
 <tr>
   <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="compareEnd"></a><a href="#compareEnd">compareEnd</a></td>
+  <td align="left"><span style="white-space: normal;">比較期間の終了日</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Date" target="_blank">schema.org/Date</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="compareStart"></a><a href="#compareStart">compareStart</a></td>
+  <td align="left"><span style="white-space: normal;">比較期間の開始日</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Date" target="_blank">schema.org/Date</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
   <td align="left"><a id="confidence"></a><a href="#confidence">confidence</a></td>
   <td align="left"><span style="white-space: normal;">タグの確信度 (estimated</td>
   <td align="left">stated)</span></td>
@@ -174,7 +188,7 @@
   <td align="center"><span class="legend"><span class="legend-icon unsafe"></span></span></td>
   <td align="left"><a id="doRecordCheckpoint"></a><a href="#doRecordCheckpoint">doRecordCheckpoint</a></td>
   <td align="left"><span style="white-space: normal;">Checkpointを記録</span></td>
-  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#taskContext">taskContext</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#aiProposal">aiProposal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#humanFinal">humanFinal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#diff">diff</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#tag">tag</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#confidence">confidence</a></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#taskContext">taskContext</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#aiProposal">aiProposal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#humanFinal">humanFinal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#diff">diff</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#tag">tag</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#confidence">confidence</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#userId">userId</a></td>
   <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#Checkpoint">Checkpoint</a></span></span></span></span></td>
 </tr>
 <tr>
@@ -244,7 +258,7 @@
   <td align="center"><span class="legend"><span class="legend-icon safe"></span></span></td>
   <td align="left"><a id="goPatternDashboard"></a><a href="#goPatternDashboard">goPatternDashboard</a></td>
   <td align="left"><span style="white-space: normal;">判断パターンダッシュボードを表示</span></td>
-  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#periodStart">periodStart</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#periodEnd">periodEnd</a></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#periodStart">periodStart</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#periodEnd">periodEnd</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#compareStart">compareStart</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#compareEnd">compareEnd</a></td>
   <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#PatternDashboard">PatternDashboard</a></span></span></span></span></td>
 </tr>
 <tr>
@@ -426,6 +440,8 @@
   &lt;descriptor id=&quot;stylisticCount&quot; title=&quot;Stylistic分類の件数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
   &lt;descriptor id=&quot;periodStart&quot; title=&quot;集計期間の開始日&quot; def=&quot;https://schema.org/Date&quot;/&gt;
   &lt;descriptor id=&quot;periodEnd&quot; title=&quot;集計期間の終了日&quot; def=&quot;https://schema.org/Date&quot;/&gt;
+  &lt;descriptor id=&quot;compareStart&quot; title=&quot;比較期間の開始日&quot; def=&quot;https://schema.org/Date&quot;/&gt;
+  &lt;descriptor id=&quot;compareEnd&quot; title=&quot;比較期間の終了日&quot; def=&quot;https://schema.org/Date&quot;/&gt;
   &lt;descriptor id=&quot;recallCount&quot; title=&quot;想起回数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
   &lt;descriptor id=&quot;recallTarget&quot; title=&quot;想起目標値&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
   &lt;descriptor id=&quot;discoveryCount&quot; title=&quot;発見回数&quot; def=&quot;https://schema.org/Integer&quot;/&gt;
@@ -537,6 +553,7 @@
     &lt;descriptor href=&quot;#diff&quot;/&gt;
     &lt;descriptor href=&quot;#tag&quot;/&gt;
     &lt;descriptor href=&quot;#confidence&quot;/&gt;
+    &lt;descriptor href=&quot;#userId&quot;/&gt;
   &lt;/descriptor&gt;
 
   &lt;descriptor id=&quot;doUpdateCheckpoint&quot; type=&quot;idempotent&quot; rt=&quot;#Checkpoint&quot; title=&quot;Checkpointの分類タグを更新&quot;&gt;
@@ -547,6 +564,8 @@
   &lt;descriptor id=&quot;goPatternDashboard&quot; type=&quot;safe&quot; rt=&quot;#PatternDashboard&quot; title=&quot;判断パターンダッシュボードを表示&quot;&gt;
     &lt;descriptor href=&quot;#periodStart&quot;/&gt;
     &lt;descriptor href=&quot;#periodEnd&quot;/&gt;
+    &lt;descriptor href=&quot;#compareStart&quot;/&gt;
+    &lt;descriptor href=&quot;#compareEnd&quot;/&gt;
   &lt;/descriptor&gt;
 
   &lt;descriptor id=&quot;goGoNoGo&quot; type=&quot;safe&quot; rt=&quot;#GoNoGo&quot; title=&quot;Go/No-Goメトリクスを表示&quot;/&gt;
