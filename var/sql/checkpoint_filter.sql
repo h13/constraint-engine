@@ -9,3 +9,4 @@ FROM checkpoint
 WHERE (:tag = '' OR tag = :tag)
   AND (:sessionId = '' OR session_id = :sessionId)
 ORDER BY date_created DESC
+LIMIT 200

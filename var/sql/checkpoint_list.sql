@@ -7,3 +7,4 @@ SELECT
     date_created as "dateCreated"
 FROM checkpoint
 ORDER BY date_created DESC
+LIMIT 200
