@@ -23,9 +23,9 @@ class Checkpoints extends ResourceObject
     ) {
     }
 
-    #[Link(rel: 'checkpoint', href: '/checkpoints/{checkpointId}')]
-    #[Link(rel: 'patternDashboard', href: '/pattern-dashboard')]
-    #[Link(rel: 'recordCheckpoint', href: '/checkpoints')]
+    #[Link(rel: 'goCheckpoint', href: '/checkpoints/{checkpointId}')]
+    #[Link(rel: 'goPatternDashboard', href: '/pattern-dashboard')]
+    #[Link(rel: 'doRecordCheckpoint', href: '/checkpoints')]
     public function onGet(string $tag = '', string $sessionId = ''): static
     {
         $this->body = $tag !== '' || $sessionId !== ''
@@ -35,7 +35,7 @@ class Checkpoints extends ResourceObject
         return $this;
     }
 
-    #[Link(rel: 'checkpoint', href: '/checkpoints/{checkpointId}')]
+    #[Link(rel: 'goCheckpoint', href: '/checkpoints/{checkpointId}')]
     public function onPost(
         string $sessionId,
         string $taskContext,

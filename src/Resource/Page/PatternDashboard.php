@@ -15,7 +15,7 @@ class PatternDashboard extends ResourceObject
     ) {
     }
 
-    #[Link(rel: 'checkpointList', href: '/checkpoints')]
+    #[Link(rel: 'goCheckpointList', href: '/checkpoints')]
     public function onGet(
         string $periodStart = '',
         string $periodEnd = '',

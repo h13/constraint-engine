@@ -15,7 +15,7 @@ class Sessions extends ResourceObject
     ) {
     }
 
-    #[Link(rel: 'sessionAnalysis', href: '/sessions/{sessionId}/analysis')]
+    #[Link(rel: 'goSessionAnalysis', href: '/sessions/{sessionId}/analysis')]
     public function onGet(): static
     {
         $this->body = $this->query->sessionList();

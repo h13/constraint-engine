@@ -16,7 +16,7 @@ class SessionAnalysis extends ResourceObject
     ) {
     }
 
-    #[Link(rel: 'checkpointList', href: '/checkpoints{?sessionId}')]
+    #[Link(rel: 'goCheckpointList', href: '/checkpoints{?sessionId}')]
     public function onGet(string $sessionId): static
     {
         $summary = $this->query->sessionAnalysisSummary($sessionId);

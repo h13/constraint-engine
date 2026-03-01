@@ -19,7 +19,7 @@ class GoNoGo extends ResourceObject
     ) {
     }
 
-    #[Link(rel: 'checkpointList', href: '/checkpoints')]
+    #[Link(rel: 'goCheckpointList', href: '/checkpoints')]
     public function onGet(): static
     {
         $summary = $this->query->summary();

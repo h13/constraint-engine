@@ -22,7 +22,7 @@ class Checkpoint extends ResourceObject
     ) {
     }
 
-    #[Link(rel: 'checkpointList', href: '/checkpoints')]
+    #[Link(rel: 'goCheckpointList', href: '/checkpoints')]
     #[Link(rel: 'doUpdateCheckpoint', href: '/checkpoints/{checkpointId}')]
     public function onGet(int $id): static
     {
@@ -39,7 +39,7 @@ class Checkpoint extends ResourceObject
         return $this;
     }
 
-    #[Link(rel: 'checkpointList', href: '/checkpoints')]
+    #[Link(rel: 'goCheckpointList', href: '/checkpoints')]
     public function onPut(int $id, string $tag): static
     {
         $item = $this->query->item($id);

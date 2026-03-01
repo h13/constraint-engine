@@ -42,6 +42,14 @@
   <descriptor id="lastCheckpoint" title="最後のCheckpoint日時" def="https://schema.org/dateModified"/>
 
   <!-- Representations -->
+  <descriptor id="Home" title="ホームページ">
+    <descriptor href="#goCheckpointList"/>
+    <descriptor href="#goPatternDashboard"/>
+    <descriptor href="#goSessionList"/>
+    <descriptor href="#goTeamDashboard"/>
+    <descriptor href="#goGoNoGo"/>
+  </descriptor>
+
   <descriptor id="CheckpointList" title="Checkpoint一覧">
     <descriptor href="#checkpointId"/>
     <descriptor href="#sessionId"/>
@@ -137,7 +145,7 @@
   </descriptor>
 
   <descriptor id="SessionAnalysis" title="セッション分析">
-    <doc>distribution (factual/strategic/stylistic counts),
+    <doc>sessionId, taskContext, classification counts (factual/strategic/stylistic),
     checkpoints (embedded Checkpoint[])</doc>
     <descriptor href="#sessionId"/>
     <descriptor href="#taskContext"/>

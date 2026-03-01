@@ -15,7 +15,7 @@ class TeamDashboard extends ResourceObject
     ) {
     }
 
-    #[Link(rel: 'checkpointList', href: '/checkpoints')]
+    #[Link(rel: 'goCheckpointList', href: '/checkpoints')]
     public function onGet(): static
     {
         $this->body = $this->query->teamSummary();

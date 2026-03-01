@@ -9,11 +9,11 @@ use BEAR\Resource\ResourceObject;
 
 class Index extends ResourceObject
 {
-    #[Link(rel: 'checkpointList', href: '/checkpoints')]
-    #[Link(rel: 'patternDashboard', href: '/pattern-dashboard')]
-    #[Link(rel: 'sessionList', href: '/sessions')]
-    #[Link(rel: 'teamDashboard', href: '/team-dashboard')]
-    #[Link(rel: 'goNoGo', href: '/go-no-go')]
+    #[Link(rel: 'goCheckpointList', href: '/checkpoints')]
+    #[Link(rel: 'goPatternDashboard', href: '/pattern-dashboard')]
+    #[Link(rel: 'goSessionList', href: '/sessions')]
+    #[Link(rel: 'goTeamDashboard', href: '/team-dashboard')]
+    #[Link(rel: 'goGoNoGo', href: '/go-no-go')]
     public function onGet(string $name = 'BEAR.Sunday'): static
     {
         $this->body = [
