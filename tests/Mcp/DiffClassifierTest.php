@@ -9,6 +9,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 use function json_encode;
 
@@ -41,6 +42,67 @@ class DiffClassifierTest extends TestCase
 
         $result = $classifier->classify('user_name → userName');
 
+        $this->assertSame('stylistic', $result['tag']);
+    }
+
+    public function testClassifyMissingApiKey(): void
+    {
+        $mock = new MockHandler([]);
+        $client = new Client(['handler' => HandlerStack::create($mock)]);
+        $classifier = new DiffClassifier($client, '');
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('ANTHROPIC_API_KEY is not configured');
+        $classifier->classify('some diff');
+    }
+
+    public function testClassifyHttpError(): void
+    {
+        $mock = new MockHandler([
+            new Response(500, [], 'Internal Server Error'),
+        ]);
+        $client = new Client(['handler' => HandlerStack::create($mock)]);
+        $classifier = new DiffClassifier($client, 'test-key');
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Anthropic API request failed');
+        $classifier->classify('some diff');
+    }
+
+    public function testClassifyMalformedResponse(): void
+    {
+        $mock = new MockHandler([
+            new Response(200, [], '{"content": []}'),
+        ]);
+        $client = new Client(['handler' => HandlerStack::create($mock)]);
+        $classifier = new DiffClassifier($client, 'test-key');
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unexpected Anthropic API response structure');
+        $classifier->classify('some diff');
+    }
+
+    public function testClassifyInvalidTagFallsBackToStylistic(): void
+    {
+        $responseBody = json_encode([
+            'content' => [
+                [
+                    'type' => 'text',
+                    'text' => json_encode([
+                        'tag' => 'unknown_tag',
+                        'confidence' => 'estimated',
+                    ], JSON_THROW_ON_ERROR),
+                ],
+            ],
+        ], JSON_THROW_ON_ERROR);
+
+        $mock = new MockHandler([
+            new Response(200, ['Content-Type' => 'application/json'], $responseBody),
+        ]);
+        $client = new Client(['handler' => HandlerStack::create($mock)]);
+        $classifier = new DiffClassifier($client, 'test-key');
+
+        $result = $classifier->classify('some diff');
         $this->assertSame('stylistic', $result['tag']);
     }
 

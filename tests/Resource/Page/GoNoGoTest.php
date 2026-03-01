@@ -62,6 +62,40 @@ class GoNoGoTest extends ResourceTestCase
         $this->assertSame('pending', $ro->body['verdict']);
     }
 
+    public function testFrictionAtLimitIsNotNoGo(): void
+    {
+        $checkpointId = $this->createCheckpoint();
+        $this->insertRecall($checkpointId, 'recall', 3);
+        $this->insertRecall($checkpointId, 'discovery', 1);
+        $this->insertRecall($checkpointId, 'friction', 2);
+
+        $ro = $this->resource->get('page://self/go-no-go');
+        assert($ro instanceof ResourceObject);
+        $this->assertSame('go', $ro->body['verdict']);
+        $this->assertSame(2, $ro->body['frictionCount']);
+    }
+
+    public function testRecallNotMetWithDiscoveryMet(): void
+    {
+        $checkpointId = $this->createCheckpoint();
+        $this->insertRecall($checkpointId, 'recall', 2);
+        $this->insertRecall($checkpointId, 'discovery', 3);
+
+        $ro = $this->resource->get('page://self/go-no-go');
+        assert($ro instanceof ResourceObject);
+        $this->assertSame('pending', $ro->body['verdict']);
+    }
+
+    public function testDiscoveryNotMetWithRecallMet(): void
+    {
+        $checkpointId = $this->createCheckpoint();
+        $this->insertRecall($checkpointId, 'recall', 5);
+
+        $ro = $this->resource->get('page://self/go-no-go');
+        assert($ro instanceof ResourceObject);
+        $this->assertSame('pending', $ro->body['verdict']);
+    }
+
     private function createCheckpoint(): int
     {
         $this->pdo->perform(
