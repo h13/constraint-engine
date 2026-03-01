@@ -4,8 +4,6 @@
 /var/log/
 env.json
 .env
-mcp-server/node_modules/
-mcp-server/dist/
 .phpunit.result.cache
 .phpunit.cache/
 tests/Http/log/workflow.log

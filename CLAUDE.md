@@ -62,24 +62,23 @@ ORDER BY date;
 
 `PatternDashboard` リソースはこのインターフェースを注入して集計結果を返す。
 
-### Phase D: MCP Server（TypeScript）
+### Phase D: MCP Server（PHP）
 
-`mcp-server/` ディレクトリに TypeScript MCP サーバーを作成。
+`src/Mcp/` と `bin/mcp-server.php` で PHP MCP サーバーを実装済み。
+BEAR.Sunday の DI を直接利用し、REST API 経由なしでサービスを呼び出す。
 
-役割: **AI対話のdiff検出 → 3分類の自動判定 → BEAR.Sunday APIへのPOST**
+設計根拠: `docs/DESIGN_CONTEXT.md` セクション6（スタック統一・コード共有・DI統合・属性ベース）
 
-依存: `@modelcontextprotocol/sdk`, `@anthropic-ai/sdk`
+MCPツール（15個）:
 
-MCPツール:
+- **record_checkpoint** / **quick_record** — チェックポイント記録
+- **show_pattern** / **compare_periods** / **show_improvement_rate** — パターン分析
+- **start_session** / **end_session** — セッション管理
+- **analyze_session** / **generate_insights** / **suggest_improvements** — 分析・提案
+- **record_recall** / **record_discovery** / **record_friction** / **show_go_no_go** — リコール追跡
+- **suggest_template** — テンプレート提案
 
-1. **record_checkpoint**
-   - 入力: `aiProposal`, `humanFinal`, `taskContext`, `sessionId`
-   - 処理: diff検出 → Claude API (claude-sonnet-4-5-20250929) で3分類判定 → `POST http://localhost:8080/checkpoints` に送信
-   - 分類プロンプト: 差分テキストを受け取り、`{"tag": "factual"|"strategic"|"stylistic", "confidence": "estimated"}` だけ返す
-
-2. **show_pattern**
-   - 処理: `GET http://localhost:8080/pattern-dashboard` を取得
-   - 出力: 分類分布のサマリーテキスト
+起動: `make mcp-server` または `docker compose exec app php bin/mcp-server.php`
 
 ### Phase E: 動作確認
 
