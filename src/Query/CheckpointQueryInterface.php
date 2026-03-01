@@ -43,4 +43,8 @@ interface CheckpointQueryInterface
     /** @return array{total: int, factual_count: int, strategic_count: int, stylistic_count: int}|null */
     #[DbQuery('checkpoint_period_summary', type: 'row')]
     public function periodSummary(string $periodStart, string $periodEnd): array|null;
+
+    /** @return array<array{date: string, total: int, factual_count: int, factual_rate: float}> */
+    #[DbQuery('checkpoint_factual_rate')]
+    public function factualRate(string $periodStart, string $periodEnd): array;
 }

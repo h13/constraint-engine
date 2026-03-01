@@ -27,6 +27,9 @@ class PatternDashboard extends ResourceObject
                 ? $this->query->trend($periodStart, $periodEnd)
                 : [],
             'comparison' => $this->buildComparison($periodStart, $periodEnd, $compareStart, $compareEnd),
+            'factualRate' => $periodStart !== '' && $periodEnd !== ''
+                ? $this->query->factualRate($periodStart, $periodEnd)
+                : [],
         ];
 
         return $this;

@@ -7,6 +7,7 @@ namespace ConstraintEngine\App\Mcp;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use Mcp\Capability\Attribute\McpTool;
 
+use function count;
 use function date;
 use function implode;
 use function number_format;
@@ -118,6 +119,61 @@ final class PatternViewer
         $lines[] = 'Dashboard: http://localhost:8080/pattern-dashboard'
             . "?periodStart={$currentStart}&periodEnd={$currentEnd}"
             . "&compareStart={$previousStart}&compareEnd={$previousEnd}";
+
+        return implode("\n", $lines);
+    }
+
+    /**
+     * Show factual correction rate trend to measure learning improvement.
+     *
+     * @param string $periodStart Start of analysis period (YYYY-MM-DD)
+     * @param string $periodEnd   End of analysis period (YYYY-MM-DD)
+     *
+     * @return string Factual rate trend with improvement assessment
+     */
+    #[McpTool(name: 'show_improvement_rate')]
+    public function showImprovementRate(
+        string $periodStart = '',
+        string $periodEnd = '',
+    ): string {
+        if ($periodStart === '') {
+            $periodStart = date('Y-m-d', strtotime('-30 days'));
+            $periodEnd = date('Y-m-d');
+        }
+
+        $rates = $this->query->factualRate($periodStart, $periodEnd);
+        if ($rates === []) {
+            return "No checkpoints found in period {$periodStart} ~ {$periodEnd}.";
+        }
+
+        $lines = [
+            "Factual Correction Rate ({$periodStart} ~ {$periodEnd})",
+            '---',
+        ];
+
+        $firstRate = null;
+        $lastRate = null;
+        foreach ($rates as $row) {
+            $rate = (float) $row['factual_rate'];
+            $lines[] = "{$row['date']}: {$row['total']} checkpoints, factual rate " . number_format($rate, 1) . '%';
+            if ($firstRate === null) {
+                $firstRate = $rate;
+            }
+
+            $lastRate = $rate;
+        }
+
+        if ($firstRate !== null && $lastRate !== null && count($rates) >= 2) {
+            $improvement = $firstRate - $lastRate;
+            $lines[] = '---';
+            if ($improvement > 0) {
+                $lines[] = 'Improvement: factual rate decreased by ' . number_format($improvement, 1) . 'pp (learning effect detected)';
+            } elseif ($improvement < 0) {
+                $lines[] = 'Note: factual rate increased by ' . number_format(-$improvement, 1) . 'pp (may need attention)';
+            } else {
+                $lines[] = 'Factual rate stable.';
+            }
+        }
 
         return implode("\n", $lines);
     }
