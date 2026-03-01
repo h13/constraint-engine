@@ -61,9 +61,9 @@ class Checkpoint extends ResourceObject
 
         try {
             $this->command->updateTag($id, $tag);
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $this->code = 500;
-            $this->body = ['error' => $e->getMessage()];
+            $this->body = ['error' => 'An internal error occurred while updating the checkpoint.'];
 
             return $this;
         }

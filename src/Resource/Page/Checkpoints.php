@@ -14,8 +14,6 @@ use ConstraintEngine\App\Input\CheckpointInput;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use RuntimeException;
 
-use function assert;
-
 class Checkpoints extends ResourceObject
 {
     public function __construct(
@@ -60,15 +58,21 @@ class Checkpoints extends ResourceObject
 
         try {
             $result = ($this->becoming)($input);
-            assert($result instanceof RecordedCheckpoint);
         } catch (SemanticVariableException $e) {
             $this->code = 422;
             $this->body = ['errors' => $e->getErrors()->getMessages('en')];
 
             return $this;
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $this->code = 500;
-            $this->body = ['error' => $e->getMessage()];
+            $this->body = ['error' => 'An internal error occurred while recording the checkpoint.'];
+
+            return $this;
+        }
+
+        if (! $result instanceof RecordedCheckpoint) {
+            $this->code = 500;
+            $this->body = ['error' => 'An internal error occurred while recording the checkpoint.'];
 
             return $this;
         }
