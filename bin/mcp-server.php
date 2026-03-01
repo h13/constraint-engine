@@ -13,6 +13,7 @@ use ConstraintEngine\App\Mcp\QuickRecorder;
 use ConstraintEngine\App\Mcp\RecallTracker;
 use ConstraintEngine\App\Mcp\SessionAnalyzer;
 use ConstraintEngine\App\Mcp\SessionManager;
+use ConstraintEngine\App\Mcp\TemplateSuggester;
 use Mcp\Server;
 use Mcp\Server\Transport\StdioTransport;
 
@@ -27,9 +28,10 @@ $sessionAnalyzer = $injector->getInstance(SessionAnalyzer::class);
 $insightGenerator = $injector->getInstance(InsightGenerator::class);
 $improvementSuggester = $injector->getInstance(ImprovementSuggester::class);
 $recallTracker = $injector->getInstance(RecallTracker::class);
+$templateSuggester = $injector->getInstance(TemplateSuggester::class);
 
 $server = Server::builder()
-    ->setServerInfo('constraint-engine', '0.3.0')
+    ->setServerInfo('constraint-engine', '0.4.0')
     ->addTool([$recorder, 'recordCheckpoint'], 'record_checkpoint')
     ->addTool([$quickRecorder, 'quickRecord'], 'quick_record')
     ->addTool([$viewer, 'showPattern'], 'show_pattern')
@@ -44,6 +46,7 @@ $server = Server::builder()
     ->addTool([$sessionAnalyzer, 'analyzeSession'], 'analyze_session')
     ->addTool([$insightGenerator, 'generateInsights'], 'generate_insights')
     ->addTool([$improvementSuggester, 'suggestImprovements'], 'suggest_improvements')
+    ->addTool([$templateSuggester, 'suggestTemplate'], 'suggest_template')
     ->build();
 
 $server->run(new StdioTransport());

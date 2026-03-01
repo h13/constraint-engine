@@ -10,6 +10,7 @@ use ConstraintEngine\App\Mcp\ImprovementSuggester;
 use ConstraintEngine\App\Mcp\InsightGenerator;
 use ConstraintEngine\App\Mcp\SessionAnalyzer;
 use ConstraintEngine\App\Mcp\SessionManager;
+use ConstraintEngine\App\Mcp\TemplateSuggester;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use Ray\Di\AbstractModule;
@@ -41,6 +42,10 @@ final class McpModule extends AbstractModule
         );
         $this->bind(InsightGenerator::class)->toConstructor(
             InsightGenerator::class,
+            ['apiKey' => 'anthropic_api_key'],
+        );
+        $this->bind(TemplateSuggester::class)->toConstructor(
+            TemplateSuggester::class,
             ['apiKey' => 'anthropic_api_key'],
         );
         $this->bind(SessionManager::class)->in(Scope::SINGLETON);

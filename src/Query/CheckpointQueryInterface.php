@@ -51,4 +51,8 @@ interface CheckpointQueryInterface
     /** @return array<array{user_id: string, checkpoint_count: int, factual_count: int, strategic_count: int, stylistic_count: int, first_checkpoint: string, last_checkpoint: string}> */
     #[DbQuery('team_summary')]
     public function teamSummary(): array;
+
+    /** @return array<array{id: int, session_id: string, task_context: string, ai_proposal: string, human_final: string, diff: string, tag: string, confidence: string, date_created: string}> */
+    #[DbQuery('checkpoint_stylistic')]
+    public function stylisticCheckpoints(): array;
 }
