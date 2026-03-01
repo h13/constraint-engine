@@ -53,9 +53,9 @@ class SessionAnalysisTest extends ResourceTestCase
         $this->assertSame(200, $ro->code);
         $this->assertSame('sess-analysis', $ro->body['sessionId']);
         $this->assertSame(3, $ro->body['checkpointCount']);
-        $this->assertSame(2, $ro->body['distribution']['factual']);
-        $this->assertSame(1, $ro->body['distribution']['strategic']);
-        $this->assertSame(0, $ro->body['distribution']['stylistic']);
+        $this->assertSame(2, $ro->body['factualCount']);
+        $this->assertSame(1, $ro->body['strategicCount']);
+        $this->assertSame(0, $ro->body['stylisticCount']);
         $this->assertCount(3, $ro->body['checkpoints']);
     }
 }
