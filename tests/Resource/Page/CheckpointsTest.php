@@ -35,6 +35,9 @@ class CheckpointsTest extends ResourceTestCase
         $this->assertSame(201, $ro->code);
         $this->assertArrayHasKey('Location', $ro->headers);
         $this->assertMatchesRegularExpression('#/checkpoints/\d+#', $ro->headers['Location']);
+        $this->assertArrayHasKey('checkpointId', $ro->body);
+        $this->assertSame('test-001', $ro->body['sessionId']);
+        $this->assertSame('factual', $ro->body['tag']);
     }
 
     public function testOnPostThenGet(): void

@@ -69,7 +69,7 @@ class Checkpoints extends ResourceObject
 
         $this->code = Code::CREATED;
         $this->headers['Location'] = "/checkpoints/{$result->id}";
-        $this->body = ['checkpointId' => $result->id];
+        $this->body = $this->query->item($result->id);
 
         return $this;
     }
