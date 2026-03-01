@@ -50,6 +50,7 @@ class CheckpointRecorderTest extends TestCase
         $command->expects($this->once())
             ->method('add')
             ->with(
+                user_id: 'default',
                 session_id: 'test-session',
                 task_context: 'Test task',
                 ai_proposal: 'AI version',

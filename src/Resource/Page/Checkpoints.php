@@ -39,6 +39,7 @@ class Checkpoints extends ResourceObject
         string $diff,
         string $tag,
         string $confidence,
+        string $userId = 'default',
     ): static {
         $input = new CheckpointInput(
             sessionId: $sessionId,
@@ -48,6 +49,7 @@ class Checkpoints extends ResourceObject
             diff: $diff,
             tag: $tag,
             confidence: $confidence,
+            userId: $userId,
         );
 
         try {

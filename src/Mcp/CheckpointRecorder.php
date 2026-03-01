@@ -47,6 +47,7 @@ final class CheckpointRecorder
         $classification = $this->classifier->classify($diff);
 
         $this->command->add(
+            user_id: $this->sessionManager->getUserId(),
             session_id: $resolvedSessionId,
             task_context: $taskContext,
             ai_proposal: $aiProposal,

@@ -28,12 +28,15 @@ final readonly class RecordedCheckpoint
         public string $tag,
         #[Input]
         public string $confidence,
+        #[Input]
+        public string $userId,
         #[Inject]
         CheckpointCommandInterface $command,
         #[Inject]
         ExtendedPdoInterface $pdo,
     ) {
         $command->add(
+            user_id: $userId,
             session_id: $sessionId,
             task_context: $taskContext,
             ai_proposal: $aiProposal,

@@ -18,6 +18,7 @@ final readonly class CheckpointInput
         public string $diff,
         public string $tag,
         public string $confidence,
+        public string $userId = 'default',
     ) {
     }
 }

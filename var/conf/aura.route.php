@@ -10,3 +10,4 @@ $map->route('/go-no-go', '/go-no-go');
 $map->route('/health', '/health');
 $map->route('/sessions', '/sessions');
 $map->route('/session-analysis', '/sessions/{sessionId}/analysis');
+$map->route('/team-dashboard', '/team-dashboard');

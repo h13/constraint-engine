@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS checkpoint (
     id SERIAL PRIMARY KEY,
+    user_id TEXT NOT NULL DEFAULT 'default',
     session_id TEXT NOT NULL,
     task_context TEXT NOT NULL,
     ai_proposal TEXT NOT NULL,
@@ -12,6 +13,7 @@ CREATE TABLE IF NOT EXISTS checkpoint (
 CREATE INDEX IF NOT EXISTS idx_checkpoint_tag ON checkpoint (tag);
 CREATE INDEX IF NOT EXISTS idx_checkpoint_session ON checkpoint (session_id);
 CREATE INDEX IF NOT EXISTS idx_checkpoint_date ON checkpoint (date_created);
+CREATE INDEX IF NOT EXISTS idx_checkpoint_user ON checkpoint (user_id);
 
 CREATE TABLE IF NOT EXISTS checkpoint_recall (
     id SERIAL PRIMARY KEY,

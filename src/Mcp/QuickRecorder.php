@@ -46,6 +46,7 @@ final class QuickRecorder
         $diff = "{$parsed['aiProposal']} → {$parsed['humanFinal']}";
 
         $this->command->add(
+            user_id: $this->sessionManager->getUserId(),
             session_id: $sessionId,
             task_context: $taskContext,
             ai_proposal: $parsed['aiProposal'],

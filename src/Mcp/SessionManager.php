@@ -16,6 +16,7 @@ final class SessionManager
 {
     private string|null $activeSessionId = null;
     private string|null $activeTaskContext = null;
+    private string $userId = 'default';
     private int $checkpointCount = 0;
 
     /** @var array<string, int> */
@@ -29,7 +30,7 @@ final class SessionManager
      * @return string Session ID and confirmation
      */
     #[McpTool(name: 'start_session')]
-    public function startSession(string $taskContext): string
+    public function startSession(string $taskContext, string $userId = 'default'): string
     {
         if ($this->activeSessionId !== null) {
             return "Error: Session '{$this->activeSessionId}' is already active. End it first with end_session.";
@@ -37,6 +38,7 @@ final class SessionManager
 
         $this->activeSessionId = $this->generateSessionId();
         $this->activeTaskContext = $taskContext;
+        $this->userId = $userId;
         $this->checkpointCount = 0;
         $this->tagCounts = [];
 
@@ -79,6 +81,11 @@ final class SessionManager
     public function getActiveTaskContext(): string|null
     {
         return $this->activeTaskContext;
+    }
+
+    public function getUserId(): string
+    {
+        return $this->userId;
     }
 
     public function trackCheckpoint(string $tag): void

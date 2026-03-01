@@ -10,6 +10,7 @@ interface CheckpointCommandInterface
 {
     #[DbQuery('checkpoint_add')]
     public function add(
+        string $user_id,
         string $session_id,
         string $task_context,
         string $ai_proposal,

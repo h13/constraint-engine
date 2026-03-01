@@ -54,6 +54,7 @@ class QuickRecorderTest extends TestCase
         $command->expects($this->once())
             ->method('add')
             ->with(
+                user_id: 'default',
                 session_id: $this->isType('string'),
                 task_context: 'SF項目設計',
                 ai_proposal: 'Textフィールド',
@@ -106,6 +107,7 @@ class QuickRecorderTest extends TestCase
         $command->expects($this->once())
             ->method('add')
             ->with(
+                user_id: 'default',
                 session_id: $this->isType('string'),
                 task_context: 'セッションコンテキスト',
                 ai_proposal: 'A',
