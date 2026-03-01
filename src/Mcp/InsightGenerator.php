@@ -15,6 +15,8 @@ use function number_format;
 final class InsightGenerator
 {
     private const int MIN_CHECKPOINTS = 10;
+    private const int MAX_TOKENS = 600;
+    private const int RECENT_LIMIT = 20;
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are an AI-human collaboration pattern analyst. Given checkpoint statistics and recent modification history, generate actionable insights in Japanese.
 
@@ -57,7 +59,7 @@ PROMPT;
             return $this->client->complete(
                 self::SYSTEM_PROMPT,
                 "Analyze these checkpoint patterns and generate insights:\n\n{$dataContext}",
-                600,
+                self::MAX_TOKENS,
             );
         } catch (RuntimeException $e) {
             return 'Error: ' . $e->getMessage();
@@ -85,7 +87,7 @@ PROMPT;
             'Recent checkpoints (last 20):',
         ];
 
-        $recent = array_slice($checkpoints, 0, 20);
+        $recent = array_slice($checkpoints, 0, self::RECENT_LIMIT);
         foreach ($recent as $i => $cp) {
             $num = $i + 1;
             $lines[] = "#{$num} [{$cp['tag']}] {$cp['taskContext']}: {$cp['diff']}";

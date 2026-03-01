@@ -13,6 +13,7 @@ use function implode;
 
 final class SessionAnalyzer
 {
+    private const int MAX_TOKENS = 500;
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are an AI-human collaboration pattern analyst. Given a list of checkpoints from a session, analyze the patterns and provide actionable insights in Japanese.
 
@@ -51,7 +52,7 @@ PROMPT;
             return $this->client->complete(
                 self::SYSTEM_PROMPT,
                 "Analyze this session's modification patterns:\n\n{$summary}",
-                500,
+                self::MAX_TOKENS,
             );
         } catch (RuntimeException $e) {
             return 'Error: ' . $e->getMessage();

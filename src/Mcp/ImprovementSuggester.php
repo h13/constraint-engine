@@ -13,6 +13,8 @@ use function implode;
 
 final class ImprovementSuggester
 {
+    private const int MAX_TOKENS = 500;
+    private const int RECENT_LIMIT = 30;
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are an AI proposal improvement assistant. You have access to a history of past modifications that humans made to AI proposals.
 
@@ -55,7 +57,7 @@ PROMPT;
             return $this->client->complete(
                 self::SYSTEM_PROMPT,
                 "Based on past patterns, suggest improvements for this proposal:\n\n{$context}",
-                500,
+                self::MAX_TOKENS,
             );
         } catch (RuntimeException $e) {
             return 'Error: ' . $e->getMessage();
@@ -65,7 +67,7 @@ PROMPT;
     /** @param array<array{tag: string, diff: string, taskContext: string, aiProposal: string, humanFinal: string}> $checkpoints */
     private function buildContext(string $aiProposal, string $taskContext, array $checkpoints): string
     {
-        $recent = array_slice($checkpoints, 0, 30);
+        $recent = array_slice($checkpoints, 0, self::RECENT_LIMIT);
 
         $lines = [
             'NEW PROPOSAL:',

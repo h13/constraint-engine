@@ -15,6 +15,8 @@ use function implode;
 final class TemplateSuggester
 {
     private const int MIN_CHECKPOINTS = 3;
+    private const int MAX_TOKENS = 800;
+    private const int RECENT_LIMIT = 50;
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are a style template generator. You analyze patterns in stylistic corrections that humans made to AI output.
 
@@ -58,7 +60,7 @@ PROMPT;
             $templates = $this->client->complete(
                 self::SYSTEM_PROMPT,
                 "Generate shared style templates from these {$total} stylistic corrections:\n\n{$context}",
-                800,
+                self::MAX_TOKENS,
             );
         } catch (RuntimeException $e) {
             return 'Error: ' . $e->getMessage();
@@ -70,7 +72,7 @@ PROMPT;
     /** @param array<array{taskContext: string, aiProposal: string, humanFinal: string, diff: string}> $checkpoints */
     private function buildContext(array $checkpoints): string
     {
-        $recent = array_slice($checkpoints, 0, 50);
+        $recent = array_slice($checkpoints, 0, self::RECENT_LIMIT);
 
         $lines = ['STYLISTIC MODIFICATION HISTORY:'];
         foreach ($recent as $i => $cp) {

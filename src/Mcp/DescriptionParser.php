@@ -10,6 +10,7 @@ use const JSON_THROW_ON_ERROR;
 
 final class DescriptionParser
 {
+    private const int MAX_TOKENS = 300;
     private const string SYSTEM_PROMPT = <<<'PROMPT'
 You are a structured data extractor for an AI-human collaboration tracking system.
 
@@ -37,7 +38,7 @@ PROMPT;
         $text = $this->client->complete(
             self::SYSTEM_PROMPT,
             "Extract structured data from this description:\n\n{$description}",
-            300,
+            self::MAX_TOKENS,
         );
 
         $parsed = json_decode($text, true, 512, JSON_THROW_ON_ERROR);
