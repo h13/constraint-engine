@@ -11,6 +11,7 @@ use ConstraintEngine\App\Exception\InvalidTagException;
 use ConstraintEngine\App\Query\CheckpointCommandInterface;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use ConstraintEngine\App\Semantic\Tag;
+use RuntimeException;
 
 class Checkpoint extends ResourceObject
 {
@@ -58,7 +59,15 @@ class Checkpoint extends ResourceObject
             return $this;
         }
 
-        $this->command->updateTag($id, $tag);
+        try {
+            $this->command->updateTag($id, $tag);
+        } catch (RuntimeException $e) {
+            $this->code = 500;
+            $this->body = ['error' => $e->getMessage()];
+
+            return $this;
+        }
+
         $this->body = $this->query->item($id);
 
         return $this;
