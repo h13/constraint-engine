@@ -106,8 +106,8 @@ final class RecallTracker
 
         try {
             $this->command->add($checkpointId, $type, $note);
-        } catch (PDOException $e) {
-            return 'Error: Failed to record ' . $type . ' — ' . $e->getMessage();
+        } catch (PDOException) {
+            return 'Error: Failed to record ' . $type . '. Please check system logs.';
         }
 
         return ucfirst($type) . " recorded for checkpoint #{$checkpointId}.";

@@ -73,7 +73,8 @@ class InsightGeneratorTest extends TestCase
         $result = $generator->generateInsights();
 
         $this->assertStringContainsString('Error:', $result);
-        $this->assertStringContainsString('API connection failed', $result);
+        $this->assertStringContainsString('Failed to generate insights', $result);
+        $this->assertStringNotContainsString('API connection failed', $result);
     }
 
     public function testGenerateInsightsWithEnoughData(): void

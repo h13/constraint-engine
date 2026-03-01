@@ -63,8 +63,8 @@ final class QuickRecorder
                 tag: $parsed['tag'],
                 confidence: $parsed['confidence'],
             );
-        } catch (PDOException $e) {
-            return 'Error: Failed to write checkpoint — ' . $e->getMessage();
+        } catch (PDOException) {
+            return 'Error: Failed to write checkpoint. Please check system logs.';
         }
 
         $lastId = $this->pdo->lastInsertId();

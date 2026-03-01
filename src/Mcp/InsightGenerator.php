@@ -61,8 +61,8 @@ PROMPT;
                 "Analyze these checkpoint patterns and generate insights:\n\n{$dataContext}",
                 self::MAX_TOKENS,
             );
-        } catch (RuntimeException $e) {
-            return 'Error: ' . $e->getMessage();
+        } catch (RuntimeException) {
+            return 'Error: Failed to generate insights. Please check system logs.';
         }
     }
 

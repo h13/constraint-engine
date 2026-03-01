@@ -72,8 +72,8 @@ final class CheckpointRecorder
                 tag: $classification['tag'],
                 confidence: $classification['confidence'],
             );
-        } catch (PDOException $e) {
-            return 'Error: Failed to write checkpoint — ' . $e->getMessage();
+        } catch (PDOException) {
+            return 'Error: Failed to write checkpoint. Please check system logs.';
         }
 
         $lastId = $this->pdo->lastInsertId();

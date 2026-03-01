@@ -184,7 +184,8 @@ class CheckpointRecorderTest extends TestCase
         );
 
         $this->assertStringContainsString('Error', $result);
-        $this->assertStringContainsString('UNIQUE constraint failed', $result);
+        $this->assertStringContainsString('Failed to write checkpoint', $result);
+        $this->assertStringNotContainsString('UNIQUE constraint failed', $result);
     }
 
     public function testRecordCheckpointTracksInSession(): void

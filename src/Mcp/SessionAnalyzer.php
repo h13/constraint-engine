@@ -54,8 +54,8 @@ PROMPT;
                 "Analyze this session's modification patterns:\n\n{$summary}",
                 self::MAX_TOKENS,
             );
-        } catch (RuntimeException $e) {
-            return 'Error: ' . $e->getMessage();
+        } catch (RuntimeException) {
+            return 'Error: Failed to analyze session. Please check system logs.';
         }
     }
 

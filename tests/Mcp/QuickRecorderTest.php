@@ -161,7 +161,8 @@ class QuickRecorderTest extends TestCase
         $result = $recorder->quickRecord('AをBに変更');
 
         $this->assertStringContainsString('Error', $result);
-        $this->assertStringContainsString('disk I/O error', $result);
+        $this->assertStringContainsString('Failed to write checkpoint', $result);
+        $this->assertStringNotContainsString('disk I/O error', $result);
     }
 
     public function testQuickRecordTracksInSession(): void

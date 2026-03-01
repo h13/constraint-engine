@@ -62,8 +62,8 @@ PROMPT;
                 "Generate shared style templates from these {$total} stylistic corrections:\n\n{$context}",
                 self::MAX_TOKENS,
             );
-        } catch (RuntimeException $e) {
-            return 'Error: ' . $e->getMessage();
+        } catch (RuntimeException) {
+            return 'Error: Failed to generate templates. Please check system logs.';
         }
 
         return "=== Shared Style Templates ===\n(Based on {$total} stylistic corrections)\n\n{$templates}";

@@ -90,7 +90,8 @@ class TemplateSuggesterTest extends TestCase
         $result = $suggester->suggestTemplate();
 
         $this->assertStringContainsString('Error:', $result);
-        $this->assertStringContainsString('API connection failed', $result);
+        $this->assertStringContainsString('Failed to generate templates', $result);
+        $this->assertStringNotContainsString('API connection failed', $result);
     }
 
     public function testSuggestTemplateWithEnoughData(): void

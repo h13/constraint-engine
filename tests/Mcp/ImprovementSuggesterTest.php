@@ -68,7 +68,8 @@ class ImprovementSuggesterTest extends TestCase
         $result = $suggester->suggestImprovements('Textフィールドを使用', 'SF項目設計');
 
         $this->assertStringContainsString('Error:', $result);
-        $this->assertStringContainsString('API connection failed', $result);
+        $this->assertStringContainsString('Failed to generate suggestions', $result);
+        $this->assertStringNotContainsString('API connection failed', $result);
     }
 
     public function testSuggestImprovementsWithData(): void

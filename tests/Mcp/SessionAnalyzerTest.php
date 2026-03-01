@@ -69,7 +69,8 @@ class SessionAnalyzerTest extends TestCase
         $result = $analyzer->analyzeSession('error-test');
 
         $this->assertStringContainsString('Error:', $result);
-        $this->assertStringContainsString('API connection failed', $result);
+        $this->assertStringContainsString('Failed to analyze session', $result);
+        $this->assertStringNotContainsString('API connection failed', $result);
     }
 
     public function testAnalyzeSession(): void
