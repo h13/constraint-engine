@@ -10,6 +10,7 @@ use ConstraintEngine\App\Injector;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use ConstraintEngine\App\TestModule;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 use function file_get_contents;
 
@@ -26,7 +27,7 @@ class TemplateSuggesterTest extends TestCase
         $pdo = $injector->getInstance(ExtendedPdoInterface::class);
         $sql = file_get_contents(__DIR__ . '/../../var/sql/sqlite/create_checkpoint.sql');
         if ($sql === false) {
-            return;
+            $this->fail('Schema file not found: var/sql/sqlite/create_checkpoint.sql');
         }
 
         $pdo->exec($sql);
@@ -66,6 +67,30 @@ class TemplateSuggesterTest extends TestCase
 
         $this->assertStringContainsString('Insufficient stylistic data', $result);
         $this->assertStringContainsString('1 stylistic checkpoints', $result);
+    }
+
+    public function testSuggestTemplateApiError(): void
+    {
+        for ($i = 0; $i < 4; $i++) {
+            $this->resource->post('page://self/checkpoints', [
+                'sessionId' => 'error-test',
+                'taskContext' => 'document',
+                'aiProposal' => "proposal{$i}",
+                'humanFinal' => "final{$i}",
+                'diff' => "proposal{$i} to final{$i}",
+                'tag' => 'stylistic',
+                'confidence' => 'estimated',
+            ]);
+        }
+
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')->willThrowException(new RuntimeException('API connection failed'));
+
+        $suggester = new TemplateSuggester($this->query, $client);
+        $result = $suggester->suggestTemplate();
+
+        $this->assertStringContainsString('Error:', $result);
+        $this->assertStringContainsString('API connection failed', $result);
     }
 
     public function testSuggestTemplateWithEnoughData(): void

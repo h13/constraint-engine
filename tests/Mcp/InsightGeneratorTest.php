@@ -10,6 +10,7 @@ use ConstraintEngine\App\Injector;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use ConstraintEngine\App\TestModule;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 use function file_get_contents;
 
@@ -26,7 +27,7 @@ class InsightGeneratorTest extends TestCase
         $pdo = $injector->getInstance(ExtendedPdoInterface::class);
         $sql = file_get_contents(__DIR__ . '/../../var/sql/sqlite/create_checkpoint.sql');
         if ($sql === false) {
-            return;
+            $this->fail('Schema file not found: var/sql/sqlite/create_checkpoint.sql');
         }
 
         $pdo->exec($sql);
@@ -47,6 +48,32 @@ class InsightGeneratorTest extends TestCase
 
         $this->assertStringContainsString('Insufficient data', $result);
         $this->assertStringContainsString('0 checkpoints', $result);
+    }
+
+    public function testGenerateInsightsApiError(): void
+    {
+        $tags = ['factual', 'strategic', 'stylistic'];
+        for ($i = 0; $i < 12; $i++) {
+            $tag = $tags[$i % 3];
+            $this->resource->post('page://self/checkpoints', [
+                'sessionId' => 'error-test',
+                'taskContext' => "タスク{$i}",
+                'aiProposal' => "提案{$i}",
+                'humanFinal' => "最終{$i}",
+                'diff' => "提案{$i}→最終{$i}",
+                'tag' => $tag,
+                'confidence' => 'estimated',
+            ]);
+        }
+
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')->willThrowException(new RuntimeException('API connection failed'));
+
+        $generator = new InsightGenerator($this->query, $client);
+        $result = $generator->generateInsights();
+
+        $this->assertStringContainsString('Error:', $result);
+        $this->assertStringContainsString('API connection failed', $result);
     }
 
     public function testGenerateInsightsWithEnoughData(): void

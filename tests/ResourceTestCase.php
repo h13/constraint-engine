@@ -22,7 +22,7 @@ abstract class ResourceTestCase extends TestCase
         $pdo = $this->pdo = $injector->getInstance(ExtendedPdoInterface::class);
         $sql = file_get_contents(__DIR__ . '/../var/sql/sqlite/create_checkpoint.sql');
         if ($sql === false) {
-            return;
+            $this->fail('Schema file not found: var/sql/sqlite/create_checkpoint.sql');
         }
 
         $pdo->exec($sql);

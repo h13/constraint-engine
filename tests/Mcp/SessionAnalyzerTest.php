@@ -10,6 +10,7 @@ use ConstraintEngine\App\Injector;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use ConstraintEngine\App\TestModule;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 use function file_get_contents;
 
@@ -26,7 +27,7 @@ class SessionAnalyzerTest extends TestCase
         $pdo = $injector->getInstance(ExtendedPdoInterface::class);
         $sql = file_get_contents(__DIR__ . '/../../var/sql/sqlite/create_checkpoint.sql');
         if ($sql === false) {
-            return;
+            $this->fail('Schema file not found: var/sql/sqlite/create_checkpoint.sql');
         }
 
         $pdo->exec($sql);
@@ -47,6 +48,28 @@ class SessionAnalyzerTest extends TestCase
 
         $this->assertStringContainsString('Error', $result);
         $this->assertStringContainsString('No checkpoints found', $result);
+    }
+
+    public function testAnalyzeSessionApiError(): void
+    {
+        $this->resource->post('page://self/checkpoints', [
+            'sessionId' => 'error-test',
+            'taskContext' => 'テスト',
+            'aiProposal' => 'A',
+            'humanFinal' => 'B',
+            'diff' => 'A→B',
+            'tag' => 'factual',
+            'confidence' => 'estimated',
+        ]);
+
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')->willThrowException(new RuntimeException('API connection failed'));
+
+        $analyzer = new SessionAnalyzer($this->query, $client);
+        $result = $analyzer->analyzeSession('error-test');
+
+        $this->assertStringContainsString('Error:', $result);
+        $this->assertStringContainsString('API connection failed', $result);
     }
 
     public function testAnalyzeSession(): void
