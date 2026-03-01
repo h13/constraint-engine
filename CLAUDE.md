@@ -10,13 +10,13 @@ BEAR.Sunday + BEAR.Skills で構築する。ALPSプロファイル駆動。
 
 ## セットアップ手順
 
-`docs/alps.json` にALPSプロファイルがある。以下の Phase を順に実行すること。
+`docs/alps.xml` にALPSプロファイルがある。以下の Phase を順に実行すること。
 
 ### Phase A: BEAR.Sundayプロジェクト生成
 
-1. `asd --validate docs/alps.json` で検証
+1. `asd --validate docs/alps.xml` で検証
 2. `/bear-from-alps` を実行:
-   - ALPSプロファイル: `docs/alps.json`
+   - ALPSプロファイル: `docs/alps.xml`
    - Development Approach: **Outside-In (Full Stack)**
    - Project Directory: **現在のディレクトリ**
    - Vendor Name: **ConstraintEngine**
@@ -101,7 +101,7 @@ curl http://localhost:8080/pattern-dashboard
 ### Phase F: ALPS再抽出
 
 `/bear-to-alps` で実装後のリソース構造からALPSプロファイルを再抽出。
-最初の `docs/alps.json` と比較して設計ドリフトがないか確認。
+最初の `docs/alps.xml` と比較して設計ドリフトがないか確認。
 
 ## アーキテクチャ原則
 

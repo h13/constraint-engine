@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alps
+  version="1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://alps-io.github.io/schemas/alps.xsd">
+
+  <title>Constraint Engine API</title>
+  <doc>AI×人間の協働における判断プロセスの記録・可視化プラットフォーム</doc>
+
+  <!-- Semantic Descriptors -->
+  <descriptor id="checkpointId" title="Checkpoint ID" def="https://schema.org/identifier"/>
+  <descriptor id="sessionId" title="AI対話セッション識別子" def="https://schema.org/identifier"/>
+  <descriptor id="taskContext" title="業務タスクの説明" def="https://schema.org/description"/>
+  <descriptor id="aiProposal" title="AIが提案した内容" def="https://schema.org/text"/>
+  <descriptor id="humanFinal" title="人間が最終的に出した内容" def="https://schema.org/text"/>
+  <descriptor id="diff" title="提案と最終の差分" def="https://schema.org/text"/>
+  <descriptor id="tag" title="分類タグ (factual|strategic|stylistic)" def="https://schema.org/category"/>
+  <descriptor id="confidence" title="タグの確信度 (estimated|stated)" def="https://schema.org/category"/>
+  <descriptor id="dateCreated" title="作成日時" def="https://schema.org/dateCreated"/>
+  <descriptor id="totalCheckpoints" title="合計Checkpoint数" def="https://schema.org/Integer"/>
+  <descriptor id="factualCount" title="Factual分類の件数" def="https://schema.org/Integer"/>
+  <descriptor id="strategicCount" title="Strategic分類の件数" def="https://schema.org/Integer"/>
+  <descriptor id="stylisticCount" title="Stylistic分類の件数" def="https://schema.org/Integer"/>
+  <descriptor id="periodStart" title="集計期間の開始日" def="https://schema.org/Date"/>
+  <descriptor id="periodEnd" title="集計期間の終了日" def="https://schema.org/Date"/>
+
+  <!-- Representations -->
+  <descriptor id="CheckpointList" title="Checkpoint一覧">
+    <descriptor href="#checkpointId"/>
+    <descriptor href="#sessionId"/>
+    <descriptor href="#taskContext"/>
+    <descriptor href="#tag"/>
+    <descriptor href="#confidence"/>
+    <descriptor href="#dateCreated"/>
+    <descriptor href="#goCheckpoint"/>
+    <descriptor href="#goPatternDashboard"/>
+    <descriptor href="#doRecordCheckpoint"/>
+  </descriptor>
+
+  <descriptor id="Checkpoint" title="Checkpoint詳細">
+    <descriptor href="#checkpointId"/>
+    <descriptor href="#sessionId"/>
+    <descriptor href="#taskContext"/>
+    <descriptor href="#aiProposal"/>
+    <descriptor href="#humanFinal"/>
+    <descriptor href="#diff"/>
+    <descriptor href="#tag"/>
+    <descriptor href="#confidence"/>
+    <descriptor href="#dateCreated"/>
+    <descriptor href="#goCheckpointList"/>
+  </descriptor>
+
+  <descriptor id="PatternDashboard" title="判断パターンダッシュボード">
+    <descriptor href="#totalCheckpoints"/>
+    <descriptor href="#factualCount"/>
+    <descriptor href="#strategicCount"/>
+    <descriptor href="#stylisticCount"/>
+    <descriptor href="#periodStart"/>
+    <descriptor href="#periodEnd"/>
+    <descriptor href="#goCheckpointList"/>
+  </descriptor>
+
+  <!-- Transitions -->
+  <descriptor id="goCheckpointList" type="safe" rt="#CheckpointList" title="Checkpoint一覧を表示">
+    <descriptor href="#tag"/>
+    <descriptor href="#sessionId"/>
+  </descriptor>
+
+  <descriptor id="goCheckpoint" type="safe" rt="#Checkpoint" title="Checkpoint詳細を表示">
+    <descriptor href="#checkpointId"/>
+  </descriptor>
+
+  <descriptor id="doRecordCheckpoint" type="unsafe" rt="#Checkpoint" title="Checkpointを記録">
+    <descriptor href="#sessionId"/>
+    <descriptor href="#taskContext"/>
+    <descriptor href="#aiProposal"/>
+    <descriptor href="#humanFinal"/>
+    <descriptor href="#diff"/>
+    <descriptor href="#tag"/>
+    <descriptor href="#confidence"/>
+  </descriptor>
+
+  <descriptor id="goPatternDashboard" type="safe" rt="#PatternDashboard" title="判断パターンダッシュボードを表示">
+    <descriptor href="#periodStart"/>
+    <descriptor href="#periodEnd"/>
+  </descriptor>
+
+</alps>
