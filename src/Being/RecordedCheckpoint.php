@@ -8,6 +8,7 @@ use Aura\Sql\ExtendedPdoInterface;
 use ConstraintEngine\App\Query\CheckpointCommandInterface;
 use Ray\Di\Di\Inject;
 use Ray\InputQuery\Attribute\Input;
+use RuntimeException;
 
 final readonly class RecordedCheckpoint
 {
@@ -45,6 +46,11 @@ final readonly class RecordedCheckpoint
             tag: $tag,
             confidence: $confidence,
         );
-        $this->id = (int) $pdo->lastInsertId();
+        $lastId = $pdo->lastInsertId();
+        if ($lastId === false || $lastId === '0') {
+            throw new RuntimeException('Failed to record checkpoint: could not retrieve insert ID');
+        }
+
+        $this->id = (int) $lastId;
     }
 }
