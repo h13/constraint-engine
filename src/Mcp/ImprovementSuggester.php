@@ -10,6 +10,7 @@ use RuntimeException;
 
 use function array_slice;
 use function implode;
+use function trim;
 
 final class ImprovementSuggester
 {
@@ -46,6 +47,14 @@ PROMPT;
     #[McpTool(name: 'suggest_improvements')]
     public function suggestImprovements(string $aiProposal, string $taskContext): string
     {
+        if (trim($aiProposal) === '') {
+            return 'Error: aiProposal cannot be empty.';
+        }
+
+        if (trim($taskContext) === '') {
+            return 'Error: taskContext cannot be empty.';
+        }
+
         $checkpoints = $this->query->detailList();
         if ($checkpoints === []) {
             return 'No past modification data available yet. Start recording checkpoints to enable pattern-based suggestions.';
@@ -59,8 +68,8 @@ PROMPT;
                 "Based on past patterns, suggest improvements for this proposal:\n\n{$context}",
                 self::MAX_TOKENS,
             );
-        } catch (RuntimeException $e) {
-            return 'Error: ' . $e->getMessage();
+        } catch (RuntimeException) {
+            return 'Error: Failed to generate suggestions. Please check system logs.';
         }
     }
 
