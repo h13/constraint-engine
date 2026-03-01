@@ -21,6 +21,10 @@
   <descriptor id="factualCount" title="Factual分類の件数" def="https://schema.org/Integer"/>
   <descriptor id="strategicCount" title="Strategic分類の件数" def="https://schema.org/Integer"/>
   <descriptor id="stylisticCount" title="Stylistic分類の件数" def="https://schema.org/Integer"/>
+  <descriptor id="count" title="件数" def="https://schema.org/Integer"/>
+  <descriptor id="date" title="日付" def="https://schema.org/Date"/>
+  <descriptor id="total" title="日次合計件数" def="https://schema.org/Integer"/>
+  <descriptor id="factualRate" title="Factual率 (%)" def="https://schema.org/Float"/>
   <descriptor id="periodStart" title="集計期間の開始日" def="https://schema.org/Date"/>
   <descriptor id="periodEnd" title="集計期間の終了日" def="https://schema.org/Date"/>
   <descriptor id="compareStart" title="比較期間の開始日" def="https://schema.org/Date"/>
@@ -64,13 +68,48 @@
     <descriptor href="#doUpdateCheckpoint"/>
   </descriptor>
 
+  <descriptor id="TagDistribution" title="タグ別件数">
+    <descriptor href="#tag"/>
+    <descriptor href="#count"/>
+  </descriptor>
+
+  <descriptor id="TrendEntry" title="日次トレンドエントリ">
+    <descriptor href="#tag"/>
+    <descriptor href="#date"/>
+    <descriptor href="#count"/>
+  </descriptor>
+
+  <descriptor id="FactualRateEntry" title="日次Factual率エントリ">
+    <descriptor href="#date"/>
+    <descriptor href="#total"/>
+    <descriptor href="#factualCount"/>
+    <descriptor href="#factualRate"/>
+  </descriptor>
+
+  <descriptor id="PeriodSummary" title="期間サマリー">
+    <descriptor href="#totalCheckpoints"/>
+    <descriptor href="#factualCount"/>
+    <descriptor href="#strategicCount"/>
+    <descriptor href="#stylisticCount"/>
+  </descriptor>
+
   <descriptor id="PatternDashboard" title="判断パターンダッシュボード">
+    <doc>summary (PeriodSummary), tagDistribution (TagDistribution[]),
+    trend (TrendEntry[]), comparison (current/previous PeriodSummary),
+    factualRate (FactualRateEntry[])</doc>
     <descriptor href="#totalCheckpoints"/>
     <descriptor href="#factualCount"/>
     <descriptor href="#strategicCount"/>
     <descriptor href="#stylisticCount"/>
     <descriptor href="#periodStart"/>
     <descriptor href="#periodEnd"/>
+    <descriptor href="#compareStart"/>
+    <descriptor href="#compareEnd"/>
+    <descriptor href="#tag"/>
+    <descriptor href="#count"/>
+    <descriptor href="#date"/>
+    <descriptor href="#total"/>
+    <descriptor href="#factualRate"/>
     <descriptor href="#goCheckpointList"/>
   </descriptor>
 
@@ -98,6 +137,8 @@
   </descriptor>
 
   <descriptor id="SessionAnalysis" title="セッション分析">
+    <doc>distribution (factual/strategic/stylistic counts),
+    checkpoints (embedded Checkpoint[])</doc>
     <descriptor href="#sessionId"/>
     <descriptor href="#taskContext"/>
     <descriptor href="#checkpointCount"/>
