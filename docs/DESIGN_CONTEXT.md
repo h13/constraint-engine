@@ -137,20 +137,31 @@ Checkpoint = {
 ### 現在のアーキテクチャ
 
 ```
-MCP Server (TypeScript)          BEAR.Sunday (PHP)
-┌─────────────────────┐         ┌──────────────────────────┐
-│ diff検出             │         │ Checkpoint Resource      │
-│ 3分類AI判定          │ ──POST──→ │ PatternDashboard Resource│
-│ Claude Desktop連携   │         │ CheckpointList Resource  │
-└─────────────────────┘         │ Query/Command Interface  │
-  薄いクライアント                │ SQLite DB               │
-                                └──────────────────────────┘
-                                  ALPSプロファイル駆動
+┌─────────────────────────────────────┐
+│         Docker Compose              │
+│                                     │
+│  nginx ─→ php-fpm (BEAR.Sunday)    │
+│              │                      │
+│              ▼                      │
+│          PostgreSQL                 │
+│                                     │
+│  php mcp-server (stdio, 同一イメージ) │
+└─────────────────────────────────────┘
 ```
 
-- **MCP Server**: diff検出と分類判定だけ。データ管理はしない
+- **MCP Server (PHP)**: `mcp/sdk` で実装。diff検出と Anthropic API による3分類判定。DI で `CheckpointCommandInterface` を直接注入（HTTP ホップゼロ）
 - **BEAR.Sunday**: Checkpointのライフサイクル管理、集計、可視化。ALPSが設計を駆動
-- **接続**: REST API（Uniform Interface）。MCP Serverが`POST /checkpoint`、`GET /pattern-dashboard` を呼ぶ
+- **DB**: PostgreSQL 16（開発・本番とも同一。テストのみ SQLite in-memory）
+- **Docker**: 単一 `compose.yaml` で dev/prod 統一。`Makefile` で全操作をコンテナ内実行
+
+#### TypeScript → PHP 移行の理由
+
+初期実装は TypeScript MCP Server + REST API 経由だったが、以下の理由で PHP に統一:
+
+1. **スタック統一**: Docker イメージ1つ。Node.js コンテナ不要
+2. **コード共有**: `Tag`, `Confidence` などの Semantic Variable を MCP 側でも直接利用
+3. **DI 統合**: BEAR.Sunday の Injector 経由で `CheckpointCommandInterface` を直接呼び出し
+4. **属性ベース**: `#[McpTool]` = BEAR.Sunday の宣言的スタイルと統一
 
 ### なぜBEAR.Sundayか
 
@@ -163,7 +174,7 @@ MCP Server (TypeScript)          BEAR.Sunday (PHP)
 
 ## 7. リソース設計
 
-ALPSプロファイル（`docs/alps.json`）に定義済み。
+ALPSプロファイル（`docs/alps.xml`）に定義済み。
 
 ### Ontology（15要素）
 checkpointId, sessionId, taskContext, aiProposal, humanFinal, diff, tag, confidence, dateCreated, totalCheckpoints, factualCount, strategicCount, stylisticCount, periodStart, periodEnd
