@@ -7,6 +7,7 @@ SELECT
         ELSE 0
     END as "factualRate"
 FROM checkpoint
-WHERE date_created BETWEEN :periodStart AND :periodEnd
+WHERE date_created >= :periodStart
+  AND date_created < date(:periodEnd, '+1 day')
 GROUP BY DATE(date_created)
 ORDER BY DATE(date_created)
