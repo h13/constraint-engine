@@ -82,7 +82,7 @@ final class PatternViewer
         string $previousStart = '',
         string $previousEnd = '',
     ): string {
-        if ($currentStart === '') {
+        if ($currentStart === '' || $currentEnd === '' || $previousStart === '' || $previousEnd === '') {
             $currentStart = date('Y-m-d', strtotime('-7 days'));
             $currentEnd = date('Y-m-d');
             $previousStart = date('Y-m-d', strtotime('-14 days'));
@@ -139,7 +139,7 @@ final class PatternViewer
         string $periodStart = '',
         string $periodEnd = '',
     ): string {
-        if ($periodStart === '') {
+        if ($periodStart === '' || $periodEnd === '') {
             $periodStart = date('Y-m-d', strtotime('-30 days'));
             $periodEnd = date('Y-m-d');
         }
