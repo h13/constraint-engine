@@ -6,10 +6,8 @@ namespace ConstraintEngine\App\Resource\Page;
 
 use BEAR\Resource\Annotation\Link;
 use BEAR\Resource\ResourceObject;
+use ConstraintEngine\App\DateHelper;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
-
-use function date;
-use function strtotime;
 
 class PatternDashboard extends ResourceObject
 {
@@ -25,7 +23,7 @@ class PatternDashboard extends ResourceObject
         string $compareStart = '',
         string $compareEnd = '',
     ): static {
-        $endExcl = $periodEnd !== '' ? self::nextDay($periodEnd) : '';
+        $endExcl = $periodEnd !== '' ? DateHelper::nextDay($periodEnd) : '';
         $this->body = [
             'summary' => $this->query->summary(),
             'tagDistribution' => $this->query->tagDistribution(),
@@ -41,11 +39,6 @@ class PatternDashboard extends ResourceObject
         return $this;
     }
 
-    private static function nextDay(string $date): string
-    {
-        return date('Y-m-d', strtotime($date . ' +1 day'));
-    }
-
     /** @return array{current: array<string, int>|null, previous: array<string, int>|null}|null */
     private function buildComparison(
         string $periodStart,
@@ -58,8 +51,8 @@ class PatternDashboard extends ResourceObject
         }
 
         return [
-            'current' => $this->query->periodSummary($periodStart, self::nextDay($periodEnd)),
-            'previous' => $this->query->periodSummary($compareStart, self::nextDay($compareEnd)),
+            'current' => $this->query->periodSummary($periodStart, DateHelper::nextDay($periodEnd)),
+            'previous' => $this->query->periodSummary($compareStart, DateHelper::nextDay($compareEnd)),
         ];
     }
 }

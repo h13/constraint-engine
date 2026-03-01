@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Mcp;
 
+use ConstraintEngine\App\DateHelper;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use Mcp\Capability\Attribute\McpTool;
 use Ray\Di\Di\Named;
@@ -89,8 +90,8 @@ final class PatternViewer
             $previousEnd = date('Y-m-d', strtotime('-8 days'));
         }
 
-        $currentEndExcl = self::nextDay($currentEnd);
-        $previousEndExcl = self::nextDay($previousEnd);
+        $currentEndExcl = DateHelper::nextDay($currentEnd);
+        $previousEndExcl = DateHelper::nextDay($previousEnd);
         $current = $this->query->periodSummary($currentStart, $currentEndExcl);
         $previous = $this->query->periodSummary($previousStart, $previousEndExcl);
 
@@ -146,7 +147,7 @@ final class PatternViewer
             $periodEnd = date('Y-m-d');
         }
 
-        $rates = $this->query->factualRate($periodStart, self::nextDay($periodEnd));
+        $rates = $this->query->factualRate($periodStart, DateHelper::nextDay($periodEnd));
         if ($rates === []) {
             return "No checkpoints found in period {$periodStart} ~ {$periodEnd}.";
         }
@@ -190,11 +191,6 @@ final class PatternViewer
         }
 
         return number_format($part / $total * 100, 1);
-    }
-
-    private static function nextDay(string $date): string
-    {
-        return date('Y-m-d', strtotime($date . ' +1 day'));
     }
 
     private function formatChange(float $previous, float $current): string
