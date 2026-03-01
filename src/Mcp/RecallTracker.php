@@ -17,6 +17,10 @@ use function ucfirst;
 
 final class RecallTracker
 {
+    private const string TYPE_RECALL = 'recall';
+    private const string TYPE_DISCOVERY = 'discovery';
+    private const string TYPE_FRICTION = 'friction';
+
     public function __construct(
         private readonly RecallCommandInterface $command,
         private readonly RecallQueryInterface $query,
@@ -35,7 +39,7 @@ final class RecallTracker
     #[McpTool(name: 'record_recall')]
     public function recordRecall(int $checkpointId, string $note = ''): string
     {
-        return $this->record($checkpointId, 'recall', $note);
+        return $this->record($checkpointId, self::TYPE_RECALL, $note);
     }
 
     /**
@@ -49,7 +53,7 @@ final class RecallTracker
     #[McpTool(name: 'record_discovery')]
     public function recordDiscovery(int $checkpointId, string $note = ''): string
     {
-        return $this->record($checkpointId, 'discovery', $note);
+        return $this->record($checkpointId, self::TYPE_DISCOVERY, $note);
     }
 
     /**
@@ -63,7 +67,7 @@ final class RecallTracker
     #[McpTool(name: 'record_friction')]
     public function recordFriction(int $checkpointId, string $note = ''): string
     {
-        return $this->record($checkpointId, 'friction', $note);
+        return $this->record($checkpointId, self::TYPE_FRICTION, $note);
     }
 
     /**
