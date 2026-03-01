@@ -11,7 +11,7 @@ use ConstraintEngine\App\Exception\InvalidTagException;
 use ConstraintEngine\App\Query\CheckpointCommandInterface;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use ConstraintEngine\App\Semantic\Tag;
-use RuntimeException;
+use PDOException;
 
 class Checkpoint extends ResourceObject
 {
@@ -61,7 +61,7 @@ class Checkpoint extends ResourceObject
 
         try {
             $this->command->updateTag($id, $tag);
-        } catch (RuntimeException) {
+        } catch (PDOException) {
             $this->code = 500;
             $this->body = ['error' => 'An internal error occurred while updating the checkpoint.'];
 
