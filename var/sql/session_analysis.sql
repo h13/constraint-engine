@@ -11,3 +11,4 @@ SELECT
 FROM checkpoint
 WHERE session_id = :sessionId
 ORDER BY date_created ASC
+LIMIT 500

@@ -12,3 +12,4 @@ SELECT
 FROM checkpoint
 GROUP BY session_id
 ORDER BY MAX(date_created) DESC
+LIMIT 200

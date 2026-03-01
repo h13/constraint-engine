@@ -9,3 +9,4 @@ SELECT
 FROM checkpoint
 GROUP BY user_id
 ORDER BY COUNT(*) DESC
+LIMIT 200
