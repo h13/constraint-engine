@@ -43,7 +43,9 @@ final class QuickRecorder
             $taskContext = $activeContext;
         }
 
-        $diff = "{$parsed['aiProposal']} → {$parsed['humanFinal']}";
+        $diff = $parsed['aiProposal'] === $parsed['humanFinal']
+            ? '(no changes)'
+            : "{$parsed['aiProposal']} → {$parsed['humanFinal']}";
 
         $this->command->add(
             user_id: $this->sessionManager->getUserId(),
