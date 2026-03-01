@@ -6,6 +6,7 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use ConstraintEngine\App\Injector;
 use ConstraintEngine\App\Mcp\CheckpointRecorder;
+use ConstraintEngine\App\Mcp\ImprovementSuggester;
 use ConstraintEngine\App\Mcp\InsightGenerator;
 use ConstraintEngine\App\Mcp\PatternViewer;
 use ConstraintEngine\App\Mcp\QuickRecorder;
@@ -24,6 +25,7 @@ $viewer = $injector->getInstance(PatternViewer::class);
 $quickRecorder = $injector->getInstance(QuickRecorder::class);
 $sessionAnalyzer = $injector->getInstance(SessionAnalyzer::class);
 $insightGenerator = $injector->getInstance(InsightGenerator::class);
+$improvementSuggester = $injector->getInstance(ImprovementSuggester::class);
 $recallTracker = $injector->getInstance(RecallTracker::class);
 
 $server = Server::builder()
@@ -40,6 +42,7 @@ $server = Server::builder()
     ->addTool([$sessionManager, 'endSession'], 'end_session')
     ->addTool([$sessionAnalyzer, 'analyzeSession'], 'analyze_session')
     ->addTool([$insightGenerator, 'generateInsights'], 'generate_insights')
+    ->addTool([$improvementSuggester, 'suggestImprovements'], 'suggest_improvements')
     ->build();
 
 $server->run(new StdioTransport());

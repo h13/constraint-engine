@@ -6,6 +6,7 @@ namespace ConstraintEngine\App\Module;
 
 use ConstraintEngine\App\Mcp\DescriptionParser;
 use ConstraintEngine\App\Mcp\DiffClassifier;
+use ConstraintEngine\App\Mcp\ImprovementSuggester;
 use ConstraintEngine\App\Mcp\InsightGenerator;
 use ConstraintEngine\App\Mcp\SessionAnalyzer;
 use ConstraintEngine\App\Mcp\SessionManager;
@@ -32,6 +33,10 @@ final class McpModule extends AbstractModule
         );
         $this->bind(SessionAnalyzer::class)->toConstructor(
             SessionAnalyzer::class,
+            ['apiKey' => 'anthropic_api_key'],
+        );
+        $this->bind(ImprovementSuggester::class)->toConstructor(
+            ImprovementSuggester::class,
             ['apiKey' => 'anthropic_api_key'],
         );
         $this->bind(InsightGenerator::class)->toConstructor(
