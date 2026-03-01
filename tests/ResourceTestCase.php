@@ -13,12 +13,13 @@ use function file_get_contents;
 abstract class ResourceTestCase extends TestCase
 {
     protected ResourceInterface $resource;
+    protected ExtendedPdoInterface $pdo;
 
     protected function setUp(): void
     {
         $injector = Injector::getOverrideInstance('app', new TestModule());
         $this->resource = $injector->getInstance(ResourceInterface::class);
-        $pdo = $injector->getInstance(ExtendedPdoInterface::class);
+        $pdo = $this->pdo = $injector->getInstance(ExtendedPdoInterface::class);
         $sql = file_get_contents(__DIR__ . '/../var/sql/sqlite/create_checkpoint.sql');
         if ($sql === false) {
             return;
