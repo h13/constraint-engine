@@ -1,0 +1,380 @@
+<html lang="en">
+<head>
+    <title>Constraint Engine API</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css">
+    <link rel="stylesheet" href="https://www.app-state-diagram.com/app-state-diagram/assets/css/main.css">
+<style>
+    .center-text {
+        text-align: center;
+    }
+    .hidden {
+        display: none;
+    }
+</style>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/@hpcc-js/wasm@2.21.0/dist/graphviz.umd.js"></script>
+    <script src="https://unpkg.com/d3-graphviz@5.6.0/build/d3-graphviz.min.js"></script>
+<script src="https://www.app-state-diagram.com/app-state-diagram/assets/js/main.js"></script>
+<script src="https://www.app-state-diagram.com/app-state-diagram/assets/js/zoom.js"></script>
+</head>
+<body>
+    <div class="markdown-body">
+        <h1>Constraint Engine API</h1>
+
+<p>AI×人間の協働における判断プロセスの記録・可視化プラットフォーム</p>
+
+<!-- Container for the ASDs -->
+
+<div id="svg-container">
+    <div id="asd-graph-id" class="center-text"></div>
+    <div id="asd-graph-name" class="center-text hidden"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            await Promise.all([
+                    renderGraph("#asd-graph-id", 'digraph application_state_diagram {  graph [    labelloc="t";    fontname="Helvetica"  ];  node [shape = box, style = "bold,filled" fillcolor="lightgray", margin="0.3,0.1"];    Checkpoint [margin=0.1, label="Checkpoint", shape=box, URL="#Checkpoint" target="_parent"]    CheckpointList [margin=0.1, label="CheckpointList", shape=box, URL="#CheckpointList" target="_parent"]    PatternDashboard [margin=0.1, label="PatternDashboard", shape=box, URL="#PatternDashboard" target="_parent"]    Checkpoint -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> goCheckpointList</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    CheckpointList -> Checkpoint [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" align="left" href="#doRecordCheckpoint" tooltip="Checkpointを記録 (unsafe)"><font color="#FF4136">■</font> doRecordCheckpoint</td></tr><tr><td valign="middle" align="left" href="#goCheckpoint" tooltip="Checkpoint詳細を表示 (safe)"><font color="#00A86B">■</font> goCheckpoint</td></tr></table>> URL="#doRecordCheckpoint" target="_parent" fontsize=13 class="doRecordCheckpoint" penwidth=1.5];    CheckpointList -> PatternDashboard [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goPatternDashboard" tooltip="判断パターンダッシュボードを表示 (safe)"><font color="#00A86B">■</font> goPatternDashboard</td></tr></table>> URL="#goPatternDashboard" target="_parent" fontsize=13 class="goPatternDashboard" penwidth=1.5];    PatternDashboard -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> goCheckpointList</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    Checkpoint [label="Checkpoint" URL="#Checkpoint" target="_parent"]    CheckpointList [label="CheckpointList" URL="#CheckpointList" target="_parent"]    PatternDashboard [label="PatternDashboard" URL="#PatternDashboard" target="_parent"]}'),
+                    renderGraph("#asd-graph-name", 'digraph application_state_diagram {  graph [    labelloc="t";    fontname="Helvetica"  ];  node [shape = box, style = "bold,filled" fillcolor="lightgray", margin="0.3,0.1"];    Checkpoint [margin=0.1, label="Checkpoint詳細", shape=box, URL="#Checkpoint" target="_parent"]    CheckpointList [margin=0.1, label="Checkpoint一覧", shape=box, URL="#CheckpointList" target="_parent"]    PatternDashboard [margin=0.1, label="判断パターンダッシュボード", shape=box, URL="#PatternDashboard" target="_parent"]    Checkpoint -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> Checkpoint一覧を表示</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    CheckpointList -> Checkpoint [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" align="left" href="#doRecordCheckpoint" tooltip="Checkpointを記録 (unsafe)"><font color="#FF4136">■</font> Checkpointを記録</td></tr><tr><td valign="middle" align="left" href="#goCheckpoint" tooltip="Checkpoint詳細を表示 (safe)"><font color="#00A86B">■</font> Checkpoint詳細を表示</td></tr></table>> URL="#doRecordCheckpoint" target="_parent" fontsize=13 class="doRecordCheckpoint" penwidth=1.5];    CheckpointList -> PatternDashboard [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goPatternDashboard" tooltip="判断パターンダッシュボードを表示 (safe)"><font color="#00A86B">■</font> 判断パターンダッシュボードを表示</td></tr></table>> URL="#goPatternDashboard" target="_parent" fontsize=13 class="goPatternDashboard" penwidth=1.5];    PatternDashboard -> CheckpointList [label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="0"><tr><td valign="middle" href="#goCheckpointList" tooltip="Checkpoint一覧を表示 (safe)"><font color="#00A86B">■</font> Checkpoint一覧を表示</td></tr></table>> URL="#goCheckpointList" target="_parent" fontsize=13 class="goCheckpointList" penwidth=1.5];    Checkpoint [label="Checkpoint詳細" URL="#Checkpoint" target="_parent"]    CheckpointList [label="Checkpoint一覧" URL="#CheckpointList" target="_parent"]    PatternDashboard [label="判断パターンダッシュボード" URL="#PatternDashboard" target="_parent"]}')
+            ]);
+            setupTagTrigger();
+            setupModeSwitch('asd-show-id', 'asd-graph-id', 'asd-graph-name');
+            setupModeSwitch('asd-show-name', 'asd-graph-name', 'asd-graph-id');
+            applySmoothScrollToLinks(document.querySelectorAll('a[href^="#"]'));
+            setupTagClick();
+            setupDocClick();
+            
+
+            // Initialize new features
+            enhanceProfileSection();
+            setupSearch();
+            setupGraphZoom();
+        } catch (error) {
+               console.error("Error in main process:", error);
+        }});
+</script>
+
+<div id="zoom-controls-container" style="margin-bottom: 10px;"></div>
+
+<div class="asd-view-selector">
+    <span class="selector-label">View:</span>
+    <input type="radio" id="asd-show-id" checked name="asd-view-selector" value="id">
+    <label for="asd-show-id">id</label>
+    <input type="radio" id="asd-show-name" name="asd-view-selector" value="name">
+    <label for="asd-show-name">title</label>
+</div>
+
+<div class="legend">
+    <div class="legend-item" title="A state element (e.g.  HTML.SPAN, HTML.INPUT, etc.).">
+        <span class="legend-icon semantic"></span>
+        Semantic
+    </div>
+    <div class="legend-item" title="A hypermedia control that triggers a safe, idempotent state
+      transition (e.g.  HTTP.GET or HTTP.HEAD).">
+        <span class="legend-icon safe"></span>
+        Safe
+    </div>
+    <div class="legend-item" title="A hypermedia control that triggers an unsafe, non-
+      idempotent state transition (e.g.  HTTP.POST).">
+        <span class="legend-icon unsafe"></span>
+        Unsafe
+    </div>
+    <div class="legend-item" title="A hypermedia control that triggers an unsafe,
+      idempotent state transition (e.g.  HTTP.PUT or HTTP.DELETE).">
+        <span class="legend-icon idempotent"></span>
+        Idempotent
+    </div>
+</div>
+
+<h2>Semantic Descriptors</h2>
+
+<table>
+<thead>
+<tr>
+  <th align="center">Type</th>
+  <th align="left">ID</th>
+  <th align="left">Title</th>
+  <th align="left">Contained</th>
+  <th align="left">Extra Info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="aiProposal"></a><a href="#aiProposal">aiProposal</a></td>
+  <td align="left"><span style="white-space: normal;">AIが提案した内容</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/text" target="_blank">schema.org/text</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="Checkpoint"></a><a href="#Checkpoint">Checkpoint</a></td>
+  <td align="left"><span style="white-space: normal;">Checkpoint詳細</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#checkpointId">checkpointId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#taskContext">taskContext</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#aiProposal">aiProposal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#humanFinal">humanFinal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#diff">diff</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#tag">tag</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#confidence">confidence</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#dateCreated">dateCreated</a><br><span class="type-indicator-small safe" title="Safe"></span><a href="#goCheckpointList">goCheckpointList</a></td>
+  <td align="left"><span style="white-space: normal;"></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="checkpointId"></a><a href="#checkpointId">checkpointId</a></td>
+  <td align="left"><span style="white-space: normal;">Checkpoint ID</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/identifier" target="_blank">schema.org/identifier</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="CheckpointList"></a><a href="#CheckpointList">CheckpointList</a></td>
+  <td align="left"><span style="white-space: normal;">Checkpoint一覧</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#checkpointId">checkpointId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#taskContext">taskContext</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#tag">tag</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#confidence">confidence</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#dateCreated">dateCreated</a><br><span class="type-indicator-small safe" title="Safe"></span><a href="#goCheckpoint">goCheckpoint</a><br><span class="type-indicator-small safe" title="Safe"></span><a href="#goPatternDashboard">goPatternDashboard</a><br><span class="type-indicator-small unsafe" title="Unsafe"></span><a href="#doRecordCheckpoint">doRecordCheckpoint</a></td>
+  <td align="left"><span style="white-space: normal;"></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="confidence"></a><a href="#confidence">confidence</a></td>
+  <td align="left"><span style="white-space: normal;">タグの確信度 (estimated</td>
+  <td align="left">stated)</span></td>
+  <td align="left">| <span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/category" target="_blank">schema.org/category</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="dateCreated"></a><a href="#dateCreated">dateCreated</a></td>
+  <td align="left"><span style="white-space: normal;">作成日時</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/dateCreated" target="_blank">schema.org/dateCreated</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="diff"></a><a href="#diff">diff</a></td>
+  <td align="left"><span style="white-space: normal;">提案と最終の差分</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/text" target="_blank">schema.org/text</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon unsafe"></span></span></td>
+  <td align="left"><a id="doRecordCheckpoint"></a><a href="#doRecordCheckpoint">doRecordCheckpoint</a></td>
+  <td align="left"><span style="white-space: normal;">Checkpointを記録</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#taskContext">taskContext</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#aiProposal">aiProposal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#humanFinal">humanFinal</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#diff">diff</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#tag">tag</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#confidence">confidence</a></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#Checkpoint">Checkpoint</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="factualCount"></a><a href="#factualCount">factualCount</a></td>
+  <td align="left"><span style="white-space: normal;">Factual分類の件数</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon safe"></span></span></td>
+  <td align="left"><a id="goCheckpoint"></a><a href="#goCheckpoint">goCheckpoint</a></td>
+  <td align="left"><span style="white-space: normal;">Checkpoint詳細を表示</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#checkpointId">checkpointId</a></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#Checkpoint">Checkpoint</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon safe"></span></span></td>
+  <td align="left"><a id="goCheckpointList"></a><a href="#goCheckpointList">goCheckpointList</a></td>
+  <td align="left"><span style="white-space: normal;">Checkpoint一覧を表示</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#tag">tag</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#sessionId">sessionId</a></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#CheckpointList">CheckpointList</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon safe"></span></span></td>
+  <td align="left"><a id="goPatternDashboard"></a><a href="#goPatternDashboard">goPatternDashboard</a></td>
+  <td align="left"><span style="white-space: normal;">判断パターンダッシュボードを表示</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#periodStart">periodStart</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#periodEnd">periodEnd</a></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">rt:</span><span class="meta-tag rt-tag"><a href="#PatternDashboard">PatternDashboard</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="humanFinal"></a><a href="#humanFinal">humanFinal</a></td>
+  <td align="left"><span style="white-space: normal;">人間が最終的に出した内容</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/text" target="_blank">schema.org/text</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="PatternDashboard"></a><a href="#PatternDashboard">PatternDashboard</a></td>
+  <td align="left"><span style="white-space: normal;">判断パターンダッシュボード</span></td>
+  <td align="left"><span class="type-indicator-small semantic" title="Semantic"></span><a href="#totalCheckpoints">totalCheckpoints</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#factualCount">factualCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#strategicCount">strategicCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#stylisticCount">stylisticCount</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#periodStart">periodStart</a><br><span class="type-indicator-small semantic" title="Semantic"></span><a href="#periodEnd">periodEnd</a><br><span class="type-indicator-small safe" title="Safe"></span><a href="#goCheckpointList">goCheckpointList</a></td>
+  <td align="left"><span style="white-space: normal;"></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="periodEnd"></a><a href="#periodEnd">periodEnd</a></td>
+  <td align="left"><span style="white-space: normal;">集計期間の終了日</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Date" target="_blank">schema.org/Date</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="periodStart"></a><a href="#periodStart">periodStart</a></td>
+  <td align="left"><span style="white-space: normal;">集計期間の開始日</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Date" target="_blank">schema.org/Date</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="sessionId"></a><a href="#sessionId">sessionId</a></td>
+  <td align="left"><span style="white-space: normal;">AI対話セッション識別子</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/identifier" target="_blank">schema.org/identifier</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="strategicCount"></a><a href="#strategicCount">strategicCount</a></td>
+  <td align="left"><span style="white-space: normal;">Strategic分類の件数</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="stylisticCount"></a><a href="#stylisticCount">stylisticCount</a></td>
+  <td align="left"><span style="white-space: normal;">Stylistic分類の件数</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="tag"></a><a href="#tag">tag</a></td>
+  <td align="left"><span style="white-space: normal;">分類タグ (factual</td>
+  <td align="left">strategic</td>
+  <td align="left">stylistic)</span> |  | <span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/category" target="_blank">schema.org/category</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="taskContext"></a><a href="#taskContext">taskContext</a></td>
+  <td align="left"><span style="white-space: normal;">業務タスクの説明</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/description" target="_blank">schema.org/description</a></span></span></span></span></td>
+</tr>
+<tr>
+  <td align="center"><span class="legend"><span class="legend-icon semantic"></span></span></td>
+  <td align="left"><a id="totalCheckpoints"></a><a href="#totalCheckpoints">totalCheckpoints</a></td>
+  <td align="left"><span style="white-space: normal;">合計Checkpoint数</span></td>
+  <td align="left"></td>
+  <td align="left"><span style="white-space: normal;"><span class="meta-container"><span class="meta-item"><span class="meta-label">def:</span><span class="meta-tag def-tag"><a href="https://schema.org/Integer" target="_blank">schema.org/Integer</a></span></span></span></span></td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2>Profile</h2>
+
+<pre><code>{
+  &quot;$schema&quot;: &quot;https://alps-io.github.io/schemas/alps.json&quot;,
+  &quot;alps&quot;: {
+    &quot;title&quot;: &quot;Constraint Engine API&quot;,
+    &quot;doc&quot;: {&quot;value&quot;: &quot;AI×人間の協働における判断プロセスの記録・可視化プラットフォーム&quot;},
+    &quot;descriptor&quot;: [
+      {&quot;id&quot;: &quot;checkpointId&quot;, &quot;title&quot;: &quot;Checkpoint ID&quot;, &quot;def&quot;: &quot;https://schema.org/identifier&quot;},
+      {&quot;id&quot;: &quot;sessionId&quot;, &quot;title&quot;: &quot;AI対話セッション識別子&quot;, &quot;def&quot;: &quot;https://schema.org/identifier&quot;},
+      {&quot;id&quot;: &quot;taskContext&quot;, &quot;title&quot;: &quot;業務タスクの説明&quot;, &quot;def&quot;: &quot;https://schema.org/description&quot;},
+      {&quot;id&quot;: &quot;aiProposal&quot;, &quot;title&quot;: &quot;AIが提案した内容&quot;, &quot;def&quot;: &quot;https://schema.org/text&quot;},
+      {&quot;id&quot;: &quot;humanFinal&quot;, &quot;title&quot;: &quot;人間が最終的に出した内容&quot;, &quot;def&quot;: &quot;https://schema.org/text&quot;},
+      {&quot;id&quot;: &quot;diff&quot;, &quot;title&quot;: &quot;提案と最終の差分&quot;, &quot;def&quot;: &quot;https://schema.org/text&quot;},
+      {&quot;id&quot;: &quot;tag&quot;, &quot;title&quot;: &quot;分類タグ (factual|strategic|stylistic)&quot;, &quot;def&quot;: &quot;https://schema.org/category&quot;},
+      {&quot;id&quot;: &quot;confidence&quot;, &quot;title&quot;: &quot;タグの確信度 (estimated|stated)&quot;, &quot;def&quot;: &quot;https://schema.org/category&quot;},
+      {&quot;id&quot;: &quot;dateCreated&quot;, &quot;title&quot;: &quot;作成日時&quot;, &quot;def&quot;: &quot;https://schema.org/dateCreated&quot;},
+      {&quot;id&quot;: &quot;totalCheckpoints&quot;, &quot;title&quot;: &quot;合計Checkpoint数&quot;, &quot;def&quot;: &quot;https://schema.org/Integer&quot;},
+      {&quot;id&quot;: &quot;factualCount&quot;, &quot;title&quot;: &quot;Factual分類の件数&quot;, &quot;def&quot;: &quot;https://schema.org/Integer&quot;},
+      {&quot;id&quot;: &quot;strategicCount&quot;, &quot;title&quot;: &quot;Strategic分類の件数&quot;, &quot;def&quot;: &quot;https://schema.org/Integer&quot;},
+      {&quot;id&quot;: &quot;stylisticCount&quot;, &quot;title&quot;: &quot;Stylistic分類の件数&quot;, &quot;def&quot;: &quot;https://schema.org/Integer&quot;},
+      {&quot;id&quot;: &quot;periodStart&quot;, &quot;title&quot;: &quot;集計期間の開始日&quot;, &quot;def&quot;: &quot;https://schema.org/Date&quot;},
+      {&quot;id&quot;: &quot;periodEnd&quot;, &quot;title&quot;: &quot;集計期間の終了日&quot;, &quot;def&quot;: &quot;https://schema.org/Date&quot;},
+      {
+        &quot;id&quot;: &quot;CheckpointList&quot;,
+        &quot;title&quot;: &quot;Checkpoint一覧&quot;,
+        &quot;descriptor&quot;: [
+          {&quot;href&quot;: &quot;#checkpointId&quot;},
+          {&quot;href&quot;: &quot;#sessionId&quot;},
+          {&quot;href&quot;: &quot;#taskContext&quot;},
+          {&quot;href&quot;: &quot;#tag&quot;},
+          {&quot;href&quot;: &quot;#confidence&quot;},
+          {&quot;href&quot;: &quot;#dateCreated&quot;},
+          {&quot;href&quot;: &quot;#goCheckpoint&quot;},
+          {&quot;href&quot;: &quot;#goPatternDashboard&quot;},
+          {&quot;href&quot;: &quot;#doRecordCheckpoint&quot;}
+        ]
+      },
+      {
+        &quot;id&quot;: &quot;Checkpoint&quot;,
+        &quot;title&quot;: &quot;Checkpoint詳細&quot;,
+        &quot;descriptor&quot;: [
+          {&quot;href&quot;: &quot;#checkpointId&quot;},
+          {&quot;href&quot;: &quot;#sessionId&quot;},
+          {&quot;href&quot;: &quot;#taskContext&quot;},
+          {&quot;href&quot;: &quot;#aiProposal&quot;},
+          {&quot;href&quot;: &quot;#humanFinal&quot;},
+          {&quot;href&quot;: &quot;#diff&quot;},
+          {&quot;href&quot;: &quot;#tag&quot;},
+          {&quot;href&quot;: &quot;#confidence&quot;},
+          {&quot;href&quot;: &quot;#dateCreated&quot;},
+          {&quot;href&quot;: &quot;#goCheckpointList&quot;}
+        ]
+      },
+      {
+        &quot;id&quot;: &quot;PatternDashboard&quot;,
+        &quot;title&quot;: &quot;判断パターンダッシュボード&quot;,
+        &quot;descriptor&quot;: [
+          {&quot;href&quot;: &quot;#totalCheckpoints&quot;},
+          {&quot;href&quot;: &quot;#factualCount&quot;},
+          {&quot;href&quot;: &quot;#strategicCount&quot;},
+          {&quot;href&quot;: &quot;#stylisticCount&quot;},
+          {&quot;href&quot;: &quot;#periodStart&quot;},
+          {&quot;href&quot;: &quot;#periodEnd&quot;},
+          {&quot;href&quot;: &quot;#goCheckpointList&quot;}
+        ]
+      },
+      {
+        &quot;id&quot;: &quot;goCheckpointList&quot;,
+        &quot;type&quot;: &quot;safe&quot;,
+        &quot;rt&quot;: &quot;#CheckpointList&quot;,
+        &quot;title&quot;: &quot;Checkpoint一覧を表示&quot;,
+        &quot;descriptor&quot;: [
+          {&quot;href&quot;: &quot;#tag&quot;},
+          {&quot;href&quot;: &quot;#sessionId&quot;}
+        ]
+      },
+      {
+        &quot;id&quot;: &quot;goCheckpoint&quot;,
+        &quot;type&quot;: &quot;safe&quot;,
+        &quot;rt&quot;: &quot;#Checkpoint&quot;,
+        &quot;title&quot;: &quot;Checkpoint詳細を表示&quot;,
+        &quot;descriptor&quot;: [
+          {&quot;href&quot;: &quot;#checkpointId&quot;}
+        ]
+      },
+      {
+        &quot;id&quot;: &quot;doRecordCheckpoint&quot;,
+        &quot;type&quot;: &quot;unsafe&quot;,
+        &quot;rt&quot;: &quot;#Checkpoint&quot;,
+        &quot;title&quot;: &quot;Checkpointを記録&quot;,
+        &quot;descriptor&quot;: [
+          {&quot;href&quot;: &quot;#sessionId&quot;},
+          {&quot;href&quot;: &quot;#taskContext&quot;},
+          {&quot;href&quot;: &quot;#aiProposal&quot;},
+          {&quot;href&quot;: &quot;#humanFinal&quot;},
+          {&quot;href&quot;: &quot;#diff&quot;},
+          {&quot;href&quot;: &quot;#tag&quot;},
+          {&quot;href&quot;: &quot;#confidence&quot;}
+        ]
+      },
+      {
+        &quot;id&quot;: &quot;goPatternDashboard&quot;,
+        &quot;type&quot;: &quot;safe&quot;,
+        &quot;rt&quot;: &quot;#PatternDashboard&quot;,
+        &quot;title&quot;: &quot;判断パターンダッシュボードを表示&quot;,
+        &quot;descriptor&quot;: [
+          {&quot;href&quot;: &quot;#periodStart&quot;},
+          {&quot;href&quot;: &quot;#periodEnd&quot;}
+        ]
+      }
+    ]
+  }
+}
+</code></pre>
+
+    </div>
+</body>
+</html>
