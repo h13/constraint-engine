@@ -76,6 +76,18 @@ class RecallTrackerTest extends TestCase
         $this->assertStringContainsString('not found', $result);
     }
 
+    public function testRecordDiscoveryNotFound(): void
+    {
+        $result = $this->tracker->recordDiscovery(99999);
+        $this->assertStringContainsString('not found', $result);
+    }
+
+    public function testRecordFrictionNotFound(): void
+    {
+        $result = $this->tracker->recordFriction(99999);
+        $this->assertStringContainsString('not found', $result);
+    }
+
     public function testShowGoNoGoPending(): void
     {
         $result = $this->tracker->showGoNoGo();
