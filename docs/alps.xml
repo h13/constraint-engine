@@ -37,12 +37,14 @@
   <descriptor id="frictionLimit" title="摩擦許容上限" def="https://schema.org/Integer"/>
   <descriptor id="verdict" title="Go/No-Go判定 (go|no_go|pending)" def="https://schema.org/Text"/>
   <descriptor id="userId" title="ユーザー識別子" def="https://schema.org/identifier"/>
+  <descriptor id="greeting" title="挨拶メッセージ" def="https://schema.org/Text"/>
   <descriptor id="checkpointCount" title="Checkpoint件数" def="https://schema.org/Integer"/>
   <descriptor id="firstCheckpoint" title="最初のCheckpoint日時" def="https://schema.org/dateCreated"/>
   <descriptor id="lastCheckpoint" title="最後のCheckpoint日時" def="https://schema.org/dateModified"/>
 
   <!-- Representations -->
   <descriptor id="Home" title="ホームページ">
+    <descriptor href="#greeting"/>
     <descriptor href="#goCheckpointList"/>
     <descriptor href="#goPatternDashboard"/>
     <descriptor href="#goSessionList"/>
@@ -102,22 +104,18 @@
   </descriptor>
 
   <descriptor id="PatternDashboard" title="判断パターンダッシュボード">
-    <doc>summary (PeriodSummary), tagDistribution (TagDistribution[]),
-    trend (TrendEntry[]), comparison (current/previous PeriodSummary),
-    factualRate (FactualRateEntry[])</doc>
-    <descriptor href="#totalCheckpoints"/>
-    <descriptor href="#factualCount"/>
-    <descriptor href="#strategicCount"/>
-    <descriptor href="#stylisticCount"/>
+    <doc>Nested structure: summary (PeriodSummary), tagDistribution (TagDistribution[]),
+    trend (TrendEntry[]), comparison ({current, previous}: PeriodSummary),
+    factualRate (FactualRateEntry[]). Query params: periodStart, periodEnd,
+    compareStart, compareEnd.</doc>
+    <descriptor href="#PeriodSummary"/>
+    <descriptor href="#TagDistribution"/>
+    <descriptor href="#TrendEntry"/>
+    <descriptor href="#FactualRateEntry"/>
     <descriptor href="#periodStart"/>
     <descriptor href="#periodEnd"/>
     <descriptor href="#compareStart"/>
     <descriptor href="#compareEnd"/>
-    <descriptor href="#tag"/>
-    <descriptor href="#count"/>
-    <descriptor href="#date"/>
-    <descriptor href="#total"/>
-    <descriptor href="#factualRate"/>
     <descriptor href="#goCheckpointList"/>
   </descriptor>
 
