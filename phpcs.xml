@@ -37,6 +37,11 @@
         <exclude-pattern>*/tmp/*</exclude-pattern>
     </rule>
     
+    <!-- Ray.MediaQuery: SQL column names require snake_case parameters -->
+    <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps">
+        <exclude-pattern>src/Query/*</exclude-pattern>
+    </rule>
+
     <!-- Additional Rules -->
     <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
         <properties>
