@@ -12,6 +12,7 @@ use BEAR\Resource\ResourceObject;
 use ConstraintEngine\App\Being\RecordedCheckpoint;
 use ConstraintEngine\App\Input\CheckpointInput;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
+use RuntimeException;
 
 use function assert;
 
@@ -63,6 +64,11 @@ class Checkpoints extends ResourceObject
         } catch (SemanticVariableException $e) {
             $this->code = 422;
             $this->body = ['errors' => $e->getErrors()->getMessages('en')];
+
+            return $this;
+        } catch (RuntimeException $e) {
+            $this->code = 500;
+            $this->body = ['error' => $e->getMessage()];
 
             return $this;
         }
