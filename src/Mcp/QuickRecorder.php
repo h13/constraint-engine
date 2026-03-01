@@ -38,6 +38,10 @@ final class QuickRecorder
 
         $parsed = $this->parser->parse($description);
 
+        if ($parsed['aiProposal'] === '' || $parsed['humanFinal'] === '') {
+            return 'Error: Could not extract proposal data from description. Please provide more detail.';
+        }
+
         $taskContext = $parsed['taskContext'];
         $activeContext = $this->sessionManager->getActiveTaskContext();
         if ($taskContext === '' && $activeContext !== null) {
@@ -64,7 +68,7 @@ final class QuickRecorder
         }
 
         $lastId = $this->pdo->lastInsertId();
-        if ($lastId === false || $lastId === '0') {
+        if ($lastId === false || $lastId === '0' || $lastId === '') {
             return 'Error: Failed to record checkpoint — database write did not return a valid insert ID.';
         }
 

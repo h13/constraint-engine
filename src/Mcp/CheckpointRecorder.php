@@ -9,6 +9,8 @@ use ConstraintEngine\App\Query\CheckpointCommandInterface;
 use Mcp\Capability\Attribute\McpTool;
 use PDOException;
 
+use function trim;
+
 final class CheckpointRecorder
 {
     public function __construct(
@@ -36,6 +38,18 @@ final class CheckpointRecorder
         string $taskContext,
         string $sessionId = '',
     ): string {
+        if (trim($aiProposal) === '') {
+            return 'Error: aiProposal cannot be empty.';
+        }
+
+        if (trim($humanFinal) === '') {
+            return 'Error: humanFinal cannot be empty.';
+        }
+
+        if (trim($taskContext) === '') {
+            return 'Error: taskContext cannot be empty.';
+        }
+
         $resolvedSessionId = $this->sessionManager->resolveSessionId(
             $sessionId !== '' ? $sessionId : null,
         );
@@ -63,7 +77,7 @@ final class CheckpointRecorder
         }
 
         $lastId = $this->pdo->lastInsertId();
-        if ($lastId === false || $lastId === '0') {
+        if ($lastId === false || $lastId === '0' || $lastId === '') {
             return 'Error: Failed to record checkpoint — database write did not return a valid insert ID.';
         }
 

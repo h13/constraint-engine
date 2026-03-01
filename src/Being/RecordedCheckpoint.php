@@ -47,7 +47,7 @@ final readonly class RecordedCheckpoint
             confidence: $confidence,
         );
         $lastId = $pdo->lastInsertId();
-        if ($lastId === false || $lastId === '0') {
+        if ($lastId === false || $lastId === '0' || $lastId === '') {
             throw new RuntimeException('Failed to record checkpoint: could not retrieve insert ID');
         }
 
