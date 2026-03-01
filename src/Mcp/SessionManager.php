@@ -6,11 +6,11 @@ namespace ConstraintEngine\App\Mcp;
 
 use Mcp\Capability\Attribute\McpTool;
 
+use function bin2hex;
 use function date;
 use function implode;
+use function random_bytes;
 use function sprintf;
-use function substr;
-use function uniqid;
 
 final class SessionManager
 {
@@ -105,7 +105,7 @@ final class SessionManager
 
     private function generateSessionId(): string
     {
-        return sprintf('ce-%s-%s', date('Y-m-d'), substr(uniqid('', true), -8));
+        return sprintf('ce-%s-%s', date('Y-m-d'), bin2hex(random_bytes(4)));
     }
 
     private function formatTagSummary(): string

@@ -180,6 +180,10 @@ final class PatternViewer
 
     private function percentage(int $part, int $total): string
     {
+        if ($total === 0) {
+            return '0.0';
+        }
+
         return number_format($part / $total * 100, 1);
     }
 
