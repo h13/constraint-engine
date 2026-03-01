@@ -14,9 +14,13 @@ down: ## Stop all containers
 build: ## Build images
 	$(DC) build
 
-setup: up ## Install deps + migrate DB
+setup: .env up ## Install deps + migrate DB
 	$(APP) composer install
 	$(APP) php bin/setup.php
+	@echo "Ready: http://localhost:$${PORT:-8080}"
+
+.env:
+	cp .env.example .env
 
 install: ## Install composer dependencies
 	$(APP) composer install

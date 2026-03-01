@@ -12,6 +12,5 @@ tests/Http/log/workflow.log
 /vendor-bin/*/vendor/
 .phpcs-cache
 /preload.php
-/autoload.php
 /var/di/
 .claude/settings.local.json
