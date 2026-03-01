@@ -6,6 +6,7 @@ namespace ConstraintEngine\App\Mcp;
 
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 use Mcp\Capability\Attribute\McpTool;
+use Ray\Di\Di\Named;
 
 use function count;
 use function date;
@@ -18,6 +19,8 @@ final class PatternViewer
 {
     public function __construct(
         private readonly CheckpointQueryInterface $query,
+        #[Named('api_base_url')]
+        private readonly string $apiBaseUrl = 'http://localhost:8080',
     ) {
     }
 
@@ -57,7 +60,7 @@ final class PatternViewer
         }
 
         $lines[] = '';
-        $lines[] = 'Dashboard: http://localhost:8080/pattern-dashboard';
+        $lines[] = "Dashboard: {$this->apiBaseUrl}/pattern-dashboard";
 
         return implode("\n", $lines);
     }
@@ -116,7 +119,7 @@ final class PatternViewer
         }
 
         $lines[] = '';
-        $lines[] = 'Dashboard: http://localhost:8080/pattern-dashboard'
+        $lines[] = "Dashboard: {$this->apiBaseUrl}/pattern-dashboard"
             . "?periodStart={$currentStart}&periodEnd={$currentEnd}"
             . "&compareStart={$previousStart}&compareEnd={$previousEnd}";
 

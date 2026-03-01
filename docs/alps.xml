@@ -151,6 +151,7 @@
     <descriptor href="#factualCount"/>
     <descriptor href="#strategicCount"/>
     <descriptor href="#stylisticCount"/>
+    <descriptor href="#Checkpoint"/>
     <descriptor href="#goCheckpointList"/>
   </descriptor>
 
