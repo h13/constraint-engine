@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Mcp;
 
+use ConstraintEngine\App\Semantic\Tag;
 use JsonException;
+use RuntimeException;
 
 use function in_array;
 use function json_decode;
@@ -33,11 +35,15 @@ PROMPT;
     /** @return array{tag: string, confidence: string} */
     public function classify(string $diff): array
     {
-        $text = $this->client->complete(
-            self::SYSTEM_PROMPT,
-            "Classify this diff:\n\n{$diff}",
-            self::MAX_TOKENS,
-        );
+        try {
+            $text = $this->client->complete(
+                self::SYSTEM_PROMPT,
+                "Classify this diff:\n\n{$diff}",
+                self::MAX_TOKENS,
+            );
+        } catch (RuntimeException) {
+            return ['tag' => 'stylistic', 'confidence' => 'estimated'];
+        }
 
         try {
             $classification = json_decode($text, true, 512, JSON_THROW_ON_ERROR);
@@ -46,7 +52,7 @@ PROMPT;
         }
 
         $tag = $classification['tag'] ?? null;
-        if (! in_array($tag, ['factual', 'strategic', 'stylistic'], true)) {
+        if (! in_array($tag, Tag::VALID, true)) {
             $tag = 'stylistic';
         }
 

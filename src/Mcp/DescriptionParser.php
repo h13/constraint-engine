@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace ConstraintEngine\App\Mcp;
 
+use ConstraintEngine\App\Semantic\Tag;
 use JsonException;
+use RuntimeException;
 
 use function in_array;
 use function json_decode;
@@ -38,11 +40,21 @@ PROMPT;
     /** @return array{aiProposal: string, humanFinal: string, taskContext: string, tag: string, confidence: string} */
     public function parse(string $description): array
     {
-        $text = $this->client->complete(
-            self::SYSTEM_PROMPT,
-            "Extract structured data from this description:\n\n{$description}",
-            self::MAX_TOKENS,
-        );
+        try {
+            $text = $this->client->complete(
+                self::SYSTEM_PROMPT,
+                "Extract structured data from this description:\n\n{$description}",
+                self::MAX_TOKENS,
+            );
+        } catch (RuntimeException) {
+            return [
+                'aiProposal' => '',
+                'humanFinal' => '',
+                'taskContext' => '',
+                'tag' => 'stylistic',
+                'confidence' => 'estimated',
+            ];
+        }
 
         try {
             $parsed = json_decode($text, true, 512, JSON_THROW_ON_ERROR);
@@ -57,7 +69,7 @@ PROMPT;
         }
 
         $tag = $parsed['tag'] ?? 'stylistic';
-        if (! in_array($tag, ['factual', 'strategic', 'stylistic'], true)) {
+        if (! in_array($tag, Tag::VALID, true)) {
             $tag = 'stylistic';
         }
 

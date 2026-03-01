@@ -41,30 +41,17 @@ class DiffClassifierTest extends TestCase
         $this->assertSame('stylistic', $result['tag']);
     }
 
-    public function testClassifyMissingApiKey(): void
+    public function testClassifyApiErrorFallsBackToStylistic(): void
     {
         $client = $this->createMock(AnthropicClientInterface::class);
         $client->method('complete')
             ->willThrowException(new RuntimeException('ANTHROPIC_API_KEY is not configured'));
 
         $classifier = new DiffClassifier($client);
+        $result = $classifier->classify('some diff');
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('ANTHROPIC_API_KEY is not configured');
-        $classifier->classify('some diff');
-    }
-
-    public function testClassifyHttpError(): void
-    {
-        $client = $this->createMock(AnthropicClientInterface::class);
-        $client->method('complete')
-            ->willThrowException(new RuntimeException('Anthropic API request failed'));
-
-        $classifier = new DiffClassifier($client);
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Anthropic API request failed');
-        $classifier->classify('some diff');
+        $this->assertSame('stylistic', $result['tag']);
+        $this->assertSame('estimated', $result['confidence']);
     }
 
     public function testClassifyMalformedResponseFallsBackToStylistic(): void

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConstraintEngine\App\Mcp;
 
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 use function json_encode;
 
@@ -71,6 +72,20 @@ class DescriptionParserTest extends TestCase
         $this->assertSame('', $result['humanFinal']);
         $this->assertSame('', $result['taskContext']);
         $this->assertSame('factual', $result['tag']);
+        $this->assertSame('estimated', $result['confidence']);
+    }
+
+    public function testParseApiErrorFallsBack(): void
+    {
+        $client = $this->createMock(AnthropicClientInterface::class);
+        $client->method('complete')
+            ->willThrowException(new RuntimeException('API connection failed'));
+
+        $parser = new DescriptionParser($client);
+        $result = $parser->parse('Some description');
+
+        $this->assertSame('', $result['aiProposal']);
+        $this->assertSame('stylistic', $result['tag']);
         $this->assertSame('estimated', $result['confidence']);
     }
 
