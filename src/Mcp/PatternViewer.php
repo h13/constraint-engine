@@ -163,8 +163,8 @@ final class PatternViewer
             $lastRate = $rate;
         }
 
-        if ($firstRate !== null && $lastRate !== null && count($rates) >= 2) {
-            $improvement = $firstRate - $lastRate;
+        if (count($rates) >= 2) {
+            $improvement = $firstRate - (float) $lastRate;
             $lines[] = '---';
             if ($improvement > 0) {
                 $lines[] = 'Improvement: factual rate decreased by ' . number_format($improvement, 1) . 'pp (learning effect detected)';

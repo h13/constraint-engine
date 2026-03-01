@@ -35,7 +35,7 @@ class PatternDashboard extends ResourceObject
         return $this;
     }
 
-    /** @return array{current: array|null, previous: array|null}|null */
+    /** @return array{current: array<string, int>|null, previous: array<string, int>|null}|null */
     private function buildComparison(
         string $periodStart,
         string $periodEnd,
