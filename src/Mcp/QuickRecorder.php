@@ -7,6 +7,7 @@ namespace ConstraintEngine\App\Mcp;
 use Aura\Sql\ExtendedPdoInterface;
 use ConstraintEngine\App\Query\CheckpointCommandInterface;
 use Mcp\Capability\Attribute\McpTool;
+use PDOException;
 
 final class QuickRecorder
 {
@@ -47,16 +48,20 @@ final class QuickRecorder
             ? '(no changes)'
             : "{$parsed['aiProposal']} → {$parsed['humanFinal']}";
 
-        $this->command->add(
-            user_id: $this->sessionManager->getUserId(),
-            session_id: $sessionId,
-            task_context: $taskContext,
-            ai_proposal: $parsed['aiProposal'],
-            human_final: $parsed['humanFinal'],
-            diff: $diff,
-            tag: $parsed['tag'],
-            confidence: $parsed['confidence'],
-        );
+        try {
+            $this->command->add(
+                user_id: $this->sessionManager->getUserId(),
+                session_id: $sessionId,
+                task_context: $taskContext,
+                ai_proposal: $parsed['aiProposal'],
+                human_final: $parsed['humanFinal'],
+                diff: $diff,
+                tag: $parsed['tag'],
+                confidence: $parsed['confidence'],
+            );
+        } catch (PDOException $e) {
+            return 'Error: Failed to write checkpoint — ' . $e->getMessage();
+        }
 
         $lastId = $this->pdo->lastInsertId();
         if ($lastId === false || $lastId === '0') {
