@@ -26,7 +26,7 @@ final class McpModule extends AbstractModule
                 'apiKey' => 'anthropic_api_key',
                 'model' => 'anthropic_model',
             ],
-        );
+        )->in(Scope::SINGLETON);
         $this->bind()->annotatedWith('anthropic_api_key')->toInstance(
             $_ENV['ANTHROPIC_API_KEY'] ?? '',
         );
