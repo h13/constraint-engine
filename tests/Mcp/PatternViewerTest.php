@@ -259,6 +259,28 @@ class PatternViewerTest extends TestCase
         $this->assertStringContainsString('Both periodStart and periodEnd', $result);
     }
 
+    public function testComparePeriodsReturnsErrorOnInvalidDate(): void
+    {
+        $query = $this->createMock(CheckpointQueryInterface::class);
+
+        $viewer = new PatternViewer($query, 'http://test:8080');
+        $result = $viewer->comparePeriods('2026-01-01', 'not-a-date', '2025-12-25', '2025-12-31');
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('Invalid date format', $result);
+    }
+
+    public function testShowImprovementRateReturnsErrorOnInvalidDate(): void
+    {
+        $query = $this->createMock(CheckpointQueryInterface::class);
+
+        $viewer = new PatternViewer($query, 'http://test:8080');
+        $result = $viewer->showImprovementRate('2026-01-01', 'not-a-date');
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('Invalid date format', $result);
+    }
+
     public function testShowImprovementRateUsesDefaultDatesWhenNoArgs(): void
     {
         $query = $this->createMock(CheckpointQueryInterface::class);

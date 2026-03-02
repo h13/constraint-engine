@@ -102,6 +102,17 @@ class PatternDashboardTest extends ResourceTestCase
         $this->assertNull($ro->body['comparison']);
     }
 
+    public function testOnGetInvalidPeriodEndReturns400(): void
+    {
+        $ro = $this->resource->get('page://self/pattern-dashboard', [
+            'periodStart' => '2026-01-01',
+            'periodEnd' => 'not-a-date',
+        ]);
+        assert($ro instanceof ResourceObject);
+        $this->assertSame(400, $ro->code);
+        $this->assertArrayHasKey('error', $ro->body);
+    }
+
     public function testOnGetFactualRateWithPeriod(): void
     {
         $this->resource->post('page://self/checkpoints', [
