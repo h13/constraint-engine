@@ -1,5 +1,5 @@
 SELECT
-    CAST(date_created AS DATE) as "date",
+    DATE(date_created) as "date",
     COUNT(*) as "total",
     SUM(CASE WHEN tag = 'factual' THEN 1 ELSE 0 END) as "factualCount",
     CASE WHEN COUNT(*) > 0
@@ -9,5 +9,5 @@ SELECT
 FROM checkpoint
 WHERE date_created >= :periodStart
   AND date_created < :periodEnd
-GROUP BY CAST(date_created AS DATE)
-ORDER BY CAST(date_created AS DATE)
+GROUP BY DATE(date_created)
+ORDER BY DATE(date_created)
