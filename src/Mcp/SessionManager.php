@@ -26,6 +26,10 @@ final class SessionManager
     /**
      * Start a new recording session with a task context.
      *
+     * Note: Session state is held in process memory only.
+     * If the MCP server process restarts, the active session is lost.
+     * Save the returned session ID for crash recovery with record_checkpoint's sessionId parameter.
+     *
      * @param string $taskContext Description of the task being worked on
      *
      * @return string Session ID and confirmation
@@ -47,7 +51,7 @@ final class SessionManager
         $this->checkpointCount = 0;
         $this->tagCounts = [];
 
-        return "Session started. ID: {$this->activeSessionId}, Context: {$taskContext}";
+        return "Session started. ID: {$this->activeSessionId}, Context: {$taskContext}. Save this ID — session state is in-memory only.";
     }
 
     /**
