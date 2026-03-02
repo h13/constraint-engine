@@ -18,19 +18,26 @@ class InsightGeneratorTest extends TestCase
 {
     private CheckpointQueryInterface $query;
     private ResourceInterface $resource;
+    private ExtendedPdoInterface $pdo;
 
     protected function setUp(): void
     {
         $injector = Injector::getOverrideInstance('app', new TestModule());
         $this->query = $injector->getInstance(CheckpointQueryInterface::class);
         $this->resource = $injector->getInstance(ResourceInterface::class);
-        $pdo = $injector->getInstance(ExtendedPdoInterface::class);
+        $this->pdo = $injector->getInstance(ExtendedPdoInterface::class);
         $sql = file_get_contents(__DIR__ . '/../../var/sql/sqlite/create_checkpoint.sql');
         if ($sql === false) {
             $this->fail('Schema file not found: var/sql/sqlite/create_checkpoint.sql');
         }
 
-        $pdo->exec($sql);
+        $this->pdo->exec($sql);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->pdo->exec('DELETE FROM checkpoint_recall');
+        $this->pdo->exec('DELETE FROM checkpoint');
     }
 
     private function createGenerator(string $aiResponse): InsightGenerator

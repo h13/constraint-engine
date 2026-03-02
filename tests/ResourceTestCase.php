@@ -27,4 +27,10 @@ abstract class ResourceTestCase extends TestCase
 
         $pdo->exec($sql);
     }
+
+    protected function tearDown(): void
+    {
+        $this->pdo->exec('DELETE FROM checkpoint_recall');
+        $this->pdo->exec('DELETE FROM checkpoint');
+    }
 }
