@@ -86,7 +86,7 @@ final class PatternViewer
     ): string {
         if ($currentStart === '' && $currentEnd === '' && $previousStart === '' && $previousEnd === '') {
             $currentStart = date('Y-m-d', (int) strtotime('-7 days'));
-            $currentEnd = date('Y-m-d');
+            $currentEnd = date('Y-m-d', (int) strtotime('-1 day'));
             $previousStart = date('Y-m-d', (int) strtotime('-14 days'));
             $previousEnd = date('Y-m-d', (int) strtotime('-8 days'));
         } elseif ($currentStart === '' || $currentEnd === '' || $previousStart === '' || $previousEnd === '') {
