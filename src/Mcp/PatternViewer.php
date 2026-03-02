@@ -174,20 +174,16 @@ final class PatternViewer
             '---',
         ];
 
-        $firstRate = null;
-        $lastRate = null;
+        $firstRate = (float) $rates[0]['factualRate'];
+        $lastRate = $firstRate;
         foreach ($rates as $row) {
             $rate = (float) $row['factualRate'];
             $lines[] = "{$row['date']}: {$row['total']} checkpoints, factual rate " . number_format($rate, 1) . '%';
-            if ($firstRate === null) {
-                $firstRate = $rate;
-            }
-
             $lastRate = $rate;
         }
 
         if (count($rates) >= 2) {
-            $rateChange = (float) $lastRate - $firstRate;
+            $rateChange = $lastRate - $firstRate;
             $lines[] = '---';
             if ($rateChange < 0) {
                 $lines[] = 'Improvement: factual rate decreased by ' . number_format(-$rateChange, 1) . 'pp (learning effect detected)';
