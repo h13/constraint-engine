@@ -111,7 +111,7 @@ class RecallTrackerTest extends TestCase
 
         $result = $this->tracker->showGoNoGo();
         $this->assertStringContainsString('GO', $result);
-        $this->assertStringNotContainsString('NO_GO', $result);
+        $this->assertStringNotContainsString('NO-GO', $result);
     }
 
     public function testShowGoNoGoExcessiveFriction(): void
@@ -122,6 +122,6 @@ class RecallTrackerTest extends TestCase
         $this->tracker->recordFriction($id, 'friction 3');
 
         $result = $this->tracker->showGoNoGo();
-        $this->assertStringContainsString('NO_GO', $result);
+        $this->assertStringContainsString('NO-GO', $result);
     }
 }

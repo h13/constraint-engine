@@ -12,6 +12,7 @@ use Mcp\Capability\Attribute\McpTool;
 use PDOException;
 
 use function implode;
+use function str_replace;
 use function strtoupper;
 use function ucfirst;
 
@@ -91,7 +92,7 @@ final class RecallTracker
             "Discovery: {$discovery} / " . GoNoGoVerdict::DISCOVERY_TARGET . ' (unexpected trend findings)',
             "Friction:  {$friction} / " . GoNoGoVerdict::FRICTION_LIMIT . ' limit (obstruction events)',
             '---',
-            'Verdict: ' . strtoupper($verdict),
+            'Verdict: ' . strtoupper(str_replace('_', '-', $verdict)),
         ];
 
         return implode("\n", $lines);
