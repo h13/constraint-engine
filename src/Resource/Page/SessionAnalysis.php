@@ -9,6 +9,8 @@ use BEAR\Resource\Code;
 use BEAR\Resource\ResourceObject;
 use ConstraintEngine\App\Query\CheckpointQueryInterface;
 
+use function count;
+
 class SessionAnalysis extends ResourceObject
 {
     public function __construct(
@@ -27,14 +29,15 @@ class SessionAnalysis extends ResourceObject
             return $this;
         }
 
+        $checkpoints = $this->query->sessionAnalysis($sessionId);
         $this->body = [
             'sessionId' => $summary['sessionId'],
             'taskContext' => $summary['taskContext'],
-            'checkpointCount' => (int) $summary['checkpointCount'],
+            'checkpointCount' => count($checkpoints),
             'factualCount' => (int) $summary['factualCount'],
             'strategicCount' => (int) $summary['strategicCount'],
             'stylisticCount' => (int) $summary['stylisticCount'],
-            'checkpoints' => $this->query->sessionAnalysis($sessionId),
+            'checkpoints' => $checkpoints,
         ];
 
         return $this;
