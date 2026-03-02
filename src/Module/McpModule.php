@@ -17,6 +17,11 @@ final class McpModule extends AbstractModule
     private const string DEFAULT_MODEL = 'claude-sonnet-4-5-20250929';
     private const string DEFAULT_API_BASE_URL = 'http://localhost:8080';
 
+    /**
+     * ExtendedPdoInterface is bound in SINGLETON by AuraSqlModule.
+     * CheckpointRecorder/QuickRecorder depend on this to call lastInsertId()
+     * on the same connection that CheckpointCommandInterface uses.
+     */
     protected function configure(): void
     {
         $this->bind(ClientInterface::class)->to(Client::class)->in(Scope::SINGLETON);
