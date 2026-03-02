@@ -25,6 +25,63 @@ class CheckpointRecorderTest extends TestCase
         return new DiffClassifier($client);
     }
 
+    public function testRecordCheckpointReturnsErrorOnEmptyAiProposal(): void
+    {
+        $classifier = $this->createClassifier('factual');
+        $command = $this->createMock(CheckpointCommandInterface::class);
+        $pdo = $this->createMock(ExtendedPdoInterface::class);
+        $sessionManager = new SessionManager();
+
+        $recorder = new CheckpointRecorder($classifier, $command, $pdo, $sessionManager);
+        $result = $recorder->recordCheckpoint(
+            aiProposal: '',
+            humanFinal: 'Human',
+            taskContext: 'Task',
+            sessionId: 'test-session',
+        );
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('aiProposal cannot be empty', $result);
+    }
+
+    public function testRecordCheckpointReturnsErrorOnWhitespaceHumanFinal(): void
+    {
+        $classifier = $this->createClassifier('factual');
+        $command = $this->createMock(CheckpointCommandInterface::class);
+        $pdo = $this->createMock(ExtendedPdoInterface::class);
+        $sessionManager = new SessionManager();
+
+        $recorder = new CheckpointRecorder($classifier, $command, $pdo, $sessionManager);
+        $result = $recorder->recordCheckpoint(
+            aiProposal: 'AI',
+            humanFinal: '   ',
+            taskContext: 'Task',
+            sessionId: 'test-session',
+        );
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('humanFinal cannot be empty', $result);
+    }
+
+    public function testRecordCheckpointReturnsErrorOnEmptyTaskContext(): void
+    {
+        $classifier = $this->createClassifier('factual');
+        $command = $this->createMock(CheckpointCommandInterface::class);
+        $pdo = $this->createMock(ExtendedPdoInterface::class);
+        $sessionManager = new SessionManager();
+
+        $recorder = new CheckpointRecorder($classifier, $command, $pdo, $sessionManager);
+        $result = $recorder->recordCheckpoint(
+            aiProposal: 'AI',
+            humanFinal: 'Human',
+            taskContext: '',
+            sessionId: 'test-session',
+        );
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('taskContext cannot be empty', $result);
+    }
+
     public function testRecordCheckpoint(): void
     {
         $classifier = $this->createClassifier('factual');

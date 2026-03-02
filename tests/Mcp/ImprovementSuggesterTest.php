@@ -48,6 +48,24 @@ class ImprovementSuggesterTest extends TestCase
         return new ImprovementSuggester($this->query, $client);
     }
 
+    public function testSuggestImprovementsReturnsErrorOnEmptyAiProposal(): void
+    {
+        $suggester = $this->createSuggester('');
+        $result = $suggester->suggestImprovements('', 'SF項目設計');
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('aiProposal cannot be empty', $result);
+    }
+
+    public function testSuggestImprovementsReturnsErrorOnWhitespaceTaskContext(): void
+    {
+        $suggester = $this->createSuggester('');
+        $result = $suggester->suggestImprovements('Textフィールド', '   ');
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('taskContext cannot be empty', $result);
+    }
+
     public function testSuggestImprovementsNoData(): void
     {
         $suggester = $this->createSuggester('');
