@@ -60,13 +60,11 @@ final class AnthropicClient implements AnthropicClientInterface
         try {
             $response = $this->httpClient->send($request);
         } catch (GuzzleException $e) {
-            throw new RuntimeException('Anthropic API request failed: ' . $e->getMessage(), 0, $e);
+            throw new RuntimeException('Anthropic API request failed', 0, $e);
         }
 
         if ($response->getStatusCode() !== 200) {
-            $errorBody = (string) $response->getBody();
-
-            throw new RuntimeException('Anthropic API error: HTTP ' . $response->getStatusCode() . ' — ' . $errorBody);
+            throw new RuntimeException('Anthropic API returned HTTP ' . $response->getStatusCode());
         }
 
         try {
