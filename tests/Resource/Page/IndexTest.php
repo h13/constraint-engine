@@ -13,9 +13,10 @@ class IndexTest extends ResourceTestCase
 {
     public function testOnGet(): void
     {
-        $ro = $this->resource->get('page://self/index', ['name' => 'BEAR.Sunday']);
+        $ro = $this->resource->get('page://self/index');
         assert($ro instanceof ResourceObject);
         $this->assertSame(200, $ro->code);
-        $this->assertSame('Hello BEAR.Sunday', $ro->body['greeting']);
+        $this->assertSame('Constraint Engine', $ro->body['name']);
+        $this->assertArrayHasKey('description', $ro->body);
     }
 }

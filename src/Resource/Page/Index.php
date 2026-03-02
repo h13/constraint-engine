@@ -14,10 +14,11 @@ class Index extends ResourceObject
     #[Link(rel: 'goSessionList', href: '/sessions')]
     #[Link(rel: 'goTeamDashboard', href: '/team-dashboard')]
     #[Link(rel: 'goGoNoGo', href: '/go-no-go')]
-    public function onGet(string $name = 'BEAR.Sunday'): static
+    public function onGet(): static
     {
         $this->body = [
-            'greeting' => 'Hello ' . $name,
+            'name' => 'Constraint Engine',
+            'description' => 'AI-human collaboration checkpoint tracking and pattern analysis platform',
         ];
 
         return $this;
