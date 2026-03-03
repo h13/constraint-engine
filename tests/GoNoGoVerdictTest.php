@@ -63,6 +63,11 @@ class GoNoGoVerdictTest extends TestCase
         $this->assertSame('no_go', GoNoGoVerdict::compute(0, 0, GoNoGoVerdict::FRICTION_LIMIT + 1));
     }
 
+    public function testPendingWhenFrictionAtLimitButTargetsUnmet(): void
+    {
+        $this->assertSame('pending', GoNoGoVerdict::compute(0, 0, GoNoGoVerdict::FRICTION_LIMIT));
+    }
+
     public function testConstants(): void
     {
         $this->assertSame(3, GoNoGoVerdict::RECALL_TARGET);
