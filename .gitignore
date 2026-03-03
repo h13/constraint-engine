@@ -1,5 +1,4 @@
 /vendor/
-/var/db/*.sqlite3
 /var/tmp/
 /var/log/
 env.json
