@@ -24,9 +24,9 @@ final class AppModule extends AbstractAppModule
     {
         (new EnvJson())->load(dirname(__DIR__, 2));
         $appDir = dirname(__DIR__, 2);
-        $dsn = $_ENV['DB_DSN'] ?? 'sqlite:' . $appDir . '/var/db/constraint_engine.sqlite3';
-        $user = $_ENV['DB_USER'] ?? '';
-        $pass = $_ENV['DB_PASS'] ?? '';
+        $dsn = $_ENV['DB_DSN'] ?? 'pgsql:host=localhost;dbname=constraint_engine';
+        $user = $_ENV['DB_USER'] ?? 'app';
+        $pass = $_ENV['DB_PASS'] ?? 'secret';
         $this->install(new AuraSqlModule($dsn, $user, $pass));
         $this->install(new MediaQuerySqlModule($appDir . '/src/Query', $appDir . '/var/sql'));
         $this->install(new AuraRouterModule($appDir . '/var/conf/aura.route.php'));
