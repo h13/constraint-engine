@@ -1,6 +1,6 @@
 SELECT
     COUNT(*) as "totalCheckpoints",
-    SUM(CASE WHEN tag = 'factual' THEN 1 ELSE 0 END) as "factualCount",
-    SUM(CASE WHEN tag = 'strategic' THEN 1 ELSE 0 END) as "strategicCount",
-    SUM(CASE WHEN tag = 'stylistic' THEN 1 ELSE 0 END) as "stylisticCount"
+    COALESCE(SUM(CASE WHEN tag = 'factual' THEN 1 ELSE 0 END), 0) as "factualCount",
+    COALESCE(SUM(CASE WHEN tag = 'strategic' THEN 1 ELSE 0 END), 0) as "strategicCount",
+    COALESCE(SUM(CASE WHEN tag = 'stylistic' THEN 1 ELSE 0 END), 0) as "stylisticCount"
 FROM checkpoint
