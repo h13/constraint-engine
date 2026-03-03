@@ -20,9 +20,9 @@ abstract class ResourceTestCase extends TestCase
         $injector = Injector::getOverrideInstance('app', new TestModule());
         $this->resource = $injector->getInstance(ResourceInterface::class);
         $pdo = $this->pdo = $injector->getInstance(ExtendedPdoInterface::class);
-        $sql = file_get_contents(__DIR__ . '/../var/sql/sqlite/create_checkpoint.sql');
+        $sql = file_get_contents(__DIR__ . '/../var/sql/create_checkpoint.sql');
         if ($sql === false) {
-            $this->fail('Schema file not found: var/sql/sqlite/create_checkpoint.sql');
+            $this->fail('Schema file not found: var/sql/create_checkpoint.sql');
         }
 
         $pdo->exec($sql);
@@ -30,7 +30,6 @@ abstract class ResourceTestCase extends TestCase
 
     protected function tearDown(): void
     {
-        $this->pdo->exec('DELETE FROM checkpoint_recall');
-        $this->pdo->exec('DELETE FROM checkpoint');
+        $this->pdo->exec('TRUNCATE checkpoint_recall, checkpoint CASCADE');
     }
 }
