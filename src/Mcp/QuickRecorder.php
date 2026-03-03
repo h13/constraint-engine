@@ -9,6 +9,8 @@ use ConstraintEngine\App\Query\CheckpointCommandInterface;
 use Mcp\Capability\Attribute\McpTool;
 use PDOException;
 
+use function trim;
+
 final class QuickRecorder
 {
     public function __construct(
@@ -46,6 +48,10 @@ final class QuickRecorder
         $activeContext = $this->sessionManager->getActiveTaskContext();
         if ($taskContext === '' && $activeContext !== null) {
             $taskContext = $activeContext;
+        }
+
+        if (trim($taskContext) === '') {
+            return 'Error: Could not determine taskContext. Provide more detail or start a session with a task context.';
         }
 
         $diff = $parsed['aiProposal'] === $parsed['humanFinal']

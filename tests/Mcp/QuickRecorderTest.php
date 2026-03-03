@@ -116,6 +116,29 @@ class QuickRecorderTest extends TestCase
         $this->assertStringContainsString('strategic', $result);
     }
 
+    public function testQuickRecordReturnsErrorWhenTaskContextIsWhitespace(): void
+    {
+        $parser = $this->createParser([
+            'aiProposal' => 'A',
+            'humanFinal' => 'B',
+            'taskContext' => '   ',
+            'tag' => 'factual',
+            'confidence' => 'estimated',
+        ]);
+
+        $command = $this->createMock(CheckpointCommandInterface::class);
+        $pdo = $this->createMock(ExtendedPdoInterface::class);
+
+        $sessionManager = new SessionManager();
+        $sessionManager->startSession('Valid context');
+
+        $recorder = new QuickRecorder($parser, $command, $pdo, $sessionManager);
+        $result = $recorder->quickRecord('AをBに変更');
+
+        $this->assertStringContainsString('Error', $result);
+        $this->assertStringContainsString('Could not determine taskContext', $result);
+    }
+
     public function testQuickRecordReturnsErrorWhenLastInsertIdReturnsFalse(): void
     {
         $parser = $this->createParser([
