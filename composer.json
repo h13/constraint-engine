@@ -12,17 +12,17 @@
         "bear/sunday": "^1.6",
         "koriym/env-json": "^1.0",
         "guzzlehttp/guzzle": "^7.0",
-        "mcp/sdk": "^0.4",
+        "mcp/sdk": "^0.7",
         "monolog/monolog": "^3.0",
         "ray/aop": "^2.12",
         "ray/di": "^2.14",
         "ray/media-query": "^1.0"
     },
     "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.4",
         "bear/api-doc": "^1.7",
         "bear/devtools": "^1.0",
-        "bear/security": "^0.1",
-        "bamarni/composer-bin-plugin": "^1.4",
+        "bear/security": "^0.3.1",
         "phpunit/phpunit": "^10.0",
         "roave/security-advisories": "dev-latest"
     },
