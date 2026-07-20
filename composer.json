@@ -11,7 +11,7 @@
         "bear/resource": "^1.17",
         "bear/sunday": "^1.6",
         "koriym/env-json": "^1.0",
-        "guzzlehttp/guzzle": "^7.0",
+        "guzzlehttp/guzzle": "^8.0",
         "mcp/sdk": "^0.7",
         "monolog/monolog": "^3.0",
         "ray/aop": "^2.12",
