@@ -3183,16 +3183,16 @@
         },
         {
             "name": "ray/aop",
-            "version": "2.20.0",
+            "version": "2.20.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.Aop.git",
-                "reference": "05a85ecb1a28af1b4414a981f11c79ee7c18e5ba"
+                "reference": "6fa85865b88cdcc262402e5fff5a886ad9287330"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/05a85ecb1a28af1b4414a981f11c79ee7c18e5ba",
-                "reference": "05a85ecb1a28af1b4414a981f11c79ee7c18e5ba",
+                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/6fa85865b88cdcc262402e5fff5a886ad9287330",
+                "reference": "6fa85865b88cdcc262402e5fff5a886ad9287330",
                 "shasum": ""
             },
             "require": {
@@ -3239,7 +3239,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.Aop/issues",
-                "source": "https://github.com/ray-di/Ray.Aop/tree/2.22.0"
+                "source": "https://github.com/ray-di/Ray.Aop/tree/2.20.1"
             },
             "funding": [
                 {
@@ -3251,7 +3251,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-14T19:46:39+00:00"
+            "time": "2026-08-07T12:03:57+00:00"
         },
         {
             "name": "ray/aura-sql-module",
@@ -3754,16 +3754,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v7.4.14",
+            "version": "v7.4.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "9adfcb2a7fc3924473b09f5a0b058dcc2cc7be9a"
+                "reference": "c1e7abe8e8c9b315d6d8b86446ffd9cf73679303"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/9adfcb2a7fc3924473b09f5a0b058dcc2cc7be9a",
-                "reference": "9adfcb2a7fc3924473b09f5a0b058dcc2cc7be9a",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/c1e7abe8e8c9b315d6d8b86446ffd9cf73679303",
+                "reference": "c1e7abe8e8c9b315d6d8b86446ffd9cf73679303",
                 "shasum": ""
             },
             "require": {
@@ -3834,7 +3834,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v7.4.14"
+                "source": "https://github.com/symfony/cache/tree/v7.4.15"
             },
             "funding": [
                 {
@@ -3854,7 +3854,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-17T14:44:48+00:00"
+            "time": "2026-07-29T04:03:42+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -4260,16 +4260,16 @@
         },
         {
             "name": "symfony/polyfill-php83",
-            "version": "v1.38.2",
+            "version": "v1.41.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php83.git",
-                "reference": "796a26abb75ce49f3a84433cd81bf1009d73d5f8"
+                "reference": "5ea99087fb99c273a9b9236ed4c31e78b16103c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/796a26abb75ce49f3a84433cd81bf1009d73d5f8",
-                "reference": "796a26abb75ce49f3a84433cd81bf1009d73d5f8",
+                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/5ea99087fb99c273a9b9236ed4c31e78b16103c6",
+                "reference": "5ea99087fb99c273a9b9236ed4c31e78b16103c6",
                 "shasum": ""
             },
             "require": {
@@ -4316,7 +4316,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.38.2"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.41.0"
             },
             "funding": [
                 {
@@ -4336,7 +4336,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-27T06:51:48+00:00"
+            "time": "2026-07-01T12:47:55+00:00"
         },
         {
             "name": "symfony/polyfill-uuid",
@@ -4588,16 +4588,16 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v8.1.1",
+            "version": "v8.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "75b74315b4e4be40e5534cf9c5cc30dd0907ed71"
+                "reference": "766dac532a04d8980b4d83183fd3d1ea284bac11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/75b74315b4e4be40e5534cf9c5cc30dd0907ed71",
-                "reference": "75b74315b4e4be40e5534cf9c5cc30dd0907ed71",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/766dac532a04d8980b4d83183fd3d1ea284bac11",
+                "reference": "766dac532a04d8980b4d83183fd3d1ea284bac11",
                 "shasum": ""
             },
             "require": {
@@ -4647,7 +4647,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v8.1.1"
+                "source": "https://github.com/symfony/var-exporter/tree/v8.1.3"
             },
             "funding": [
                 {
@@ -4667,7 +4667,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-27T09:05:56+00:00"
+            "time": "2026-07-29T16:43:23+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5874,12 +5874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "4fac0729c45b6dba8d6171a94eccb1d5d9514bf9"
+                "reference": "dd51bbf2083143b3cbb2c1469cc3c091a9c67e8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4fac0729c45b6dba8d6171a94eccb1d5d9514bf9",
-                "reference": "4fac0729c45b6dba8d6171a94eccb1d5d9514bf9",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/dd51bbf2083143b3cbb2c1469cc3c091a9c67e8f",
+                "reference": "dd51bbf2083143b3cbb2c1469cc3c091a9c67e8f",
                 "shasum": ""
             },
             "conflict": {
@@ -6016,7 +6016,7 @@
                 "codingms/modules": "<4.3.11|>=5,<5.7.4|>=6,<6.4.2|>=7,<7.5.5",
                 "commerceteam/commerce": ">=0.9.6,<0.9.9",
                 "components/jquery": ">=1.0.3,<3.5",
-                "composer/composer": "<2.2.28|>=2.3,<2.9.8",
+                "composer/composer": "<2.2.29|>=2.3,<2.10.2",
                 "concrete5/concrete5": "<9.5.2",
                 "concrete5/core": "<8.5.8|>=9,<9.1",
                 "contao-components/mediaelement": ">=2.14.2,<2.21.1",
@@ -6034,7 +6034,7 @@
                 "cpsit/typo3-mailqueue": "<0.4.5|>=0.5,<0.5.2",
                 "craftcms/aws-s3": ">=2.0.2,<=2.2.4",
                 "craftcms/azure-blob": ">=2.0.0.0-beta1,<=2.1",
-                "craftcms/cms": "<4.18|>=5,<5.10",
+                "craftcms/cms": "<4.18.3|>=5,<5.10.8",
                 "craftcms/commerce": ">=4,<=4.11.1|>=5,<=5.6.4",
                 "craftcms/composer": ">=4.0.0.0-RC1-dev,<=4.10|>=5.0.0.0-RC1-dev,<=5.5.1",
                 "craftcms/craft": ">=3.5,<=4.16.17|>=5.0.0.0-RC1-dev,<=5.8.21",
@@ -6076,7 +6076,7 @@
                 "doctrine/mongodb-odm-bundle": "<3.0.1",
                 "doctrine/orm": ">=1,<1.2.4|>=2,<2.4.8|>=2.5,<2.5.1|>=2.8.3,<2.8.4",
                 "dolibarr/dolibarr": "<=23.0.2",
-                "dompdf/dompdf": "<2.0.4",
+                "dompdf/dompdf": "<3.1.6",
                 "doublethreedigital/guest-entries": "<3.1.2",
                 "dreamfactory/df-core": "<1.0.4",
                 "drupal-pattern-lab/unified-twig-extensions": "<=0.1",
@@ -6231,10 +6231,10 @@
                 "gregwar/rst": "<1.0.3",
                 "grumpydictator/firefly-iii": "<=6.6.2",
                 "gugoan/economizzer": "<=0.9.0.0-beta1",
-                "guzzlehttp/guzzle": "<7.12.1",
+                "guzzlehttp/guzzle": "<7.15.2|>=8,<8.0.1",
                 "guzzlehttp/guzzle-services": "<1.5.4",
                 "guzzlehttp/oauth-subscriber": "<0.8.1",
-                "guzzlehttp/psr7": "<2.12.1",
+                "guzzlehttp/psr7": "<2.12.3",
                 "haffner/jh_captcha": "<=2.1.3|>=3,<=3.0.2",
                 "handcraftedinthealps/goodby-csv": "<1.4.3",
                 "harvesthq/chosen": "<1.8.7",
@@ -6343,7 +6343,7 @@
                 "lavalite/cms": "<=10.1",
                 "lavitto/typo3-form-to-database": "<2.2.5|>=3,<3.2.2|>=4,<4.2.3|>=5,<5.0.2",
                 "lcobucci/jwt": ">=3.4,<3.4.6|>=4,<4.0.4|>=4.1,<4.1.5",
-                "league/commonmark": "<=2.8.1",
+                "league/commonmark": "<2.9",
                 "league/flysystem": "<1.1.4|>=2,<2.1.1",
                 "league/oauth2-server": ">=8.3.2,<8.4.2|>=8.5,<8.5.3",
                 "leantime/leantime": "<3.3",
@@ -6352,7 +6352,7 @@
                 "librenms/librenms": "<26.3",
                 "liftkit/database": "<2.13.2",
                 "lightsaml/lightsaml": "<1.3.5",
-                "limesurvey/limesurvey": "<6.15.4",
+                "limesurvey/limesurvey": "<=7.0.0.0-beta1",
                 "livehelperchat/livehelperchat": "<=3.91",
                 "livewire-filemanager/filemanager": "<=1.0.4",
                 "livewire/livewire": "<2.12.7|>=3.0.0.0-beta1,<3.6.4",
@@ -6485,8 +6485,10 @@
                 "oro/customer-portal": ">=4.1,<=4.1.13|>=4.2,<=4.2.10|>=5,<=5.0.11|>=5.1,<=5.1.3",
                 "oro/platform": ">=1.7,<1.7.4|>=3.1,<3.1.29|>=4.1,<4.1.17|>=4.2,<=4.2.10|>=5,<=5.0.12|>=5.1,<=5.1.3",
                 "oveleon/contao-cookiebar": "<1.16.3|>=2,<2.1.3",
-                "oxid-esales/oxideshop-ce": "<=7.0.5",
+                "oxid-esales/oxideshop-ce": "<4.5|>=6,<6.14.4",
+                "oxid-esales/oxideshop-metapackage-ce": ">=6,<6.5.5",
                 "oxid-esales/paymorrow-module": ">=1,<1.0.2|>=2,<2.0.1",
+                "oxid-esales/smarty-component": "<1.0.1",
                 "packbackbooks/lti-1-3-php-library": "<5",
                 "padraic/humbug_get_contents": "<1.1.2",
                 "pagarme/pagarme-php": "<3",
@@ -6509,7 +6511,7 @@
                 "personnummer/personnummer": "<3.0.2",
                 "ph7software/ph7builder": "<=17.9.1",
                 "phanan/koel": "<=9.7",
-                "pheditor/pheditor": "<2.0.6",
+                "pheditor/pheditor": "<2.0.8",
                 "phenx/php-svg-lib": "<0.5.2",
                 "php-censor/php-censor": "<2.0.13|>=2.1,<2.1.5",
                 "php-mod/curl": "<2.3.2",
@@ -6525,7 +6527,7 @@
                 "phpoffice/common": "<0.2.9",
                 "phpoffice/math": "<=0.2",
                 "phpoffice/phpexcel": "<=1.8.2",
-                "phpoffice/phpspreadsheet": "<=1.30.4|>=2,<=2.1.15|>=2.2,<=2.4.4|>=3,<=3.10.4|>=4,<=5.6",
+                "phpoffice/phpspreadsheet": "<=1.30.5|>=2,<=2.1.17|>=2.2,<=2.4.6|>=3,<=3.10.6|>=4,<=5.8",
                 "phppgadmin/phppgadmin": "<=7.13",
                 "phpseclib/phpseclib": "<=2.0.54|>=3,<=3.0.53",
                 "phpservermon/phpservermon": "<3.6",
@@ -6552,7 +6554,7 @@
                 "pocketmine/pocketmine-mp": "<5.42.1",
                 "pocketmine/raklib": ">=0.14,<0.14.6|>=0.15,<0.15.1",
                 "pontedilana/php-weasyprint": "<=2.5.1",
-                "poweradmin/poweradmin": "<4.2.4|>=4.3,<4.3.3",
+                "poweradmin/poweradmin": "<4.2.5|>=4.3,<4.3.4",
                 "pressbooks/pressbooks": "<5.18",
                 "prestashop/autoupgrade": ">=4,<4.10.1",
                 "prestashop/blockreassurance": "<=5.1.3",
@@ -6571,7 +6573,7 @@
                 "propel/propel": ">=2.0.0.0-alpha1,<2.0.0.0-alpha8",
                 "propel/propel1": ">=1,<1.7.2",
                 "psy/psysh": "<=0.11.22|>=0.12,<=0.12.18",
-                "pterodactyl/panel": "<1.12.3",
+                "pterodactyl/panel": "<=1.12.4",
                 "ptheofan/yii2-statemachine": ">=2.0.0.0-RC1-dev,<=2",
                 "ptrofimov/beanstalk_console": "<1.7.14",
                 "pubnub/pubnub": "<6.1",
@@ -6591,7 +6593,7 @@
                 "rap2hpoutre/laravel-log-viewer": "<0.13",
                 "react/http": ">=0.7,<1.9",
                 "really-simple-plugins/complianz-gdpr": "<6.4.2",
-                "redaxo/source": "<5.21",
+                "redaxo/source": "<5.21.1",
                 "remdex/livehelperchat": "<4.29",
                 "renolit/reint-downloadmanager": "<4.0.2|>=5,<5.0.1",
                 "reportico-web/reportico": "<=8.1",
@@ -6648,8 +6650,8 @@
                 "silverstripe/versioned-admin": ">=1,<1.11.1",
                 "simogeo/filemanager": "<=2.5",
                 "simple-updates/phpwhois": "<=1",
-                "simplesamlphp/saml2": "<=4.20.2|>=5,<5.0.6|>=6,<6.2.1",
-                "simplesamlphp/saml2-legacy": "<=4.20.2",
+                "simplesamlphp/saml2": "<4.19.3|>=4.20,<=4.20.2|>=5,<5.0.6|>=6,<6.2.1",
+                "simplesamlphp/saml2-legacy": "<4.19.3|>=4.20,<=4.20.2",
                 "simplesamlphp/simplesamlphp": "<=2.4.6|>=2.5,<=2.5.1",
                 "simplesamlphp/simplesamlphp-module-casserver": "<=7.0.2",
                 "simplesamlphp/simplesamlphp-module-infocard": "<1.0.1",
@@ -6682,13 +6684,13 @@
                 "spomky-labs/otphp": "<11.4.3",
                 "spoon/library": "<1.4.1",
                 "spoonity/tcpdf": "<6.2.22",
-                "squizlabs/php_codesniffer": ">=1,<2.8.1|>=3,<3.0.1",
+                "squizlabs/php_codesniffer": "<3.13.6|>=4,<4.0.2",
                 "ssddanbrown/bookstack": "<24.05.1",
                 "starcitizentools/citizen-skin": ">=1.9.4,<3.9",
                 "starcitizentools/short-description": ">=4,<4.0.1",
                 "starcitizentools/tabber-neue": ">=1.9.1,<2.7.2|>=3,<3.1.1",
                 "starcitizenwiki/embedvideo": "<=4",
-                "statamic/cms": "<5.74|>=6,<6.20.3",
+                "statamic/cms": "<5.74.3|>=6,<6.24.2",
                 "stormpath/sdk": "<9.9.99",
                 "studio-42/elfinder": "<=2.1.67",
                 "studiomitte/friendlycaptcha": "<0.1.4",
@@ -6705,6 +6707,7 @@
                 "sylius/admin-bundle": ">=1,<1.0.17|>=1.1,<1.1.9|>=1.2,<1.2.2",
                 "sylius/grid": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
                 "sylius/grid-bundle": "<1.10.1",
+                "sylius/mollie-plugin": "<2.2.8|>=3,<3.2.4|>=3.3,<3.3.1",
                 "sylius/paypal-plugin": "<1.6.2|>=1.7,<1.7.2|>=2,<2.0.2",
                 "sylius/resource-bundle": ">=1,<1.3.14|>=1.4,<1.4.7|>=1.5,<1.5.2|>=1.6,<1.6.4",
                 "sylius/sylius": "<1.9.12|>=1.10,<1.10.16|>=1.11,<1.11.17|>=1.12,<=1.12.22|>=1.13,<=1.13.14|>=1.14,<=1.14.17|>=2,<2.0.18|>=2.1,<2.1.15|>=2.2,<2.2.6",
@@ -6882,7 +6885,8 @@
                 "wnx/laravel-backup-restore": "<=1.9.3",
                 "woocommerce/woocommerce": "<6.6|>=8.8,<8.8.5|>=8.9,<8.9.3",
                 "wp-cli/wp-cli": ">=0.12,<2.5",
-                "wp-graphql/wp-graphql": "<=1.14.5",
+                "wp-coding-standards/wpcs": ">=0.14.1,<3.4.1",
+                "wp-graphql/wp-graphql": "<=2.6",
                 "wp-premium/gravityforms": "<2.4.21",
                 "wpanel/wpanel4-cms": "<=4.3.1",
                 "wpcloud/wp-stateless": "<3.2",
@@ -6988,7 +6992,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-17T19:07:03+00:00"
+            "time": "2026-08-06T23:57:53+00:00"
         },
         {
             "name": "sebastian/cli-parser",
