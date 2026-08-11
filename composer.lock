@@ -3386,16 +3386,16 @@
         },
         {
             "name": "ray/di",
-            "version": "2.22.2",
+            "version": "2.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.Di.git",
-                "reference": "236ac262e045f5f8c8b7fdd3aff42e9ad1e9052c"
+                "reference": "a762a71bab7fe683e48ee696dd3620a14b586cd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Di/zipball/236ac262e045f5f8c8b7fdd3aff42e9ad1e9052c",
-                "reference": "236ac262e045f5f8c8b7fdd3aff42e9ad1e9052c",
+                "url": "https://api.github.com/repos/ray-di/Ray.Di/zipball/a762a71bab7fe683e48ee696dd3620a14b586cd8",
+                "reference": "a762a71bab7fe683e48ee696dd3620a14b586cd8",
                 "shasum": ""
             },
             "require": {
@@ -3409,11 +3409,9 @@
                 "phpunit/phpunit": "^11.0"
             },
             "suggest": {
-                "ray/compiler": "For compiling dependency injection container to improve performance"
+                "ray/compiler": "For compiling dependency injection container to improve performance",
+                "ray/object-visual-grapher": "For visualizing composed bindings and the object graph"
             },
-            "bin": [
-                "bin/bindings-html"
-            ],
             "type": "library",
             "extra": {
                 "bamarni-bin": {
@@ -3426,8 +3424,7 @@
                     "Ray\\Di\\": [
                         "src/di",
                         "src-deprecated/di"
-                    ],
-                    "Ray\\Bindings\\": "src-bindings/"
+                    ]
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3447,9 +3444,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.Di/issues",
-                "source": "https://github.com/ray-di/Ray.Di/tree/2.22.2"
+                "source": "https://github.com/ray-di/Ray.Di/tree/2.23.0"
             },
-            "time": "2026-07-19T01:22:09+00:00"
+            "time": "2026-08-10T20:12:22+00:00"
         },
         {
             "name": "ray/input-query",
