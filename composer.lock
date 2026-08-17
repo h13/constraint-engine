@@ -305,16 +305,16 @@
         },
         {
             "name": "bear/app-meta",
-            "version": "1.11.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.AppMeta.git",
-                "reference": "1a8e317b75d14d77d6a80bc4829ea12140d21a4e"
+                "reference": "f77d840037d34fec3a54ddb8c5c578fe24643235"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.AppMeta/zipball/1a8e317b75d14d77d6a80bc4829ea12140d21a4e",
-                "reference": "1a8e317b75d14d77d6a80bc4829ea12140d21a4e",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.AppMeta/zipball/f77d840037d34fec3a54ddb8c5c578fe24643235",
+                "reference": "f77d840037d34fec3a54ddb8c5c578fe24643235",
                 "shasum": ""
             },
             "require": {
@@ -351,9 +351,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.AppMeta/issues",
-                "source": "https://github.com/bearsunday/BEAR.AppMeta/tree/1.11.0"
+                "source": "https://github.com/bearsunday/BEAR.AppMeta/tree/1.12.0"
             },
-            "time": "2026-07-10T09:09:44+00:00"
+            "time": "2026-08-16T14:09:43+00:00"
         },
         {
             "name": "bear/aura-router-module",
@@ -414,21 +414,21 @@
         },
         {
             "name": "bear/package",
-            "version": "1.22.1",
+            "version": "1.23.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.Package.git",
-                "reference": "9b1c0fdf8e248d3ec019fcd3bf75d665a9f34085"
+                "reference": "1fe7a72e5f9b6b811c1885e2a908dd5d854b12f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.Package/zipball/9b1c0fdf8e248d3ec019fcd3bf75d665a9f34085",
-                "reference": "9b1c0fdf8e248d3ec019fcd3bf75d665a9f34085",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.Package/zipball/1fe7a72e5f9b6b811c1885e2a908dd5d854b12f4",
+                "reference": "1fe7a72e5f9b6b811c1885e2a908dd5d854b12f4",
                 "shasum": ""
             },
             "require": {
                 "aura/cli": "^2.2",
-                "bear/app-meta": "^1.11",
+                "bear/app-meta": "^1.12",
                 "bear/query-repository": "^1.13",
                 "bear/resource": "^1.31",
                 "bear/streamer": "^1.4",
@@ -441,7 +441,7 @@
                 "psr/cache": "^1.0 || ^2.0 || ^3.0",
                 "psr/log": "^1.1 || ^2.0 || ^3.0",
                 "ray/aop": "^2.20",
-                "ray/compiler": "^1.13",
+                "ray/compiler": "^1.16",
                 "ray/di": "^2.19.3",
                 "ray/object-visual-grapher": "^1.0",
                 "ray/psr-cache-module": "^1.5.2",
@@ -489,9 +489,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.Package/issues",
-                "source": "https://github.com/bearsunday/BEAR.Package/tree/1.22.1"
+                "source": "https://github.com/bearsunday/BEAR.Package/tree/1.23.1"
             },
-            "time": "2026-08-14T08:44:00+00:00"
+            "time": "2026-08-16T19:21:41+00:00"
         },
         {
             "name": "bear/query-repository",
@@ -3320,16 +3320,16 @@
         },
         {
             "name": "ray/compiler",
-            "version": "1.14.0",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.Compiler.git",
-                "reference": "eafc543117995cbd8ceb5f810e846b16a26b77ea"
+                "reference": "741b185c5cfd7993f16f505dd6895f263182873d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Compiler/zipball/eafc543117995cbd8ceb5f810e846b16a26b77ea",
-                "reference": "eafc543117995cbd8ceb5f810e846b16a26b77ea",
+                "url": "https://api.github.com/repos/ray-di/Ray.Compiler/zipball/741b185c5cfd7993f16f505dd6895f263182873d",
+                "reference": "741b185c5cfd7993f16f505dd6895f263182873d",
                 "shasum": ""
             },
             "require": {
@@ -3380,9 +3380,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.Compiler/issues",
-                "source": "https://github.com/ray-di/Ray.Compiler/tree/1.14.0"
+                "source": "https://github.com/ray-di/Ray.Compiler/tree/1.16.0"
             },
-            "time": "2026-07-12T02:28:14+00:00"
+            "time": "2026-08-14T08:03:36+00:00"
         },
         {
             "name": "ray/di",
