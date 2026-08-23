@@ -718,20 +718,20 @@
         },
         {
             "name": "bear/sunday",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.Sunday.git",
-                "reference": "589bd9b2ac92311ece6b856691eff07575b81f7f"
+                "reference": "24b3b9ec78aec50182d53e200deb4b917f89154b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.Sunday/zipball/589bd9b2ac92311ece6b856691eff07575b81f7f",
-                "reference": "589bd9b2ac92311ece6b856691eff07575b81f7f",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.Sunday/zipball/24b3b9ec78aec50182d53e200deb4b917f89154b",
+                "reference": "24b3b9ec78aec50182d53e200deb4b917f89154b",
                 "shasum": ""
             },
             "require": {
-                "bear/resource": "^1.16",
+                "bear/resource": "^1.33",
                 "php": "^8.2",
                 "psr/log": "^1.1 || ^2.0 || ^3.0",
                 "ray/aop": "^2.12.3",
@@ -776,9 +776,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.Sunday/issues",
-                "source": "https://github.com/bearsunday/BEAR.Sunday/tree/1.8.0"
+                "source": "https://github.com/bearsunday/BEAR.Sunday/tree/1.9.0"
             },
-            "time": "2025-11-11T14:54:25+00:00"
+            "time": "2026-08-23T01:23:42+00:00"
         },
         {
             "name": "doctrine/deprecations",
