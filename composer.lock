@@ -3508,16 +3508,16 @@
         },
         {
             "name": "ray/media-query",
-            "version": "1.1.1",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.MediaQuery.git",
-                "reference": "37e22dd78dccf8f0b93c30a9f4f0e28ad81fb325"
+                "reference": "ad696cb422dbdd61dfdda88d2a21050989765b4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.MediaQuery/zipball/37e22dd78dccf8f0b93c30a9f4f0e28ad81fb325",
-                "reference": "37e22dd78dccf8f0b93c30a9f4f0e28ad81fb325",
+                "url": "https://api.github.com/repos/ray-di/Ray.MediaQuery/zipball/ad696cb422dbdd61dfdda88d2a21050989765b4a",
+                "reference": "ad696cb422dbdd61dfdda88d2a21050989765b4a",
                 "shasum": ""
             },
             "require": {
@@ -3573,9 +3573,9 @@
             "description": "PHP interface-based SQL framework",
             "support": {
                 "issues": "https://github.com/ray-di/Ray.MediaQuery/issues",
-                "source": "https://github.com/ray-di/Ray.MediaQuery/tree/1.1.1"
+                "source": "https://github.com/ray-di/Ray.MediaQuery/tree/1.2.0"
             },
-            "time": "2026-06-25T14:37:32+00:00"
+            "time": "2026-08-30T01:02:24+00:00"
         },
         {
             "name": "ray/object-visual-grapher",
