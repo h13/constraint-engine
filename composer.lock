@@ -3388,16 +3388,16 @@
         },
         {
             "name": "ray/di",
-            "version": "2.23.0",
+            "version": "2.23.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.Di.git",
-                "reference": "a762a71bab7fe683e48ee696dd3620a14b586cd8"
+                "reference": "b361775c2b8a35b270eb2becd4e76774c30af5b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Di/zipball/a762a71bab7fe683e48ee696dd3620a14b586cd8",
-                "reference": "a762a71bab7fe683e48ee696dd3620a14b586cd8",
+                "url": "https://api.github.com/repos/ray-di/Ray.Di/zipball/b361775c2b8a35b270eb2becd4e76774c30af5b7",
+                "reference": "b361775c2b8a35b270eb2becd4e76774c30af5b7",
                 "shasum": ""
             },
             "require": {
@@ -3446,9 +3446,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.Di/issues",
-                "source": "https://github.com/ray-di/Ray.Di/tree/2.23.0"
+                "source": "https://github.com/ray-di/Ray.Di/tree/2.23.1"
             },
-            "time": "2026-08-10T20:12:22+00:00"
+            "time": "2026-08-30T08:05:52+00:00"
         },
         {
             "name": "ray/input-query",
