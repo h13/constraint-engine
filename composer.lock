@@ -3185,16 +3185,16 @@
         },
         {
             "name": "ray/aop",
-            "version": "2.20.1",
+            "version": "2.20.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.Aop.git",
-                "reference": "6fa85865b88cdcc262402e5fff5a886ad9287330"
+                "reference": "66e57e01da44689a4c6897cb5fa5f9d846af75a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/6fa85865b88cdcc262402e5fff5a886ad9287330",
-                "reference": "6fa85865b88cdcc262402e5fff5a886ad9287330",
+                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/66e57e01da44689a4c6897cb5fa5f9d846af75a1",
+                "reference": "66e57e01da44689a4c6897cb5fa5f9d846af75a1",
                 "shasum": ""
             },
             "require": {
@@ -3241,7 +3241,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.Aop/issues",
-                "source": "https://github.com/ray-di/Ray.Aop/tree/2.20.1"
+                "source": "https://github.com/ray-di/Ray.Aop/tree/2.20.2"
             },
             "funding": [
                 {
@@ -3253,7 +3253,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-07T12:03:57+00:00"
+            "time": "2026-09-03T01:53:18+00:00"
         },
         {
             "name": "ray/aura-sql-module",
