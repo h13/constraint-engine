@@ -414,16 +414,16 @@
         },
         {
             "name": "bear/package",
-            "version": "1.24.1",
+            "version": "1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.Package.git",
-                "reference": "f766bd4fdf86631afba093f90dea669818fdcd26"
+                "reference": "e8a17e589dbded1cf0600d2339637d92540858d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.Package/zipball/f766bd4fdf86631afba093f90dea669818fdcd26",
-                "reference": "f766bd4fdf86631afba093f90dea669818fdcd26",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.Package/zipball/e8a17e589dbded1cf0600d2339637d92540858d7",
+                "reference": "e8a17e589dbded1cf0600d2339637d92540858d7",
                 "shasum": ""
             },
             "require": {
@@ -488,9 +488,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.Package/issues",
-                "source": "https://github.com/bearsunday/BEAR.Package/tree/1.24.1"
+                "source": "https://github.com/bearsunday/BEAR.Package/tree/1.25.0"
             },
-            "time": "2026-08-27T03:54:02+00:00"
+            "time": "2026-09-05T02:20:10+00:00"
         },
         {
             "name": "bear/query-repository",
