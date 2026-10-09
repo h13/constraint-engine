@@ -1,7 +1,7 @@
 # =============================================================================
 # Base: shared extensions for all stages
 # =============================================================================
-FROM php:8.5-fpm@sha256:b7254c1e7bc85d2df3e0539c0b1de846aa23da9fb557ae3d51148bcd49f6ee5d AS base
+FROM php:8.5-fpm@sha256:adde18b67ea7a8cddc580f657e0d3f16e800758c6fa690b969c2925a303e8afc AS base
 RUN apt-get update && apt-get install -y libpq-dev git unzip \
     && docker-php-ext-install pdo_pgsql opcache \
     && rm -rf /var/lib/apt/lists/*
