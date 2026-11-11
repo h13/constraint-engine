@@ -176,7 +176,8 @@
                 "issues": "https://github.com/auraphp/Aura.Sql/issues",
                 "source": "https://github.com/auraphp/Aura.Sql/tree/6.1.0"
             },
-            "time": "2026-09-29T06:10:04+00:00"
+            "time": "2026-09-29T06:10:04+00:00",
+            "published-time": "2026-09-29T06:11:05+00:00"
         },
         {
             "name": "aura/sqlquery",
@@ -353,7 +354,8 @@
                 "issues": "https://github.com/bearsunday/BEAR.AppMeta/issues",
                 "source": "https://github.com/bearsunday/BEAR.AppMeta/tree/1.14.0"
             },
-            "time": "2026-08-25T10:13:15+00:00"
+            "time": "2026-08-25T10:13:15+00:00",
+            "published-time": "2026-08-25T10:16:08+00:00"
         },
         {
             "name": "bear/aura-router-module",
@@ -1561,7 +1563,8 @@
                 "issues": "https://github.com/koriym/Koriym.Psr4List/issues",
                 "source": "https://github.com/koriym/Koriym.Psr4List/tree/1.4.0"
             },
-            "time": "2025-10-27T01:52:35+00:00"
+            "time": "2025-10-27T01:52:35+00:00",
+            "published-time": "2025-10-27T01:53:16+00:00"
         },
         {
             "name": "koriym/semantic-logger",
@@ -4207,7 +4210,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-25T15:50:05+00:00"
+            "time": "2026-09-25T15:50:05+00:00",
+            "published-time": "2026-09-30T10:23:35+00:00"
         },
         {
             "name": "symfony/polyfill-php82",
@@ -4903,16 +4907,16 @@
         },
         {
             "name": "bear/devtools",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.DevTools.git",
-                "reference": "55162e0a866c163886b02fdb6b1eccd0ebff0a53"
+                "reference": "d682d324f5291d07964eccd65eda53e07afa5802"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.DevTools/zipball/55162e0a866c163886b02fdb6b1eccd0ebff0a53",
-                "reference": "55162e0a866c163886b02fdb6b1eccd0ebff0a53",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.DevTools/zipball/d682d324f5291d07964eccd65eda53e07afa5802",
+                "reference": "d682d324f5291d07964eccd65eda53e07afa5802",
                 "shasum": ""
             },
             "require": {
@@ -4921,15 +4925,15 @@
                 "ext-curl": "*",
                 "koriym/php-server": "^1.0",
                 "php": "^8.2",
-                "phpunit/phpunit": "^9.6 || ^10.0",
-                "ray/aop": "^2.14",
-                "ray/di": "^2.14"
+                "ray/aop": "^2.18.0",
+                "ray/di": "^2.18.0"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.4",
-                "bear/package": "^1.10",
+                "bear/package": "^1.25",
                 "madapaja/twig-module": "^2.5",
-                "ray/aura-sql-module": "^1.10",
+                "phpunit/phpunit": "^10.5.62 || ^11.5.50 || ^12.5.8 || ^13.4.4",
+                "ray/aura-sql-module": "^1.13.3",
                 "xhprof/xhprof": "^2.3"
             },
             "suggest": {
@@ -4959,11 +4963,13 @@
                     "email": "akihito.koriyama@gmail.com"
                 }
             ],
+            "description": "Development tools for BEAR.Sunday: Halo resource inspector, HTTP resource client and hypermedia workflow testing",
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.DevTools/issues",
-                "source": "https://github.com/bearsunday/BEAR.DevTools/tree/1.4.0"
+                "source": "https://github.com/bearsunday/BEAR.DevTools/tree/1.5.0"
             },
-            "time": "2026-06-14T16:20:07+00:00"
+            "time": "2026-11-11T07:04:28+00:00",
+            "published-time": "2026-11-11T07:07:28+00:00"
         },
         {
             "name": "bear/security",
@@ -5080,7 +5086,8 @@
                 "issues": "https://github.com/koriym/Koriym.PhpServer/issues",
                 "source": "https://github.com/koriym/Koriym.PhpServer/tree/1.0.1"
             },
-            "time": "2025-01-03T00:56:16+00:00"
+            "time": "2025-01-03T00:56:16+00:00",
+            "published-time": "2025-01-03T00:57:05+00:00"
         },
         {
             "name": "michelf/php-markdown",
@@ -7954,7 +7961,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-01-26T15:53:37+00:00"
+            "time": "2026-01-26T15:53:37+00:00",
+            "published-time": "2026-01-28T07:15:57+00:00"
         },
         {
             "name": "theseer/tokenizer",
