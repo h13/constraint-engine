@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8d8eac3751c7c8d21fa78fde9eabfa92",
+    "content-hash": "8c36480ea071bd8c63b200fd592ac937",
     "packages": [
         {
             "name": "aura/cli",
@@ -4973,20 +4973,24 @@
         },
         {
             "name": "bear/security",
-            "version": "0.3.1",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.Security.git",
-                "reference": "0fd4c4ff03674c5c9164dabdcfba9b7d2e77aaa2"
+                "reference": "e4a0a652e95b6587ed68fa5951fce3f56e60b6e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.Security/zipball/0fd4c4ff03674c5c9164dabdcfba9b7d2e77aaa2",
-                "reference": "0fd4c4ff03674c5c9164dabdcfba9b7d2e77aaa2",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.Security/zipball/e4a0a652e95b6587ed68fa5951fce3f56e60b6e6",
+                "reference": "e4a0a652e95b6587ed68fa5951fce3f56e60b6e6",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.1"
+                "composer-runtime-api": "^2.0",
+                "php": "^8.2"
+            },
+            "conflict": {
+                "vimeo/psalm": "<7.3 || >=8.0"
             },
             "require-dev": {
                 "aura/sql": "^6.0",
@@ -4994,9 +4998,9 @@
                 "bear/resource": "^1.28",
                 "bear/sunday": "^1.8",
                 "infection/infection": "^0.31.9",
-                "phpstan/phpstan": "^2.1",
-                "phpunit/phpunit": "^10.5",
-                "vimeo/psalm": "^6.14"
+                "phpstan/phpstan": "^2.1.29",
+                "phpunit/phpunit": "^10.5.62",
+                "vimeo/psalm": "^7.3"
             },
             "suggest": {
                 "bear/devtools": "Required for DAST (Dynamic Application Security Testing) with HTTP workflow tests"
@@ -5038,9 +5042,10 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.Security/issues",
-                "source": "https://github.com/bearsunday/BEAR.Security/tree/0.3.1"
+                "source": "https://github.com/bearsunday/BEAR.Security/tree/0.4.0"
             },
-            "time": "2026-01-09T20:12:09+00:00"
+            "time": "2026-11-11T07:04:30+00:00",
+            "published-time": "2026-11-11T07:07:30+00:00"
         },
         {
             "name": "koriym/php-server",
