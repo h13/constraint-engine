@@ -3673,7 +3673,8 @@
                 "issues": "https://github.com/ray-di/Ray.ObjectGrapher/issues",
                 "source": "https://github.com/ray-di/Ray.ObjectGrapher/tree/1.1.0"
             },
-            "time": "2026-07-27T00:40:34+00:00"
+            "time": "2026-07-27T00:40:34+00:00",
+            "published-time": "2026-08-20T14:49:02+00:00"
         },
         {
             "name": "ray/psr-cache-module",
@@ -4853,16 +4854,16 @@
         },
         {
             "name": "bear/api-doc",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.ApiDoc.git",
-                "reference": "a7e27f0bb6d984bb1cf584bf747eeb407b14d848"
+                "reference": "f1f501c3951775785514acbe91f0627f54c94f00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.ApiDoc/zipball/a7e27f0bb6d984bb1cf584bf747eeb407b14d848",
-                "reference": "a7e27f0bb6d984bb1cf584bf747eeb407b14d848",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.ApiDoc/zipball/f1f501c3951775785514acbe91f0627f54c94f00",
+                "reference": "f1f501c3951775785514acbe91f0627f54c94f00",
                 "shasum": ""
             },
             "require": {
@@ -4920,9 +4921,10 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.ApiDoc/issues",
-                "source": "https://github.com/bearsunday/BEAR.ApiDoc/tree/1.12.0"
+                "source": "https://github.com/bearsunday/BEAR.ApiDoc/tree/1.13.0"
             },
-            "time": "2026-08-11T06:40:34+00:00"
+            "time": "2026-11-16T09:35:43+00:00",
+            "published-time": "2026-11-16T10:31:37+00:00"
         },
         {
             "name": "bear/devtools",
@@ -5167,7 +5169,8 @@
                 "issues": "https://github.com/michelf/php-markdown/issues",
                 "source": "https://github.com/michelf/php-markdown/tree/2.0.0"
             },
-            "time": "2022-09-26T12:21:08+00:00"
+            "time": "2022-09-26T12:21:08+00:00",
+            "published-time": "2022-09-26T12:28:12+00:00"
         },
         {
             "name": "myclabs/deep-copy",
