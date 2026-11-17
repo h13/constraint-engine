@@ -580,16 +580,16 @@
         },
         {
             "name": "bear/resource",
-            "version": "1.34.2",
+            "version": "1.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.Resource.git",
-                "reference": "7c7baceaa280f3d596d157eac3f6ca2bb9eb8942"
+                "reference": "060a4c601053afc70b7b9e453f8b4f940bf62db1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.Resource/zipball/7c7baceaa280f3d596d157eac3f6ca2bb9eb8942",
-                "reference": "7c7baceaa280f3d596d157eac3f6ca2bb9eb8942",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.Resource/zipball/060a4c601053afc70b7b9e453f8b4f940bf62db1",
+                "reference": "060a4c601053afc70b7b9e453f8b4f940bf62db1",
                 "shasum": ""
             },
             "require": {
@@ -598,14 +598,14 @@
                 "ext-fileinfo": "*",
                 "ext-filter": "*",
                 "justinrainbow/json-schema": "^5.3 || ^6.0",
-                "koriym/file-upload": "^1.0",
+                "koriym/file-upload": "^1.0.1",
                 "koriym/hal": "^1.1",
                 "koriym/http-constants": "^1.1",
                 "php": "^8.2",
                 "phpdocumentor/reflection-docblock": "^6.0",
                 "psr/log": "^1.1 || ^2.0 || ^3.0",
-                "ray/aop": "^2.18.0",
-                "ray/di": "^2.18.0",
+                "ray/aop": "^2.19.1",
+                "ray/di": "^2.19.0",
                 "ray/input-query": "^1.1",
                 "rize/uri-template": "^0.4.1"
             },
@@ -615,7 +615,7 @@
                 "koriym/json-schema-faker": "^0.3.1",
                 "koriym/php-server": "^1.0",
                 "phpunit/phpunit": "^11.0",
-                "ray/compiler": "^1.12",
+                "ray/compiler": "^1.13",
                 "webmozart/assert": "^2.0"
             },
             "type": "library",
@@ -659,10 +659,10 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.Resource/issues",
-                "source": "https://github.com/bearsunday/BEAR.Resource/tree/1.34.2"
+                "source": "https://github.com/bearsunday/BEAR.Resource/tree/1.35.0"
             },
-            "time": "2026-11-13T08:49:03+00:00",
-            "published-time": "2026-11-13T08:49:09+00:00"
+            "time": "2026-11-16T19:30:02+00:00",
+            "published-time": "2026-11-16T19:31:06+00:00"
         },
         {
             "name": "bear/streamer",
@@ -1339,16 +1339,16 @@
         },
         {
             "name": "koriym/file-upload",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/Koriym.FileUpload.git",
-                "reference": "a26c70fcfcfe82ec672f5f3c7814bf88bbc8f4dc"
+                "reference": "8adf58634d696ea6e390cf9a2b7628f726fea2c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Koriym.FileUpload/zipball/a26c70fcfcfe82ec672f5f3c7814bf88bbc8f4dc",
-                "reference": "a26c70fcfcfe82ec672f5f3c7814bf88bbc8f4dc",
+                "url": "https://api.github.com/repos/koriym/Koriym.FileUpload/zipball/8adf58634d696ea6e390cf9a2b7628f726fea2c5",
+                "reference": "8adf58634d696ea6e390cf9a2b7628f726fea2c5",
                 "shasum": ""
             },
             "require": {
@@ -1378,10 +1378,10 @@
             "description": "Type-safe file upload handling with immutable value objects",
             "support": {
                 "issues": "https://github.com/koriym/Koriym.FileUpload/issues",
-                "source": "https://github.com/koriym/Koriym.FileUpload/tree/1.0.0"
+                "source": "https://github.com/koriym/Koriym.FileUpload/tree/1.0.1"
             },
-            "time": "2025-11-07T00:35:36+00:00",
-            "published-time": "2025-11-07T00:41:45+00:00"
+            "time": "2026-11-12T19:14:59+00:00",
+            "published-time": "2026-11-12T19:16:59+00:00"
         },
         {
             "name": "koriym/hal",
