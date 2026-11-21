@@ -11,7 +11,7 @@ WORKDIR /var/www/html
 # Dev: composer + xdebug + dev dependencies, volume mount 前提
 # =============================================================================
 FROM base AS dev
-COPY --from=composer:latest@sha256:0c8e663f14c94d07b3c45b175c51f5a14718508f21fe4dd7e54f09488dd0ed71 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latest@sha256:50ea4d33fdcde1adb0f045547295faa1548b33872e5f789dae5b02ce2fb5de93 /usr/bin/composer /usr/bin/composer
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 COPY docker/php/php-dev.ini $PHP_INI_DIR/conf.d/app.ini
 EXPOSE 9000
@@ -19,7 +19,7 @@ EXPOSE 9000
 # =============================================================================
 # Composer: install production dependencies
 # =============================================================================
-FROM composer:latest@sha256:0c8e663f14c94d07b3c45b175c51f5a14718508f21fe4dd7e54f09488dd0ed71 AS composer
+FROM composer:latest@sha256:50ea4d33fdcde1adb0f045547295faa1548b33872e5f789dae5b02ce2fb5de93 AS composer
 WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-scripts
