@@ -580,16 +580,16 @@
         },
         {
             "name": "bear/resource",
-            "version": "1.35.0",
+            "version": "1.36.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearsunday/BEAR.Resource.git",
-                "reference": "060a4c601053afc70b7b9e453f8b4f940bf62db1"
+                "reference": "f360bf993201e3b07e67355857416730f14670f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearsunday/BEAR.Resource/zipball/060a4c601053afc70b7b9e453f8b4f940bf62db1",
-                "reference": "060a4c601053afc70b7b9e453f8b4f940bf62db1",
+                "url": "https://api.github.com/repos/bearsunday/BEAR.Resource/zipball/f360bf993201e3b07e67355857416730f14670f3",
+                "reference": "f360bf993201e3b07e67355857416730f14670f3",
                 "shasum": ""
             },
             "require": {
@@ -604,8 +604,8 @@
                 "php": "^8.2",
                 "phpdocumentor/reflection-docblock": "^6.0",
                 "psr/log": "^1.1 || ^2.0 || ^3.0",
-                "ray/aop": "^2.19.1",
-                "ray/di": "^2.19.0",
+                "ray/aop": "^2.20.3",
+                "ray/di": "^2.22.1",
                 "ray/input-query": "^1.1",
                 "rize/uri-template": "^0.4.1"
             },
@@ -636,10 +636,7 @@
                         "src-deprecated"
                     ],
                     "Ray\\WebContextParam\\": "src-web-context"
-                },
-                "exclude-from-classmap": [
-                    "/src-deprecated/"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -659,10 +656,10 @@
             ],
             "support": {
                 "issues": "https://github.com/bearsunday/BEAR.Resource/issues",
-                "source": "https://github.com/bearsunday/BEAR.Resource/tree/1.35.0"
+                "source": "https://github.com/bearsunday/BEAR.Resource/tree/1.36.1"
             },
-            "time": "2026-11-16T19:30:02+00:00",
-            "published-time": "2026-11-16T19:31:06+00:00"
+            "time": "2026-11-18T03:12:30+00:00",
+            "published-time": "2026-11-18T03:18:24+00:00"
         },
         {
             "name": "bear/streamer",
