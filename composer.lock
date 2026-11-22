@@ -1528,7 +1528,8 @@
                 "issues": "https://github.com/koriym/Koriym.NullObject/issues",
                 "source": "https://github.com/koriym/Koriym.NullObject/tree/1.0.4"
             },
-            "time": "2023-09-29T06:40:29+00:00"
+            "time": "2023-09-29T06:40:29+00:00",
+            "published-time": "2023-09-29T06:42:16+00:00"
         },
         {
             "name": "koriym/psr4list",
@@ -3430,20 +3431,21 @@
                 "issues": "https://github.com/ray-di/Ray.Compiler/issues",
                 "source": "https://github.com/ray-di/Ray.Compiler/tree/1.16.0"
             },
-            "time": "2026-08-14T08:03:36+00:00"
+            "time": "2026-08-14T08:03:36+00:00",
+            "published-time": "2026-08-14T17:40:23+00:00"
         },
         {
             "name": "ray/di",
-            "version": "2.23.1",
+            "version": "2.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.Di.git",
-                "reference": "b361775c2b8a35b270eb2becd4e76774c30af5b7"
+                "reference": "83a077ef416d9ec09b99bce23d817c25f91a8cfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Di/zipball/b361775c2b8a35b270eb2becd4e76774c30af5b7",
-                "reference": "b361775c2b8a35b270eb2becd4e76774c30af5b7",
+                "url": "https://api.github.com/repos/ray-di/Ray.Di/zipball/83a077ef416d9ec09b99bce23d817c25f91a8cfe",
+                "reference": "83a077ef416d9ec09b99bce23d817c25f91a8cfe",
                 "shasum": ""
             },
             "require": {
@@ -3492,9 +3494,10 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.Di/issues",
-                "source": "https://github.com/ray-di/Ray.Di/tree/2.23.1"
+                "source": "https://github.com/ray-di/Ray.Di/tree/2.24.0"
             },
-            "time": "2026-08-30T08:05:52+00:00"
+            "time": "2026-11-21T22:26:14+00:00",
+            "published-time": "2026-11-21T22:26:53+00:00"
         },
         {
             "name": "ray/input-query",
